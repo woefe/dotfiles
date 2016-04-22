@@ -1,0 +1,7 @@
+[submodule "awesomewm/.config/awesome/revelation"]
+	path = awesomewm/.config/awesome/revelation
+	url = https://github.com/guotsuan/awesome-revelation.git
+	branch = stable
+[submodule "awesomewm/.config/awesome/vicious"]
+	path = awesomewm/.config/awesome/vicious
+	url = http://git.sysphere.org/vicious
