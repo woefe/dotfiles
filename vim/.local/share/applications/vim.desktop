@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Vim Text Editor (Console)
+Comment=Edit text files in a console using Vim
+Exec=nvim %u
+Terminal=true
+Type=Application
+Icon=text-editor
+Categories=Application;Utility;TextEditor;
+StartupNotify=true
+MimeType=text/plain;
+NoDisplay=true

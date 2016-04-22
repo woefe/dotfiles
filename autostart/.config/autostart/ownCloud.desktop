@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=ownCloud
+GenericName=File Synchronizer
+Exec=/usr/bin/owncloud
+Terminal=false
+Icon=owncloud
+Categories=Network
+Type=Application
+StartupNotify=false
+X-GNOME-Autostart-enabled=true

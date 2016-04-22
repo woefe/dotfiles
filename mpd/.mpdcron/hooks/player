@@ -1,0 +1,51 @@
+#!/usr/bin/bash
+
+# Sends a notification via notify-send when the song changes or the playback is unpaused.
+
+# HACK: only send a notification when the song actually changed.
+# Otherwise it sends two notifications when the song changes.
+PID=$$
+PROGNAME="$(cat /proc/$PID/comm)"
+OLDEST_PID=$(pgrep --oldest "$PROGNAME")
+SONG_ID_FILE="/tmp/mpd_old_song_id"
+MPD_SONG_ID_OLD=$(cat $SONG_ID_FILE)
+
+if [ $PID -ne $OLDEST_PID ]; then
+    exit
+fi
+
+if [ "$MPD_SONG_ID" != "$MPD_SONG_ID_OLD" -a "$MPD_STATUS_STATE" == "play" ]; then
+
+    echo $MPD_SONG_ID > $SONG_ID_FILE
+
+    SONG_FILE="$HOME/Music/$MPD_SONG_URI"
+    ARTIST="$MPD_SONG_TAG_ARTIST"
+    TITLE="$MPD_SONG_TAG_TITLE"
+    COVER_FILE="/tmp/mpd_cover.jpg"
+    ICON="/usr/share/icons/HighContrast/48x48/devices/audio-headphones.png"
+
+    if [ -z "$ARTIST" ]; then
+        ARTIST=$(basename "$MPD_SONG_URI")
+    fi
+
+    test -e "${COVER_FILE}" && rm "${COVER_FILE}"
+    test -e "${COVER_FILE}.tmp" && rm "${COVER_FILE}.tmp"
+
+    if [ -e "${SONG_FILE}" ]; then
+        ffmpeg -loglevel quiet -i "${SONG_FILE}" -an -vcodec copy "${COVER_FILE}"
+    fi
+
+    if [ -e ${COVER_FILE} ]; then
+        mv "${COVER_FILE}" "${COVER_FILE}.tmp"
+        convert "${COVER_FILE}.tmp" -thumbnail 100x100 "${COVER_FILE}"
+        ICON=${COVER_FILE}
+    fi
+
+    notify-send -i "${ICON}" "${ARTIST}" "${TITLE}"
+fi
+
+
+if [ "$MPD_STATUS_STATE" == "pause" ]; then
+    echo "" > $SONG_ID_FILE
+fi
+

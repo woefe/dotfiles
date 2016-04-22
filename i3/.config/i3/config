@@ -1,0 +1,190 @@
+set $mod Mod4
+set $alt Mod1
+
+set $color_blue "#5294e2"
+set $color_black "#000000"
+set $color_white "#FFFFFF"
+set $color_darkgray "#3e424d"
+set $color_yellow  "#a76200"
+set $color_red  "#c93737"
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:monospace 8
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec xterm
+
+# kill focused window
+bindsym $mod+c kill
+
+# start dmenu (a program launcher)
+#bindsym $mod+p exec --no-startup-id i3-dmenu-desktop
+
+# lock the session
+bindsym $mod+Control+s exec i3lock -c $color_active_bg
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal orientation
+bindsym $mod+n split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Control+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym $mod+Control+h move workspace to output left
+bindsym $mod+Control+l move workspace to output right
+bindsym $mod+Control+j move workspace to output down
+bindsym $mod+Control+k move workspace to output up
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+    # These bindings trigger as soon as you enter the resize mode
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Application Quickstart
+bindsym $mod+$alt+b exec firefox
+bindsym $mod+$alt+f exec nautilus
+bindsym $mod+$alt+e exec thunderbird
+bindsym $mod+$alt+t exec telegram
+bindsym $mod+$alt+r exec xterm -e ranger
+bindsym $mod+$alt+m exec xterm -e mocp
+
+# Toggle touchpad on/off
+bindsym $mod+Control+t exec --no-startup-id synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')
+
+# Multimedia controls
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 1 -steps 1
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 1 -steps 1
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer sset Master 5%+
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer sset Master 5%-
+bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle
+bindsym XF86Display exec arandr
+bindsym XF86WebCam exec cheese
+bindsym XF86AudioNext exec --no-startup-id mocp --next
+bindsym XF86AudioPrev exec --no-startup-id mocp --previous
+bindsym XF86AudioPlay exec --no-startup-id mocp --toggle-pause
+
+bindsym $mod+Control+n exec --no-startup-id xrandr --output LVDS1 --primary --mode 1366x768 --output HDMI1 --off --output VGA1 --off
+
+#Assign windows to workspaces
+assign [class="Firefox"] 1
+assign [class="Thunderbird"] 10
+
+for_window [class="mpv"] floating enable
+for_window [class="Vlc"] floating enable
+for_window [class="feh"] floating enable
+
+workspace_auto_back_and_forth yes
+workspace 1 output LVDS1
+workspace 2 output LVDS1
+workspace 3 output LVDS1
+workspace 4 output LVDS1
+workspace 5 output LVDS1
+workspace 6 output HDMI1
+workspace 7 output HDMI1
+workspace 8 output HDMI1
+workspace 9 output HDMI1
+workspace 10 output LVDS1
+
+#disable window title
+new_window pixel 3
+
+client.focused $color_blue $color_blue $color_white
+client.focused_inactive $color_black $color_black $color_white
+client.unfocused $color_black $color_black $color_white
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    position top
+    tray_output primary
+    status_command i3status
+    separator_symbol "🙼"
+    #separator_symbol "╱"
+    #separator_symbol "┃"
+    colors {
+        background $color_darkgray
+        statusline $color_white
+        #separator $color_white
+        separator $color_blue
+        focused_workspace  $color_blue $color_blue $color_white
+        active_workspace   $color_blue $color_blue $color_white
+        inactive_workspace $color_darkgray $color_darkgray $color_white
+        urgent_workspace   $color_red $color_red $color_black
+    }
+}
+

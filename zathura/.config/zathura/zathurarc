@@ -1,0 +1,8 @@
+set adjust-open "width"
+set page-padding 2
+set default-bg "#8d8d8d"
+set window-icon /usr/share/icons/breeze/mimetypes/64/application-pdf.svg
+set recolor-lightcolor "#353535"
+set recolor-darkcolor "#FFFFFF"
+set recolor-keephue
+"set recolor

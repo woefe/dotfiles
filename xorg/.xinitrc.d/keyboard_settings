@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Load my modified keyboard layout
+[[ -f ~/.Xkeymap ]] && xkbcomp ~/.Xkeymap $DISPLAY
+
+# Set keyboard autorepeat. Wait 290ms to start
+xset r rate 400 37

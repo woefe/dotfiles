@@ -1,0 +1,38 @@
+# wblue - transparent background and some blue elements
+
+#property               fg        bg    fx
+background           = default default
+frame                = blue    default
+window_title         = default default
+directory            = default default
+selected_directory   = black   white
+playlist             = default default bold
+selected_playlist    = black   white
+file                 = default default
+selected_file        = black   white
+marked_file          = blue    default bold
+marked_selected_file = blue    white   bold
+info                 = blue    default bold
+selected_info        = blue    white   bold
+marked_info          = blue    white   bold
+marked_selected_info = blue    white   bold
+status               = default default
+title                = blue    default bold
+state                = blue    default bold
+current_time         = blue    default bold
+time_left            = blue    default bold
+total_time           = blue    default bold
+time_total_frames    = default default
+sound_parameters     = blue    default bold
+legend               = default default
+disabled             = default default
+enabled              = blue    default bold
+empty_mixer_bar      = default default
+filled_mixer_bar     = default blue    bold
+empty_time_bar       = white   default
+filled_time_bar      = default blue
+entry                = default default
+entry_title          = white   blue    bold
+error                = red     default bold
+message              = blue    default bold
+plist_time           = default default bold

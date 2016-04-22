@@ -1,0 +1,13 @@
+#include ".Xresources.d/colors/papercolor-light"
+#include ".Xresources.d/urxvt"
+!#include ".Xresources.d/xterm"
+
+!-------------------------------------------------------------------------------
+! Xft settings
+!-------------------------------------------------------------------------------
+Xft.dpi:                    93
+Xft.antialias:              true
+Xft.rgba:                   rgb
+Xft.lcdfilter:              lcddefault
+Xft.hinting:                true
+Xft.hintstyle:              hintfull

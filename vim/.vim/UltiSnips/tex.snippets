@@ -1,0 +1,73 @@
+snippet binom "binom"
+\binom{${1:n}}{${2:k}} $0
+endsnippet
+
+snippet int "integral"
+\int_{${1:0}}^{${2:\infty}} $0
+endsnippet
+
+snippet mmath "\[ \] math mode" b
+\[
+    $1
+\]
+$0
+endsnippet
+
+snippet $$ "$$ math mode"
+$$1$$0
+endsnippet
+
+snippet prod "big product"
+\prod_{${1:i=1}}^{${2:n}} $0
+endsnippet
+
+snippet {{ "left and right curly braces" i
+\left\\{ $1 \right\\}$0
+endsnippet
+
+snippet (( "left and right braces" i
+\left( $1 \right)$0
+endsnippet
+
+snippet bigcap "Big intersection"
+\bigcap_{${1:i=1}}^{${2:\infty}}$0
+endsnippet
+
+snippet bigcup "Big union"
+\bigcup_{${1:i=1}}^{${2:\infty}}$0
+endsnippet
+
+snippet cases "cases environment" b
+\begin{cases}
+    $1
+\end{cases}
+$0
+endsnippet
+
+snippet vltemplate "Insert lecture template" b
+\documentclass[a4paper]{article}
+\usepackage[left=2cm,right=2cm,bottom=1cm,includeheadfoot]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[]{amsmath}
+\usepackage{soul}
+\usepackage{ngerman}
+\usepackage{tikz}
+\usepackage{diagbox}
+\usepackage{standalone}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{hyperref}
+
+\title{$1}
+\date{\today}
+\author{Wolfgang Popp}
+
+\begin{document}
+\maketitle
+$2
+$0
+\end{document}
+endsnippet
