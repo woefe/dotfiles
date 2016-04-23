@@ -47,7 +47,7 @@ end
 -- {{{ Initialization and default applications
 homedir = os.getenv("HOME")
 confdir = homedir .. "/.config/awesome"
-themefile = confdir .. "/themes/arc/theme.lua"
+themefile = confdir .. "/themes/Arc/theme.lua"
 
 terminal = "urxvtc"
 editor = terminal .. " -e nvim"

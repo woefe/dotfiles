@@ -1,12 +1,12 @@
 ---------------------------
--- ARC awesome theme --
+-- Arc awesome theme --
 ---------------------------
 
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
 
-theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/arc/"
+theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/Arc/"
 theme = {}
 theme.font          = "sans 8"
 
