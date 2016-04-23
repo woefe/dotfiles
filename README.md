@@ -16,3 +16,9 @@ sudo pacman -S stow
 ```
 * Uncomment the lines in install.sh of dotfiles you want to install
 * Execute `./install.sh`
+
+# Screenshots
+Notebook
+![notebook setup](https://raw.githubusercontent.com/popeye123/dotfiles/master/screenshots/notebook.png)
+Desktop
+![desktop setup](https://raw.githubusercontent.com/popeye123/dotfiles/master/screenshots/desktop-dual-monitor.png)
