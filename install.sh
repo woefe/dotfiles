@@ -19,6 +19,7 @@ mkdir -p $HOME/.config
 #ln -s ~/.vim ~/.config/nvim; ln -s ~/.vimrc ~/.config/nvim/init.vim #Installs nvim config (important: stow vim first)
 #stow --no-folding vimperator
 #stow xorg
+#stow ytcc
 #stow zathura
 
 
