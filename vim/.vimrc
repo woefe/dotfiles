@@ -261,6 +261,11 @@ nnoremap <F11> :GundoToggle<CR>
 " Don't highlight search matches
 nnoremap <Esc> :nohlsearch<CR>
 
+" Paste from X clipboard
+vmap <Insert> d"*p
+imap <Insert> <Esc>"*pa
+nmap <Insert> "*p
+
 " neovim terminal mappings
 if has('nvim')
     tnoremap <Esc> <C-\><C-n>
