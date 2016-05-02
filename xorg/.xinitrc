@@ -27,7 +27,7 @@ xset s off
 wmname Sawfish
 
 # start the urxvt daemon
-urxvtd -q -f -o
+#urxvtd -q -f -o
 
 # set wallpaper
 feh --bg-fill Pictures/wallpaper/makepkgnotwarpaisley.png &

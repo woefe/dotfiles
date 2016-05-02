@@ -49,19 +49,19 @@ homedir = os.getenv("HOME")
 confdir = homedir .. "/.config/awesome"
 themefile = confdir .. "/themes/Arc/theme.lua"
 
-terminal = "urxvtc"
+terminal = "gnome-terminal"
 editor = terminal .. " -e nvim"
 htop = terminal .. " -e htop"
 browser = "firefox"
 mail = {}
-mail.prog = "evolution"
-mail.class = "Evolution"
+mail.prog = "thunderbird"
+mail.class = "Thunderbird"
 
 filemanager = terminal .. " -e ranger"
-netstat = terminal .. " -e sh -c 'ss -tupr | column -t | less'"
-music = terminal .. " -name Music -e ncmpcpp"
+netstat = terminal .. " -e \"sh -c 'ss -tupr | column -t | less'\""
+music = terminal .. " --name Music -e ncmpcpp"
 --notes = "gvim note:Notes"
-notes = terminal .. " -e nvim note:Notes"
+notes = terminal .. " -e 'nvim note:Notes'"
 
 modkey = "Mod4"
 altkey = "Mod1"
@@ -163,8 +163,8 @@ end
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
-    { "edit config", editor .. " " .. awesome.conffile },
-    { "edit theme", editor .. " " .. themefile },
+    { "edit config", terminal .. " -e 'nvim " .. awesome.conffile .. "'" },
+    { "edit theme", terminal .. " -e 'nvim " .. themefile .. "'" },
     { "restart", awesome.restart },
     { "quit", awesome.quit }
 }
@@ -766,7 +766,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift" }, "x", function() awesome.quit() end ),
     awful.key({ modkey, }, "y", function() mymainmenu:show() end),
     awful.key({ modkey, }, "p", function() menubar.show() end),
-    awful.key({ modkey, altkey }, "Return", function() drop(terminal .. " -e tmux new-session -A -s drop", "top", "center", 1, 1, true, 1) end),
+    awful.key({ modkey, altkey }, "Return", function() drop(terminal .. " -e 'tmux new-session -A -s drop'", "top", "center", 1, 1, true, 1) end),
 
     awful.key({ modkey, "Control" }, "b", function()
         mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
