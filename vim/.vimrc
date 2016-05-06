@@ -33,6 +33,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'tomasr/molokai'
 Plug 'sjl/gundo.vim'
 Plug 'godlygeek/tabular'
+"Plug 'plasticboy/vim-markdown'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -355,12 +356,14 @@ let g:ycm_semantic_triggers.tex = [
 let g:vimtex_latexmk_enabled = 1
 let g:vimtex_latexmk_continuous = 1
 let g:vimtex_latexmk_build_dir = 'build'
-let g:vimtex_latexmk_progname = '/usr/bin/nvr'
 "let g:vimtex_fold_enabled = 1
 let g:vimtex_imaps_leader = ','
 let g:vimtex_complete_close_braces = 1
 let g:vimtex_quickfix_open_on_warning = 0
 let g:vimtex_quickfix_mode = 2
+if has('nvim')
+    let g:vimtex_latexmk_progname = '/usr/bin/nvr'
+endif
 
 let g:tex_fold_enabled=1
 let g:vimsyn_folding='af'
