@@ -131,11 +131,12 @@ end
 
 # prevent man from displaying lines wider than 120 characters
 function man
+    set man_cmd (command -s man)
     set MANWIDTH 120
     if test $MANWIDTH -gt $COLUMNS
         set MANWIDTH $COLUMNS
     end
-    env MANWIDTH=$MANWIDTH /usr/bin/man $argv
+    env MANWIDTH=$MANWIDTH $man_cmd $argv
 end
 
 function random-string
