@@ -91,10 +91,13 @@ theme.menu_border_width = 0 or theme.border_width
 -- Different wallpaper for horizontal and vertical screen orientation
 theme.wallpaper_horizontal = {
     theme_dir .. "wallpaper.png",
+    theme_dir .. "wallpaper.png",
     theme_dir .. "wallpaper.png"
 }
 
 theme.wallpaper_vertical = {
+    theme_dir .. "wallpaper_vertical.png",
+    theme_dir .. "wallpaper_vertical.png",
     theme_dir .. "wallpaper_vertical.png"
 }
 
