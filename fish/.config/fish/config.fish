@@ -21,6 +21,7 @@ eval (thefuck --alias | tr '\n' ';')
 
 set --export --global EDITOR 'nvim'
 set --export --global BROWSER 'firefox'
+set --export --global TERMCMD 'termite'
 set --export --global _JAVA_OPTIONS '-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
 set --export --global QT_STYLE_OVERRIDE 'GTK+'
 
