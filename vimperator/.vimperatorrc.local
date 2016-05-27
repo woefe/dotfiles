@@ -17,3 +17,4 @@ set gui=nonavigation
 
 noremap <A-b> :js statusline.setVisibility(statusline.setVisibility.TOGGLE)<CR>
 
+source ~/.vimperatorrc.private
