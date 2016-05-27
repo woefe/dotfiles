@@ -49,7 +49,7 @@ homedir = os.getenv("HOME")
 confdir = homedir .. "/.config/awesome"
 themefile = confdir .. "/themes/Arc/theme.lua"
 
-terminal = "gnome-terminal"
+terminal = "termite"
 editor = terminal .. " -e nvim"
 htop = terminal .. " -e htop"
 browser = "firefox"
