@@ -1,29 +1,11 @@
-alias ...='cd ../..'
-alias cdt='cd /tmp'
-alias cpstat='rsync -haP'
-alias datea='date +%F'
-alias g='git'
-alias grep='grep --color=auto'
-alias ip='ip -c'
-alias lah='ls -lah'
-alias l='ls'
-alias mkqrcode='qrencode -t ansiutf8 -o -'
-alias pacclean='sudo bash -c "paccache -vr && paccache -vruk0"'
-alias pacu='sudo pacman -Syu'
-alias :q='exit'
-alias rm='trash'
-alias ssh-public-key='cat ~/.ssh/id_rsa.pub'
-alias T='urxvt &'
-alias vim='nvim'
-alias whoneeds='pacman -Qi'
-
+# Enable thefuck
 eval (thefuck --alias | tr '\n' ';')
 
-set --export --global EDITOR 'nvim'
-set --export --global BROWSER 'firefox'
-set --export --global TERMCMD 'termite'
-set --export --global _JAVA_OPTIONS '-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
-set --export --global QT_STYLE_OVERRIDE 'GTK+'
+# Load default environment variables
+source ~/.environment
+
+# Setup default aliases
+source ~/.aliases
 
 # Colorscheme
 set fish_color_autosuggestion white
