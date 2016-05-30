@@ -31,7 +31,9 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'tomasr/molokai'
-Plug 'sjl/gundo.vim'
+"Plug 'sjl/gundo.vim'
+Plug 'mbbill/undotree'
+Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
 "Plug 'plasticboy/vim-markdown'
 
@@ -257,7 +259,7 @@ inoremap <A-left> <ESC>bi
 map <F12> :setlocal spell! spelllang=de_de<CR>
 
 " Toggle Gundo history graph
-nnoremap <F11> :GundoToggle<CR>
+nnoremap <F11> :UndotreeToggle<CR>
 
 " Don't highlight search matches
 nnoremap <Esc> :nohlsearch<CR>
