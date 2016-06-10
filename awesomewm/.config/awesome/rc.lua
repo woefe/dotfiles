@@ -228,7 +228,7 @@ netwidget = {
 netwidget.interfaces = {}
 function netwidget:update_interfaces()
     netwidget.interfaces = {}
-    for interface in string.gmatch(awful.util.pread("ls --ignore={lo,tun0} /sys/class/net/"), "%S+") do
+    for interface in string.gmatch(awful.util.pread("ls --ignore={lo,tun0,virbr*} /sys/class/net/"), "%S+") do
        netwidget.interfaces = awful.util.table.join(netwidget.interfaces, { interface })
     end
 end
