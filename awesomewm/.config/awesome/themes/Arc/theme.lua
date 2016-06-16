@@ -8,38 +8,41 @@
 
 theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/Arc/"
 theme = {}
-theme.font          = "sans 8"
+theme.font = "sans 8"
 
 -- Default colors
 theme.color = {}
-theme.color.blue      = "#5294e2"
-theme.color.black     = "#000000"
-theme.color.white     = "#FFFFFF"
-theme.color.red       = "#f46067"
-theme.color.green     = "#00c43e"
-theme.color.gray      = "#858c98"
+theme.color.blue       = "#5294e2"
+theme.color.black      = "#000000"
+theme.color.white      = "#FFFFFF"
+theme.color.red        = "#f46067"
+theme.color.green      = "#00c43e"
+theme.color.gray       = "#858c98"
+theme.color.arc_darker = "#2f343f"
+theme.color.arc_dark   = "#3e424d"
 
 -- Widget colors
 -- Background colors of widgets
 theme.widget_bg = {
-    "#2f343f",
-    "#3e424d",
-    "#2f343f",
-    "#3e424d",
-    "#2f343f",
-    "#3e424d",
-    "#2f343f"
+    theme.color.arc_darker,
+    theme.color.arc_dark,
+    theme.color.arc_darker,
+    theme.color.arc_dark,
+    theme.color.arc_darker,
+    theme.color.arc_dark,
+    theme.color.arc_darker,
+    theme.color.arc_dark
 }
 
 theme.widget_graph_fg = theme.color.white
 theme.widget_text_fg = theme.color.white
 
 -- Common theme settings
-theme.bg_normal     = "#3e424d"
+theme.bg_normal     = theme.color.arc_dark
 theme.bg_focus      = theme.color.blue
 theme.bg_urgent     = theme.color.red
-theme.bg_minimize   = "#3e424d"
-theme.bg_systray    = theme.widget_bg[1]
+theme.bg_minimize   = theme.color.arc_dark
+theme.bg_systray    = theme.color.arc_darker
 
 theme.fg_normal     = theme.color.white
 theme.fg_focus      = theme.color.white
@@ -131,7 +134,7 @@ theme.screenshot_icon  = theme_dir .. "icons/screenshooter.svg"
 
 -- Define the icon theme for application icons. If not set then the icons
 -- in /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = "Papirus-GTK"
+theme.icon_theme = "Paper"
 
 return theme
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:foldmethod=marker

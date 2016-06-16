@@ -14,6 +14,7 @@ local menubar = require("menubar")
 local vicious = require("vicious")
 local revelation = require("revelation")
 local drop = require("scratchdrop")
+local simpletab = require("simpletab")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -751,13 +752,11 @@ globalkeys = awful.util.table.join(
     end),
 
     awful.key({ modkey, }, "Tab", function()
-        awful.client.focus.byidx(1)
-        if client.focus then client.focus:raise() end
+        simpletab.switch(1, "Super_L", "Tab", "ISO_Left_Tab")
     end),
 
     awful.key({ modkey, "Shift" }, "Tab", function()
-        awful.client.focus.byidx(-1)
-        if client.focus then client.focus:raise() end
+        simpletab.switch(-2, "Super_L", "Tab", "ISO_Left_Tab")
     end),
 
     -- miscellaneous
