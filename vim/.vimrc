@@ -35,7 +35,7 @@ Plug 'tomasr/molokai'
 Plug 'mbbill/undotree'
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
-"Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -167,6 +167,9 @@ set listchars=tab:▸\
 " updatetime (for gitgutter)
 set updatetime=250
 
+" enable undodir
+set undofile
+set undodir=~/.vim/undodir
 
 "------------------------------------------------------------
 " Indentation options
