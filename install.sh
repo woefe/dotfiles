@@ -21,6 +21,7 @@ mkdir -p $HOME/.config
 #stow xorg
 #stow ytcc
 #stow zathura
+#stow zsh
 
 
 cat << EOF
