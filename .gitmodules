@@ -5,3 +5,15 @@
 [submodule "awesomewm/.config/awesome/vicious"]
 	path = awesomewm/.config/awesome/vicious
 	url = http://git.sysphere.org/vicious
+[submodule "zsh/.zsh-plugins/zsh-git-prompt"]
+	path = zsh/.zsh-plugins/zsh-git-prompt
+	url = https://github.com/olivierverdier/zsh-git-prompt.git
+[submodule "zsh/.zsh-plugins/zsh-syntax-highlighting"]
+	path = zsh/.zsh-plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "zsh/.zsh-plugins/zsh-autosuggestions"]
+	path = zsh/.zsh-plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
+[submodule "zsh/.zsh-plugins/zsh-history-substring-search"]
+	path = zsh/.zsh-plugins/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search.git
