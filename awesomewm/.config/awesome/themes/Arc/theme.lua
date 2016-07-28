@@ -129,8 +129,10 @@ theme.shutdown_icon    = theme_dir .. "icons/shutdown.png"
 theme.suspend_icon     = theme_dir .. "icons/suspend.png"
 
 -- Notification icons
-theme.low_battery_icon = theme_dir .. "icons/battery-warning.svg"
-theme.screenshot_icon  = theme_dir .. "icons/screenshooter.svg"
+theme.low_battery_icon     = theme_dir .. "icons/battery-warning.svg"
+theme.screenshot_icon      = theme_dir .. "icons/screenshooter.svg"
+theme.icon_notify_enabled  = theme_dir .. "icons/notification-symbolic.svg"
+theme.icon_notify_disabled = theme_dir .. "icons/notification-disabled-symbolic.svg"
 
 -- Define the icon theme for application icons. If not set then the icons
 -- in /usr/share/icons and /usr/share/icons/hicolor will be used.

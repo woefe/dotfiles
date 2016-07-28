@@ -767,6 +767,26 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, }, "p", function() menubar.show() end),
     awful.key({ modkey, altkey }, "Return", function() drop(terminal .. " -e 'tmux new-session -A -s drop'", "top", "center", 1, 1, true, 1) end),
 
+    awful.key({ modkey }, "XF86AudioMute", function()
+        naughty.notify({
+            title = "Notifications disabled",
+            screen = mouse.screen,
+            timeout = 2,
+            icon = beautiful.icon_notify_disabled
+        })
+        naughty.suspend()
+    end),
+
+    awful.key({ modkey, "Shift" }, "XF86AudioMute", function()
+        naughty.resume()
+        naughty.notify({
+            title = "Notifications enabled",
+            screen = mouse.screen,
+            timeout = 2,
+            icon = beautiful.icon_notify_enabled
+        })
+    end),
+
     awful.key({ modkey, "Control" }, "b", function()
         mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
     end),
