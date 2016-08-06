@@ -48,5 +48,5 @@ unclutter &
 dex -a &
 
 # finally start a window manager
-exec awesome
+exec awesome #-c /etc/xdg/awesome/rc.lua
 #exec i3
