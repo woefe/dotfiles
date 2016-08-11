@@ -74,11 +74,7 @@ packages=(
     iotop
     ipython
     jdk7-openjdk
-    jdk7-openjdk-doc
-    jdk7-openjdk-src
     jdk8-openjdk
-    jdk8-openjdk-doc
-    jdk8-openjdk-src
     keepassx2
     lame
     languagetool
@@ -109,6 +105,10 @@ packages=(
     nfs-utils
     nm-connection-editor
     ntfs-3g
+    openjdk7-doc
+    openjdk7-src
+    openjdk8-doc
+    openjdk8-src
     openssh
     opus
     owncloud-client
