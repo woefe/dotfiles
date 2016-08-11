@@ -30,6 +30,7 @@ packages=(
     dia
     easytag
     eog
+    etckeeper
     evince
     exfat-utils
     feh
@@ -47,6 +48,7 @@ packages=(
     gnome-clocks
     gnome-disk-utility
     gnome-keyring
+    gnome-terminal
     grml-zsh-config
     gsmartcontrol
     gst-libav
@@ -72,9 +74,14 @@ packages=(
     iotop
     ipython
     jdk7-openjdk
+    jdk7-openjdk-doc
+    jdk7-openjdk-src
     jdk8-openjdk
+    jdk8-openjdk-doc
+    jdk8-openjdk-src
     keepassx2
     lame
+    languagetool
     libnotify
     libreoffice-fresh
     linux-headers
@@ -82,6 +89,7 @@ packages=(
     lolcat
     lsof
     lxappearance
+    meld
     moc
     mpc
     mpd
@@ -120,11 +128,15 @@ packages=(
     python2-lockfile
     python2-nautilus
     python2-neovim
+    python2-numpy
     python2-paramiko
+    python2-pylint
     python-chardet
     python-gobject
     python-neovim
+    python-numpy
     python-packaging
+    python-pylint
     python-requests
     python-setuptools
     python-six
@@ -135,9 +147,8 @@ packages=(
     redshift
     rsync
     rtmpdump
-    rxvt-unicode
-    rxvt-unicode-terminfo
     scrot
+    shellcheck
     simple-scan
     slock
     smartmontools
@@ -152,6 +163,8 @@ packages=(
     thunderbird
     thunderbird-i18n-de
     thunderbird-i18n-en-us
+    tidy
+    tig
     tipp10
     tmux
     transmission-gtk
@@ -195,8 +208,6 @@ aur_packages=(
     mpdcron-git
     needrestart
     neovim-remote
-    telegram-desktop-bin
-    urxvt-resize-font-git
     xonsh
 )
 
@@ -208,6 +219,7 @@ optional_packages=(
     tlp
     xf86-video-ati
     xf86-video-intel
+    nvidia
 )
 
 sudo pacman --needed -S ${packages[@]}
