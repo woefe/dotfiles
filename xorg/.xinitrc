@@ -30,10 +30,10 @@ wmname Sawfish
 #urxvtd -q -f -o
 
 # set wallpaper
-feh --bg-fill Pictures/wallpaper/makepkgnotwarpaisley.png &
+#feh --bg-fill Pictures/wallpaper/makepkgnotwarpaisley.png &
 
 # Initialize X's resource database
-[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
 
 # spawn compositing manager
 compton &
