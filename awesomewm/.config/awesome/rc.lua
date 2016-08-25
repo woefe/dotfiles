@@ -815,6 +815,11 @@ globalkeys = awful.util.table.join(
         })
     end),
 
+    -- Start xfce screenshooter
+    awful.key({ }, "Print", function()
+        awful.util.spawn("xfce4-screenshooter", false)
+    end),
+
     -- Touchpad on/off
     awful.key({ modkey, "Control" }, "t",
          function ()
