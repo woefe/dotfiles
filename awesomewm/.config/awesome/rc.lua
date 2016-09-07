@@ -60,7 +60,7 @@ mail.class = "Thunderbird"
 
 filemanager = terminal .. " -e ranger"
 netstat = terminal .. " -e \"sh -c 'ss -tupr | column -t | less'\""
-music = terminal .. " --name Music -e ncmpcpp"
+music = terminal .. " --name Music -e mocp"
 --notes = "gvim note:Notes"
 notes = terminal .. " -e 'nvim note:Notes'"
 
@@ -692,12 +692,12 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86AudioMute", function () alsawidget.toggle_mute() end),
     awful.key({ }, "XF86Display", function () awful.util.spawn("arandr") end),
     awful.key({ }, "XF86WebCam", function () awful.util.spawn("guvcview") end),
-    awful.key({ }, "XF86AudioNext", function () awful.util.spawn("mpc next", false) end),
-    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("mpc prev", false) end),
-    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("mpc toggle", false) end),
-    awful.key({ }, "KP_Right", function() awful.util.spawn("mpc next", false) end),
-    awful.key({ }, "KP_Left", function() awful.util.spawn("mpc prev", false) end),
-    awful.key({ }, "KP_Begin", function() awful.util.spawn("mpc toggle", false) end),
+    awful.key({ }, "XF86AudioNext", function () awful.util.spawn("mocp --next", false) end),
+    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("mocp --previous", false) end),
+    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("mocp --toggle-pause", false) end),
+    awful.key({ }, "KP_Right", function() awful.util.spawn("mocp --next", false) end),
+    awful.key({ }, "KP_Left", function() awful.util.spawn("mocp --previous", false) end),
+    awful.key({ }, "KP_Begin", function() awful.util.spawn("mocp --toggle-pause", false) end),
 
     -- Layout manipulation
     awful.key({ modkey, altkey }, "l", function() awful.tag.incncol(1) end),
