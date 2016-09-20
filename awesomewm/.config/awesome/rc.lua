@@ -976,6 +976,10 @@ awful.rules.rules = {
         except = { instance = "Navigator" },
         properties = { floating = true, size_hints_honor = true }
     },
+    { rule = { class = "Steam" },
+        except = { name = "Steam" },
+        properties = { floating = true, size_hints_honor = true }
+    },
     { rule_any = {
             class = {
                 "mpv",
