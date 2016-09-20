@@ -1049,8 +1049,4 @@ client.connect_signal("property::sticky", function(c)
 end)
 -- }}}
 
--- {{{ Autostart
-awful.util.spawn("dex -a")
--- }}}
-
 -- vim: set foldmethod=marker tabstop=4 shiftwidth=4 expandtab:

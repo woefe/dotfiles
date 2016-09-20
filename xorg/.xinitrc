@@ -44,6 +44,9 @@ unclutter &
 # Start the rofi launcher
 #rofi -key-run SuperL+p -key-ssh SuperL+i -key-window SuperL+o &
 
+# Autostart
+dex -a &
+
 # finally start a window manager
 exec awesome #-c /etc/xdg/awesome/rc.lua
 #exec i3
