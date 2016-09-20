@@ -45,7 +45,7 @@ unclutter &
 #rofi -key-run SuperL+p -key-ssh SuperL+i -key-window SuperL+o &
 
 # Autostart
-dex -a &
+(sleep 2 && dex -a)&
 
 # finally start a window manager
 exec awesome #-c /etc/xdg/awesome/rc.lua
