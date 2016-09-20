@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if ! mocp_state=$(mocp -Q "%state"); then
+    mocp --server
+    mocp_state=$(mocp -Q "%state")
+fi
+
+if [ "x$mocp_state" = "xSTOP" ] ; then
+    mocp --play
+else
+    mocp --toggle-pause
+fi
+

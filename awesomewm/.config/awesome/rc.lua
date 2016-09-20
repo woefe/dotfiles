@@ -694,10 +694,10 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86WebCam", function () awful.util.spawn("guvcview") end),
     awful.key({ }, "XF86AudioNext", function () awful.util.spawn("mocp --next", false) end),
     awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("mocp --previous", false) end),
-    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("mocp --toggle-pause", false) end),
+    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(homedir .. "/.moc/mocp_toggle", false) end),
     awful.key({ }, "KP_Right", function() awful.util.spawn("mocp --next", false) end),
     awful.key({ }, "KP_Left", function() awful.util.spawn("mocp --previous", false) end),
-    awful.key({ }, "KP_Begin", function() awful.util.spawn("mocp --toggle-pause", false) end),
+    awful.key({ }, "KP_Begin", function() awful.util.spawn(homedir .. "/.moc/mocp_toggle", false) end),
 
     -- Layout manipulation
     awful.key({ modkey, altkey }, "l", function() awful.tag.incncol(1) end),
