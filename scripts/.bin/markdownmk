@@ -1,0 +1,27 @@
+#!/bin/bash
+
+watch_file="$1"
+pid_file="/tmp/mdmk_pdf_viewer.pid"
+parent_dir=$(dirname "$1")
+build_dir=$parent_dir/build/
+build_file=$build_dir/$(basename "$1").pdf
+pdf_viewer_pid=-1
+
+maybe_start_pdf_viewer(){
+    if [ $pdf_viewer_pid -lt 1 ] || ! ps -p "$pdf_viewer_pid" > /dev/null; then
+        zathura "$build_file" &
+        echo $! > $pid_file
+    fi
+}
+
+mkdir -p "$build_dir"
+if [ -w $pid_file ]; then
+    pdf_viewer_pid=$(<$pid_file)
+fi
+
+maybe_start_pdf_viewer
+
+while inotifywait -e modify "$watch_file"; do
+    pandoc -f markdown_github -o "$build_file" "$watch_file"
+    maybe_start_pdf_viewer
+done

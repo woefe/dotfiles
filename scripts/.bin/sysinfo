@@ -1,0 +1,52 @@
+#!/bin/bash
+
+host_name=$(hostname -f)
+ip_adress=$(hostname -i)
+cpu=$(grep "model name" /proc/cpuinfo | head -1 | cut -d: -f2)
+load=$(cat /proc/loadavg | cut -d' ' -f1-3)
+ram=$(free -h | grep -i mem | sed --regexp-extended "s/\s+/:/g")
+ram_used=$(echo $ram | cut -d: -f4)
+ram_total=$(echo $ram | cut -d: -f3)
+ram_free=$(echo $ram | cut -d: -f5)
+kernelversion=$(uname -r)
+kernel_arch=$(uname -m)
+active_users=$(users | tr ' ' '\n' | sort -u | tr '\n' ':' | sed 's/:/,\ /g' | sed 's/..$//')
+uptime=$(cat /proc/uptime | sed 's/\..*//g')
+secs=$(($uptime%60))
+mins=$(($uptime/60%60))
+hours=$(($uptime/3600%24))
+days=$(($uptime/86400))
+uptime="${mins}m ${secs}s"
+
+blue='\e[1;34m'
+default='\e[0m'
+
+if [ $hours -ne 0 ]; then
+    uptime="${hours}h ${uptime}"
+fi
+if [ $days -ne 0 ]; then
+    uptime="${days}d ${uptime}"
+fi
+
+if [ "$1" = "--long" ]; then
+    echo -e ""
+    echo -e "\e[1;34m               ."
+    echo -e "\e[1;34m              /A\\"
+    echo -e "\e[1;34m             /AAA\\                HOSTNAME: \e[0m$host_name"
+    echo -e "\e[1;34m            /AAAAA\\               KERNEL: \e[0m$kernelversion $kernel_arch"
+    echo -e "\e[1;34m           /AAAAAAA\\              CPU:\e[0m$cpu"
+    echo -e "\e[1;34m          /AAAAAAAAA\\             LOAD: \e[0m$load"
+    echo -e "\e[1;34m         /AAAAAAAAAAA\\            RAM: \e[0m$ram_total \e[1;34mtotal, \e[0m$ram_used \e[1;34mused, \e[0m$ram_free \e[1;34mfree"
+    echo -e "\e[1;34m        /AAAA/´ \`\\AAAA\\           UPTIME: \e[0m$uptime"
+    echo -e "\e[1;34m       /AAAA(     )AAAA\\          USER(S): \e[0m$active_users"
+    echo -e "\e[1;34m      /AAAAA|     |AAAAA\\         IP: \e[0m$ip_adress"
+    echo -e "\e[1;34m     /AA|+'^´     \`^'+|AA\\"
+    echo -e "\e[1;34m    /-^´               \`^-\\"
+    echo -e "\e[1;34m   ´                       \`"
+    echo -e "\e[0m"
+else
+    echo -e "
+HOSTNAME: $host_name    # UPTIME: $uptime
+IPADDR:   $ip_adress    # LOAD:   $load
+USER(S):  $active_users # RAM:    $ram_used used, $ram_free free#" | column -t -s '#' -o ' '
+fi
