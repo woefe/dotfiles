@@ -186,8 +186,8 @@ set smarttab
 "------------------------------------------------------------
 " Mappings
 "------------------------------------------------------------
-let mapleader=','
-let maplocalleader=','
+let mapleader='ö'
+let maplocalleader='ö'
 
 " Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
 " which is the default
@@ -362,7 +362,7 @@ let g:vimtex_latexmk_enabled = 1
 let g:vimtex_latexmk_continuous = 1
 let g:vimtex_latexmk_build_dir = 'build'
 "let g:vimtex_fold_enabled = 1
-let g:vimtex_imaps_leader = ','
+let g:vimtex_imaps_leader = 'ö'
 let g:vimtex_complete_close_braces = 1
 let g:vimtex_quickfix_open_on_warning = 0
 let g:vimtex_quickfix_mode = 2
