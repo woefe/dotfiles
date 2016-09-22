@@ -1,27 +1,48 @@
 #!/bin/bash
 
-watch_file="$1"
-pid_file="/tmp/mdmk_pdf_viewer.pid"
-parent_dir=$(dirname "$1")
-build_dir=$parent_dir/build/
-build_file=$build_dir/$(basename "$1").pdf
-pdf_viewer_pid=-1
+###
+# A small tool to watch a markdown file and convert it to pdf as soon as it changes.
+#
+# Usage:
+#   markdownmk file.md
+#
+# Dependencies: inotify-tools, zathura, pandoc
+###
+
 
 maybe_start_pdf_viewer(){
-    if [ $pdf_viewer_pid -lt 1 ] || ! ps -p "$pdf_viewer_pid" > /dev/null; then
-        zathura "$build_file" &
-        echo $! > $pid_file
+    if [ "$pdf_viewer_pid" -lt 1 ] || ! ps -p "$pdf_viewer_pid" > /dev/null; then
+        $pdf_viewer "$build_file" &
+        pdf_viewer_pid=$!
+        echo "$pdf_viewer_pid" > "$pid_file"
     fi
 }
 
-mkdir -p "$build_dir"
-if [ -w $pid_file ]; then
-    pdf_viewer_pid=$(<$pid_file)
+compile_and_view(){
+    pandoc -o "$build_file" "$watch_file"
+    maybe_start_pdf_viewer
+}
+
+
+if [ ! -r "$1" ];then
+    echo "Cannot read file '$1'"
+    exit 1
 fi
 
-maybe_start_pdf_viewer
+pdf_viewer="zathura"
+watch_file=$(realpath "$1")
+tmp_dir="/tmp/markdownmk"
+pid_file="$tmp_dir/${watch_file//\//%}.pid"
+build_file="$tmp_dir/${watch_file//\//%}.pdf"
+pdf_viewer_pid=-1
+
+mkdir -p "$tmp_dir"
+if [ -w "$pid_file" ]; then
+    pdf_viewer_pid=$(<"$pid_file")
+fi
+
+compile_and_view
 
 while inotifywait -e modify "$watch_file"; do
-    pandoc -f markdown_github -o "$build_file" "$watch_file"
-    maybe_start_pdf_viewer
+    compile_and_view
 done
