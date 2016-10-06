@@ -44,8 +44,12 @@ snippet cases "cases environment" b
 $0
 endsnippet
 
-snippet ref "reference" w
-~\ref{$1
+snippet ref "reference" i
+~\ref{$0
+endsnippet
+
+snippet cite "cite" i
+~\cite{$0
 endsnippet
 
 snippet vltemplate "Insert lecture template" b
@@ -78,4 +82,20 @@ endsnippet
 
 snippet it "item" b
 \item $0
+endsnippet
+
+snippet <- "\leftarrow" w
+\leftarrow $0
+endsnippet
+
+snippet <= "\Leftarrow" w
+\Leftarrow $0
+endsnippet
+
+snippet -> "\rightarrow" w
+\rightarrow $0
+endsnippet
+
+snippet => "\Rightarrow" w
+\Rightarrow $0
 endsnippet
