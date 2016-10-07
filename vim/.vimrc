@@ -36,6 +36,7 @@ Plug 'mbbill/undotree'
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug 'junegunn/rainbow_parentheses.vim'
 
 " All of your Plugins must be added before the following line
 call plug#end()
