@@ -114,7 +114,8 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
         c = dropdown[prog][screen]
 
         -- Switch the client to the current workspace
-        if c:isvisible() == false then c.hidden = true
+        if c:isvisible() == false then
+            c.hidden = true
             awful.client.movetotag(awful.tag.selected(screen), c)
         end
 

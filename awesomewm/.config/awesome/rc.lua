@@ -111,14 +111,15 @@ for s = 1, screen.count() do
     end
 end
 
+function get_wallpaper(s)
+    return beautiful.wallpaper[screen_orientation[s]][s]
+end
+
 -- Set different wallpapers depending on the screen orientation
-if beautiful.wallpaper_horizontal and beautiful.wallpaper_vertical then
-    for s = 1, screen.count() do
-        if screen_orientation[s] == "landscape" then
-            gears.wallpaper.maximized(beautiful.wallpaper_horizontal[s], s, false)
-        else
-            gears.wallpaper.maximized(beautiful.wallpaper_vertical[s], s, false)
-        end
+for s = 1, screen.count() do
+    wallpaper = get_wallpaper(s)
+    if wallpaper then
+        gears.wallpaper.maximized(wallpaper, s, false)
     end
 end
 -- }}}
@@ -799,7 +800,8 @@ globalkeys = awful.util.table.join(
     end),
 
     awful.key({ modkey, "Control" }, "s", function()
-        awful.util.spawn_with_shell( "sh -c 'slock && xset -dpms' & ; xset dpms 0 0 2; xset dpms force off" )
+        --awful.util.spawn_with_shell( "sh -c 'slock && xset -dpms' & ; xset dpms -1 0 2; xset dpms force off" )
+        awful.util.spawn("i3lock -f -i " .. get_wallpaper(1) .. " -c '" .. beautiful.bg_normal .. "'")
     end),
 
     -- Take a screenshot
