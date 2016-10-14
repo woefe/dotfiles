@@ -1,6 +1,6 @@
 export EDITOR='nvim'
 export BROWSER='firefox'
-export TERMCMD='gnome-terminal'
+export TERMCMD='termite'
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
 export QT_QPA_PLATFORMTHEME='gtk2'
 #export QT_STYLE_OVERRIDE='GTK+'
