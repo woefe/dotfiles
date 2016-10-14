@@ -800,8 +800,19 @@ globalkeys = awful.util.table.join(
     end),
 
     awful.key({ modkey, "Control" }, "s", function()
-        --awful.util.spawn_with_shell( "sh -c 'slock && xset -dpms' & ; xset dpms -1 0 2; xset dpms force off" )
-        awful.util.spawn("i3lock -f -i " .. get_wallpaper(1) .. " -c '" .. beautiful.bg_normal .. "'")
+        lockcmd = "i3lock -S 0 -f -c '" .. beautiful.bg_normal .. "'"
+            .. " --insidevercolor=00000000"
+            .. " --insidewrongcolor=00000000"
+            .. " --insidecolor=00000000"
+            .. " --ringvercolor='" .. beautiful.color.blue .. "ff'"
+            .. " --ringwrongcolor='" .. beautiful.color.red  .. "ff'"
+            .. " --ringcolor='" .. beautiful.color.arc_darker .. "ff'"
+            .. " --linecolor=00000000"
+            .. " --separatorcolor=00000000"
+            .. " --textcolor='" .. beautiful.color.white .. "ff'"
+            .. " --keyhlcolor='" .. beautiful.color.blue .. "ff'"
+            .. " --bshlcolor='" .. beautiful.color.blue .. "ff'"
+        awful.util.spawn(lockcmd, false)
     end),
 
     -- Take a screenshot
