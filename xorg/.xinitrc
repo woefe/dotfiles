@@ -44,8 +44,13 @@ unclutter &
 # Start the rofi launcher
 #rofi -key-run SuperL+p -key-ssh SuperL+i -key-window SuperL+o &
 
+# Workaround: First execution of amixer might take a few second.
+# Execute it here so that awesome, which also executes amixer, doesn't
+# hang on startup.
+amixer -M sget Master > /dev/null
+
 # Autostart
-(sleep 2 && dex -a)&
+dex -a &
 
 # finally start a window manager
 exec awesome #-c /etc/xdg/awesome/rc.lua
