@@ -35,7 +35,7 @@ Plug 'tomasr/molokai'
 Plug 'mbbill/undotree'
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+"Plug 'plasticboy/vim-markdown'
 Plug 'junegunn/rainbow_parentheses.vim'
 
 " All of your Plugins must be added before the following line
@@ -347,6 +347,8 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsEditSplit = "vertical"
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/ycm_extra_conf.py"
+let g:ycm_filetype_blacklist={'notes': 1, 'unite': 1, 'tagbar': 1, 'pandoc': 1, 'qf': 1, 'vimwiki': 1, 'text': 1, 'infolog': 1, 'mail': 1}
+
 
 if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
