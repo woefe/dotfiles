@@ -43,6 +43,7 @@ fi
 
 compile_and_view
 
-while inotifywait -e modify "$watch_file"; do
+while true; do
+    inotifywait -e modify "$watch_file"
     compile_and_view
 done
