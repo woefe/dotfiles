@@ -23,26 +23,25 @@ xset b off
 xset -dpms
 xset s off
 
-# fix Java GUI rendering bugs
-wmname Sawfish
+# fix Java GUI rendering bugs (qtile sets the wmname itself)
+#wmname Sawfish
 
 # start the urxvt daemon
 #urxvtd -q -f -o
 
 # set wallpaper
-#feh --bg-fill Pictures/wallpaper/makepkgnotwarpaisley.png &
+if [ -f ~/.wallpaper ]; then
+    feh --bg-fill ~/.wallpaper &
+fi
 
 # Initialize X's resource database
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
 
 # spawn compositing manager
-compton &
+#compton &
 
 # Removes mouse cursor if it did not move for 5 seconds
-unclutter &
-
-# Start the rofi launcher
-#rofi -key-run SuperL+p -key-ssh SuperL+i -key-window SuperL+o &
+#unclutter &
 
 # Workaround: First execution of amixer might take a few second.
 # Execute it here so that awesome, which also executes amixer, doesn't
@@ -53,5 +52,6 @@ amixer -M sget Master > /dev/null
 dex -a &
 
 # finally start a window manager
-exec awesome #-c /etc/xdg/awesome/rc.lua
+exec qtile
+#exec awesome #-c /etc/xdg/awesome/rc.lua
 #exec i3
