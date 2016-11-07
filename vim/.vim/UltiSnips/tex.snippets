@@ -2,7 +2,7 @@ snippet binom "binom"
 \binom{${1:n}}{${2:k}} $0
 endsnippet
 
-snippet int "integral"
+snippet int "integral" i
 \int_{${1:0}}^{${2:\infty}} $0
 endsnippet
 
@@ -17,7 +17,7 @@ snippet $$ "$$ math mode"
 $$1$$0
 endsnippet
 
-snippet prod "big product"
+snippet prod "big product" i
 \prod_{${1:i=1}}^{${2:n}} $0
 endsnippet
 
@@ -29,11 +29,15 @@ snippet (( "left and right braces" i
 \left( $1 \right)$0
 endsnippet
 
-snippet bigcap "Big intersection"
+snippet [[ "left and right braces" i
+\left[ $1 \right]$0
+endsnippet
+
+snippet bigcap "Big intersection" i
 \bigcap_{${1:i=1}}^{${2:\infty}}$0
 endsnippet
 
-snippet bigcup "Big union"
+snippet bigcup "Big union" i
 \bigcup_{${1:i=1}}^{${2:\infty}}$0
 endsnippet
 
@@ -120,3 +124,10 @@ snippet frakp "\mathfrak{P}" i
 \mathfrak{P}$0
 endsnippet
 
+snippet cala "\mathcal{A}" i
+\mathcal{A}$0
+endsnippet
+
+snippet ... "\ldots" i
+\ldots $0
+endsnippet
