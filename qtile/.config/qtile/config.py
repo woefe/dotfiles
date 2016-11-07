@@ -41,7 +41,7 @@ def get_interface():
 
     return next(filter(filter_up,
                        filter(filter_ethernet,
-                              os.listdir("/sys/class/net"))))
+                              os.listdir("/sys/class/net"))), "wlp2s0")
 
 
 mod = "mod4"
@@ -133,6 +133,7 @@ keys = [
     Key([mod, alt], "f", lazy.spawn("nautilus --no-desktop")),
     Key([mod, alt], "r", lazy.spawn([terminal, "-e", "ranger"])),
     Key([mod, alt], "m", lazy.spawn([terminal, "-e", "mocp"])),
+    Key([mod, alt], "n", lazy.spawn('gvim note:Notes')),
     Key([mod, alt], "b", lazy.spawn("firefox")),
     Key([mod, alt], "c", lazy.spawn("chromium --incognito")),
     Key([mod, alt], "p", lazy.spawn(["keepassx2", homedir + "/sync/passwords.kdbx"])),
@@ -311,7 +312,7 @@ wmname = "LG3D"
 
 @hook.subscribe.client_new
 def floating_windows(window):
-    floaters = ["mpv", "quake", "gcr_prompter", "Keepassx"]
+    floaters = ["mpv", "quake", "Gcr-prompter", "Keepassx"]
     if window.window.get_wm_class()[1] in floaters:
         window.floating = True
 
