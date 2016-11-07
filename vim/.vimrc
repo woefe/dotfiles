@@ -7,7 +7,7 @@ if &shell =~# 'fish$'
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'benekastah/neomake'
+Plug 'neomake/neomake'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
