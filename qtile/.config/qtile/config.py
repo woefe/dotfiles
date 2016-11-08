@@ -30,6 +30,15 @@ from libqtile import layout, bar, widget, hook
 import os
 
 
+def to_urgent(qtile):
+    cg = qtile.currentGroup
+    for group in qtile.groupMap.values():
+        if group == cg:
+            continue
+        if len([w for w in group.windows if w.urgent]) > 0:
+            qtile.currentScreen.setGroup(group)
+            return
+
 def get_interface():
     def filter_ethernet(iface):
         with open("/sys/class/net/" + iface + "/type") as f:
@@ -48,6 +57,15 @@ mod = "mod4"
 alt = "mod1"
 homedir = os.getenv("HOME")
 terminal = os.getenv("TERMCMD")
+dgroups_key_binder = None
+dgroups_app_rules = []
+main = None
+follow_mouse_focus = True
+bring_front_click = True
+cursor_warp = False
+auto_fullscreen = True
+focus_on_window_activation = "smart"
+wmname = "LG3D"
 
 colorscheme = {
     "blue": "#5294E2",
@@ -108,7 +126,8 @@ keys = [
     Key([mod], "c", lazy.window.kill()),
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod, "control"], "q", lazy.shutdown()),
-    Key([mod, "shift"], "x", lazy.spawncmd()),
+    Key([mod, "shift"], "period", lazy.spawncmd()),
+    Key([mod], "udiaeresis", lazy.function(to_urgent)),
 
     # Multimedia/Function keys
     Key([], "XF86MonBrightnessDown", lazy.spawn("xbacklight -dec 1 -steps 1")),
@@ -170,6 +189,8 @@ layouts = [
     layout.VerticalTile(name="vert", **border),
     layout.Max(),
 ]
+
+floating_layout = layout.Floating(**border)
 
 widget_defaults = dict(
     font='Arial',
@@ -290,26 +311,6 @@ mouse = [
     Click([mod], "Button2", lazy.window.bring_to_front())
 ]
 
-dgroups_key_binder = None
-dgroups_app_rules = []
-main = None
-follow_mouse_focus = True
-bring_front_click = True
-cursor_warp = False
-floating_layout = layout.Floating(**border)
-auto_fullscreen = True
-focus_on_window_activation = "smart"
-
-# XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
-# string besides java UI toolkits; you can see several discussions on the
-# mailing lists, github issues, and other WM documentation that suggest setting
-# this string if your java app doesn't work correctly. We may as well just lie
-# and say that we're a working one by default.
-#
-# We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
-# java that happens to be on java's whitelist.
-wmname = "LG3D"
-
 @hook.subscribe.client_new
 def floating_windows(window):
     floaters = ["mpv", "quake", "Gcr-prompter", "Keepassx"]
@@ -321,3 +322,8 @@ def drop(window):
     if window.window.get_wm_class()[1] == "drop":
         window.fullscreen = True
         #window.place(100, 200, 400, 200, 3, None, above=True, force=True, margin=None)
+
+@hook.subscribe.screen_change
+def restart_on_randr(qtile_manager, ev):
+    qtile_manager.cmd_spawn("feh --bg-fill " + homedir + "/.wallpaper")
+    qtile_manager.cmd_restart()
