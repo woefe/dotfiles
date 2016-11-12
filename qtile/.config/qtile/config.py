@@ -39,6 +39,7 @@ def to_urgent(qtile):
             qtile.currentScreen.setGroup(group)
             return
 
+
 def get_interface():
     def filter_ethernet(iface):
         with open("/sys/class/net/" + iface + "/type") as f:
@@ -311,11 +312,13 @@ mouse = [
     Click([mod], "Button2", lazy.window.bring_to_front())
 ]
 
+
 @hook.subscribe.client_new
 def floating_windows(window):
     floaters = ["mpv", "quake", "Gcr-prompter", "Keepassx"]
     if window.window.get_wm_class()[1] in floaters:
         window.floating = True
+
 
 @hook.subscribe.client_managed
 def drop(window):
@@ -323,7 +326,9 @@ def drop(window):
         window.fullscreen = True
         #window.place(100, 200, 400, 200, 3, None, above=True, force=True, margin=None)
 
-@hook.subscribe.screen_change
-def restart_on_randr(qtile_manager, ev):
-    qtile_manager.cmd_spawn("feh --bg-fill " + homedir + "/.wallpaper")
-    qtile_manager.cmd_restart()
+
+@hook.subscribe.startup
+def set_wallpaper():
+    import subprocess
+    subprocess.run(["feh", "--bg-fill",  homedir + "/.wallpaper"])
+
