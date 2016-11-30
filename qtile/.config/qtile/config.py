@@ -161,6 +161,7 @@ keys = [
 
     # rofi launcher
     Key([mod], "x", lazy.spawn(rofi % "run")),
+    Key([mod], "d", lazy.spawn(rofi % "drun")),
     Key([mod], "a", lazy.spawn(rofi % "window")),
     Key([mod], "y", lazy.spawn(rofi % "ssh")),
 ]
