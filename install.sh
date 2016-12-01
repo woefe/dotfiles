@@ -12,12 +12,14 @@ mkdir -p $HOME/.config
 #stow i3
 #stow --no-folding moc
 #stow --no-folding mpd; mkdir ~/.config/mpd/playlists
+#stow --no-folding qtile
 #stow --no-folding ranger
 #stow redshift
 #stow tmux
 #stow --no-folding vim; mkdir -p $HOME/.vim/{swapfiles,undodir}; curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 #ln -s ~/.vim ~/.config/nvim; ln -s ~/.vimrc ~/.config/nvim/init.vim #Installs nvim config (important: stow vim first)
 #stow --no-folding vimperator
+#stow wallpaper
 #stow xorg
 #stow ytcc
 #stow zathura
