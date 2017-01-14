@@ -155,7 +155,7 @@ keys = [
     Key([mod, alt], "m", lazy.spawn([terminal, "-e", "mocp"])),
     Key([mod, alt], "n", lazy.spawn('gvim note:Notes')),
     Key([mod, alt], "b", lazy.spawn("firefox")),
-    Key([mod, alt], "c", lazy.spawn("chromium --incognito")),
+    Key([mod, alt], "c", lazy.spawn("firefox -P private")),
     Key([mod, alt], "p", lazy.spawn(["keepassx2", homedir + "/sync/passwords.kdbx"])),
     Key([mod, "control"], "s", lazy.spawn(screenlock)),
 
