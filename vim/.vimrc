@@ -311,6 +311,7 @@ highlight ExtraWhitespace guibg=#f4acbb ctermbg=210
 
 " Run Neomake when saving the buffer (like syntastic does)
 autocmd! BufWritePost * Neomake
+let g:neomake_cpp_enabled_makers = ['gcc']
 
 " Airline settings
 let g:airline_theme='tomorrow'
