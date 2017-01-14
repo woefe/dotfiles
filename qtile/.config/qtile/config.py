@@ -46,8 +46,8 @@ def get_interface():
             return f.readline() == "1\n"
 
     def filter_up(iface):
-        with open("/sys/class/net/" + iface + "/carrier") as f:
-            return f.readline() == "1\n"
+        with open("/sys/class/net/" + iface + "/operstate") as f:
+            return f.readline() == "up\n"
 
     return next(filter(filter_up,
                        filter(filter_ethernet,
