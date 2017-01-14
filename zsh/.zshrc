@@ -56,7 +56,10 @@ bindkey -s '\e3' "!:2-2 \t"
 bindkey -s '\e4' "!:3-3 \t"
 bindkey -s '\e5' "!:4-4 \t"
 
-o(){ fasd -f -e xdg-open $* & }
+o(){
+    fasd -f -e xdg-open $* &
+    disown
+}
 
 # prevent man from displaying lines wider than 120 characters
 man(){
