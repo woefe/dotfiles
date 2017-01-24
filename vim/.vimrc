@@ -172,6 +172,9 @@ set updatetime=250
 set undofile
 set undodir=~/.vim/undodir
 
+" Enable increasing of alphabetical characters with <C-A>
+set nrformats+=alpha
+
 "------------------------------------------------------------
 " Indentation options
 "------------------------------------------------------------
