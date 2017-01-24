@@ -130,6 +130,9 @@ keys = [
     Key([mod, "shift"], "period", lazy.spawncmd()),
     Key([mod], "udiaeresis", lazy.function(to_urgent)),
 
+    # Toggle touchpad enabled
+    Key([mod, "control"], "t", lazy.spawn("bash -c \"synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')\"")),
+
     # Multimedia/Function keys
     Key([], "XF86MonBrightnessDown", lazy.spawn("xbacklight -dec 1 -steps 1")),
     Key([], "XF86MonBrightnessUp", lazy.spawn("xbacklight -inc 1 -steps 1")),
