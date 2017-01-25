@@ -37,6 +37,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
 "Plug 'plasticboy/vim-markdown'
 Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'editorconfig/editorconfig-vim'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -388,3 +389,6 @@ let g:Tex_ViewRule_pdf = 'zathura'
 
 "set filetype=tex on empty tex files.
 let g:tex_flavor='latex'
+
+" EditorConfig settings
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
