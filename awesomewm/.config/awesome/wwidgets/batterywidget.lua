@@ -5,6 +5,7 @@ local vicious = require("vicious")
 local wibox = require("wibox")
 local awful = require("awful")
 local beautiful = require("beautiful")
+local naughty = require("naughty")
 local helpers = require("wwidgets.helpers")
 local batterywidget = {}
 
@@ -41,8 +42,9 @@ function batterywidget.setup(settings)
     --     end
     -- end
 
-    txt = wibox.widget.textbox()
-    tooltip = awful.tooltip({ objects = { txt }})
+    local txt = wibox.widget.textbox()
+    txt:set_text("test")
+    local tooltip = awful.tooltip({ objects = { txt }})
 
     txt:buttons(awful.util.table.join(
         awful.button({}, 1, function()
@@ -83,7 +85,7 @@ function batterywidget.setup(settings)
         end
     end, 61, "BAT0")
 
-    batterywidget.widget = add_background(txt, color_bg)
+    batterywidget.widget = helpers.add_background(txt, color_fg, color_bg)
 
     return batterywidget
 end

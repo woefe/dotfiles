@@ -24,7 +24,7 @@ xset -dpms
 xset s off
 
 # fix Java GUI rendering bugs (qtile sets the wmname itself)
-mname Sawfish
+wmname Sawfish
 
 # start the urxvt daemon
 #urxvtd -q -f -o

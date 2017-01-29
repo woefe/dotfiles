@@ -45,6 +45,7 @@ end
 homedir = os.getenv("HOME")
 confdir = homedir .. "/.config/awesome"
 themefile = confdir .. "/themes/Arc/theme.lua"
+hostname = io.popen("hostname"):read()
 
 terminal = os.getenv("TERMCMD") or "xterm"
 editor = terminal .. " -e nvim"
@@ -166,9 +167,15 @@ function widget_background()
     return beautiful.widget_bg[widget_bg_toggle]
 end
 
+interfaces = {"eth0"}
+if hostname == "glados" then
+    interfaces = {"enp2s0"}
+elseif hostname == "wheatley" then
+    interfaces = {"enp8s0", "wlp2s0"}
+end
 
 netwidget = wwidgets.netwidget({
-    interfaces = {"enp2s0"},
+    interfaces = interfaces,
     color_bg = widget_background()
 })
 
@@ -181,6 +188,7 @@ alsawidget = wwidgets.alsawidget({
 })
 
 -- No battery widget for desktop computers
+batterywidget = nil
 if awful.util.file_readable("/sys/class/power_supply/BAT0/present") then
     batterywidget = wwidgets.batterywidget({
         color_bg = widget_background()
@@ -300,6 +308,7 @@ awful.screen.connect_for_each_screen(function(s)
             netwidget.widget,
             cpuwidget.widget,
             alsawidget.widget,
+            batterywidget.widget,
             clock.widget,
             s.mylayoutbox,
         },
@@ -402,11 +411,18 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey }, "Return", function() drop(terminal .. " -e 'tmux new-session -A -s drop'", "top", "center", 1, 1, true, 1) end),
 
     awful.key({ modkey }, "XF86AudioMute", function()
+        text = "Notifications disabled"
+        icon = beautiful.icon_notify_disabled
+        if naughty.is_suspended() then
+            text = "Notifications enabled"
+        icon = beautiful.icon_notify_enabled
+        end
+
         naughty.notify({
-            title = "Notifications disabled",
+            title = text,
             screen = mouse.screen,
             timeout = 2,
-            icon = beautiful.icon_notify_disabled
+            icon = icon
         })
         naughty.toggle()
     end),
