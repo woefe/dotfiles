@@ -68,7 +68,7 @@ beautiful.init(themefile)
 
 -- {{{ Override naughty defaults
 naughty.config.defaults = {
-    timeout = 5,
+    timeout = 10,
     text = "",
     screen = 1,
     ontop = true,
@@ -83,7 +83,7 @@ naughty.config.defaults = {
 naughty.config.presets = {
     normal = {},
     low = {
-        timeout = 5
+        timeout = 10
     },
     critical = {
         bg = beautiful.color.red,
@@ -160,20 +160,39 @@ menubar.utils.terminal = terminal
 -- }}}
 
 -- {{{ Widgets
+widget_bg_toggle = 1
+function widget_background()
+    widget_bg_toggle = (widget_bg_toggle + 1) % 2
+    return beautiful.widget_bg[widget_bg_toggle]
+end
 
-netwidget = wwidgets.netwidget({interfaces = {"enp2s0"}})
 
-cpuwidget = wwidgets.cpuwidget()
+netwidget = wwidgets.netwidget({
+    interfaces = {"enp2s0"},
+    color_bg = widget_background()
+})
 
-alsawidget = wwidgets.alsawidget()
+cpuwidget = wwidgets.cpuwidget({
+    color_bg = widget_background()
+})
+
+alsawidget = wwidgets.alsawidget({
+    color_bg = widget_background()
+})
 
 -- No battery widget for desktop computers
 if awful.util.file_readable("/sys/class/power_supply/BAT0/present") then
-    batterywidget = wwidgets.batterywidget()
-    add_widget(batterywidget.widget)
+    batterywidget = wwidgets.batterywidget({
+        color_bg = widget_background()
+    })
 end
 
-clock = wwidgets.clock({mail = mail})
+clock = wwidgets.clock({
+    mail = mail,
+    color_bg = widget_background()
+})
+
+layout_box_color = widget_background()
 -- }}}
 
 -- Create a wibox for each screen and add it
@@ -251,7 +270,7 @@ awful.screen.connect_for_each_screen(function(s)
         awful.button({ }, 4, function() awful.layout.inc(layouts, 1) end),
         awful.button({ }, 5, function() awful.layout.inc(layouts, -1) end)
     ))
-    s.mylayoutbox = wwidgets.helpers.add_background(s.mylayoutbox, beautiful.widget_bg[widget_pos])
+    s.mylayoutbox = wwidgets.helpers.add_background(s.mylayoutbox, beautiful.fg_normal, layout_box_color)
 
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
@@ -261,6 +280,11 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
+
+    systray = nil
+    if s.index == 1 then
+        systray = wwidgets.helpers.add_background(wibox.widget.systray(), beautiful.fg_normal, beautiful.bg_systray)
+    end
 
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal(),
@@ -272,8 +296,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            -- mykeyboardlayout,
-            wwidgets.helpers.add_background(wibox.widget.systray(), beautiful.widget_bg[1]),
+            systray,
             netwidget.widget,
             cpuwidget.widget,
             alsawidget.widget,
@@ -385,17 +408,7 @@ globalkeys = awful.util.table.join(
             timeout = 2,
             icon = beautiful.icon_notify_disabled
         })
-        naughty.suspend()
-    end),
-
-    awful.key({ modkey, "Shift" }, "XF86AudioMute", function()
-        naughty.resume()
-        naughty.notify({
-            title = "Notifications enabled",
-            screen = mouse.screen,
-            timeout = 2,
-            icon = beautiful.icon_notify_enabled
-        })
+        naughty.toggle()
     end),
 
     awful.key({ modkey, "Control" }, "b", function()
@@ -525,6 +538,7 @@ for s in screen do
     for i,_ in pairs(screen_keys[s.index]) do
         globalkeys = awful.util.table.join(globalkeys,
             awful.key({ modkey }, screen_keys[s.index][i], function()
+                awful.screen.focus(s)
                 local tag = s.tags[i]
                 if tag then
                     tag:view_only()

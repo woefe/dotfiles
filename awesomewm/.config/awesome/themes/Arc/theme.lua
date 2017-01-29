@@ -26,12 +26,6 @@ theme.color.arc_dark   = "#3e424d"
 theme.widget_bg = {
     theme.color.arc_darker,
     theme.color.arc_dark,
-    theme.color.arc_darker,
-    theme.color.arc_dark,
-    theme.color.arc_darker,
-    theme.color.arc_dark,
-    theme.color.arc_darker,
-    theme.color.arc_dark
 }
 
 theme.widget_graph_fg = theme.color.white
@@ -56,7 +50,7 @@ theme.border_marked = theme.color.green
 
 -- Tooltip settings
 theme.tooltip_opacity      = 1
-theme.tooltip_border_width = theme.border_width
+theme.tooltip_border_width = 0
 theme.tooltip_border_color = theme.bg_focus
 theme.tooltip_bg_color     = theme.bg_focus
 theme.tooltip_fg_color     = theme.fg_focus
