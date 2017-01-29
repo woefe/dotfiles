@@ -24,7 +24,7 @@ xset -dpms
 xset s off
 
 # fix Java GUI rendering bugs (qtile sets the wmname itself)
-#wmname Sawfish
+mname Sawfish
 
 # start the urxvt daemon
 #urxvtd -q -f -o
@@ -38,10 +38,10 @@ fi
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
 
 # spawn compositing manager
-#compton &
+compton &
 
 # Removes mouse cursor if it did not move for 5 seconds
-#unclutter &
+unclutter &
 
 # Workaround: First execution of amixer might take a few second.
 # Execute it here so that awesome, which also executes amixer, doesn't
@@ -52,6 +52,6 @@ amixer -M sget Master > /dev/null
 dex -a &
 
 # finally start a window manager
-exec qtile
-#exec awesome #-c /etc/xdg/awesome/rc.lua
+#exec qtile
+exec awesome #-c /etc/xdg/awesome/rc.lua
 #exec i3
