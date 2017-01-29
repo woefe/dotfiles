@@ -11,7 +11,6 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 -- Widget library
-local revelation = require("revelation")
 local drop = require("scratchdrop")
 local simpletab = require("simpletab")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
@@ -65,7 +64,6 @@ modkey = "Mod4"
 altkey = "Mod1"
 
 beautiful.init(themefile)
-revelation.init()
 -- }}}
 
 -- {{{ Override naughty defaults
@@ -337,7 +335,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift" }, "h", function() awful.client.swap.global_bydirection("left") end),
     awful.key({ modkey, "Shift" }, "n", function() awful.client.restore() end ),
     awful.key({ modkey, }, "#34", function() awful.client.urgent.jumpto() end),
-    awful.key({ modkey, }, "a", function() revelation() end),
 
     awful.key({ modkey, }, "j", function()
         awful.client.focus.global_bydirection("down")
@@ -377,8 +374,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "x", function() awesome.restart() end),
     awful.key({ modkey, "Shift" }, ".", function() mypromptbox[mouse.screen]:run() end),
     awful.key({ modkey, "Shift" }, "x", function() awesome.quit() end ),
-    awful.key({ modkey, }, "y", function() mymainmenu:show() end),
-    awful.key({ modkey, }, "p", function() menubar.show() end),
+    awful.key({ modkey, "Shift" }, "y", function() mymainmenu:show() end),
+    -- awful.key({ modkey, }, "p", function() menubar.show() end),
     awful.key({ modkey, altkey }, "Return", function() drop(terminal .. " -e 'tmux new-session -A -s drop'", "top", "center", 1, 1, true, 1) end),
 
     awful.key({ modkey }, "XF86AudioMute", function()
@@ -483,6 +480,19 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey }, "p", function() awful.spawn("keepassx2 '/home/popeye/sync/passwords.kdbx'") end),
     awful.key({ modkey, altkey }, "n", function() drop(notes, "top", "right", 500, 1, true, 1) end),
     awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end)
+)
+
+
+-- Rofi keys
+function spawn_rofi(mode)
+    awful.spawn( "rofi -show " .. mode .. " -terminal " .. terminal .. " -rsh-command '{terminal} -e \"{ssh-client} {host}\"'", false)
+end
+
+globalkeys = awful.util.table.join(globalkeys,
+    awful.key({ modkey }, "x", function() spawn_rofi("run") end),
+    awful.key({ modkey }, "p", function() spawn_rofi("drun") end),
+    awful.key({ modkey }, "y", function() spawn_rofi("ssh") end),
+    awful.key({ modkey }, "a", function() spawn_rofi("window") end)
 )
 
 clientkeys = awful.util.table.join(
