@@ -7,7 +7,7 @@ SONG_FILE=$1
 ARTIST=$2
 TITLE=$3
 COVER_FILE="/tmp/moc_cover.jpg"
-ICON="/usr/share/icons/HighContrast/48x48/devices/audio-headphones.png"
+ICON="/usr/share/icons/Arc/devices/48/audio-headphones.png"
 
 
 if [ -z "$ARTIST" -o -z "$TITLE" ]; then
