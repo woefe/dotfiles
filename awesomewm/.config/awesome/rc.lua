@@ -11,35 +11,32 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 -- Widget library
-local vicious = require("vicious")
 local revelation = require("revelation")
 local drop = require("scratchdrop")
 local simpletab = require("simpletab")
+local hotkeys_popup = require("awful.hotkeys_popup").widget
+local wwidgets = require("wwidgets")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
-    naughty.notify({
-        preset = naughty.config.presets.critical,
-        title = "Oops, there were errors during startup!",
-        text = awesome.startup_errors
-    })
+    naughty.notify({ preset = naughty.config.presets.critical,
+                     title = "Oops, there were errors during startup!",
+                     text = awesome.startup_errors })
 end
 
 -- Handle runtime errors after startup
 do
     local in_error = false
-    awesome.connect_signal("debug::error", function(err)
+    awesome.connect_signal("debug::error", function (err)
         -- Make sure we don't go into an endless error loop
         if in_error then return end
         in_error = true
 
-        naughty.notify({
-            preset = naughty.config.presets.critical,
-            title = "Oops, an error happened!",
-            text = err
-        })
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = "Oops, an error happened!",
+                         text = tostring(err) })
         in_error = false
     end)
 end
@@ -101,27 +98,22 @@ naughty.config.presets = {
 
 -- {{{ Wallpaper
 -- Determine screen orientation
-screen_orientation = {}
-for s = 1, screen.count() do
-    geometry = screen[s].geometry
-    if geometry.height > geometry.width then
-        screen_orientation[s] = "portrait"
-    else
-        screen_orientation[s] = "landscape"
+local function get_screen_orientation(s)
+    if s.geometry.height > s.geometry.width then
+        return "portrait"
     end
+    return "landscape"
 end
 
-function get_wallpaper(s)
-    return beautiful.wallpaper[screen_orientation[s]][s]
-end
-
--- Set different wallpapers depending on the screen orientation
-for s = 1, screen.count() do
-    wallpaper = get_wallpaper(s)
+local function set_wallpaper(s)
+    wallpaper = beautiful.wallpaper[get_screen_orientation(s)]
     if wallpaper then
         gears.wallpaper.maximized(wallpaper, s, false)
     end
 end
+
+-- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
+screen.connect_signal("property::geometry", set_wallpaper)
 -- }}}
 
 -- {{{ Layouts
@@ -142,33 +134,14 @@ local layouts = {
 }
 -- }}}
 
--- {{{ Tags
--- Define a tag table which hold all screen tags.
-tags = {}
-local tagnames = {}
-tagnames[1] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
-tagnames[2] = { "Q", "W", "E", "R", "T", "Z", "U", "I", "O" }
-tagnames[3] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
-
-for s = 1, screen.count() do
-    local layout = layouts[1]
-    if screen_orientation[s] == "landscape" then
-        layout = awful.layout.suit.tile
-    else
-        layout = awful.layout.suit.tile.top
-    end
-    -- Each screen has its own tag table.
-    tags[s] = awful.tag(tagnames[s], s, layout)
-end
--- }}}
-
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
     { "edit config", terminal .. " -e 'nvim " .. awesome.conffile .. "'" },
     { "edit theme", terminal .. " -e 'nvim " .. themefile .. "'" },
+    { "hotkeys", function() return false, hotkeys_popup.show_help end},
     { "restart", awesome.restart },
-    { "quit", awesome.quit }
+    { "quit", function() awesome.quit() end }
 }
 
 myshutdownmenu = {
@@ -189,401 +162,25 @@ menubar.utils.terminal = terminal
 -- }}}
 
 -- {{{ Widgets
--- Adds a background and separator to the given widget and sets the foreground color
-local function add_background(widget, color)
-    container = wibox.layout.fixed.horizontal()
-    spacer = wibox.widget.textbox()
-    --spacer:set_text(" ")
-    spacer:set_markup('<span font="17"> </span>')
-    container:add(spacer)
-    container:add(widget)
-    container:add(spacer)
-
-    bg = wibox.widget.background(container, color)
-    bg:set_fg(beautiful.widget_text_fg)
-    return bg
-end
-
--- Holds all widgets that are drawn on every screen. Note that the systray and
--- the layoutbox are not included in this table!
-widgets = {}
-
---reserve widget_pos = 1 for the systray which is added later
-widget_pos = 2
-
-local function add_widget(widget)
-    widgets[widget_pos] = widget
-    widget_pos = widget_pos + 1
-end
-
---------------------
--- Network widget --
---------------------
--- Settings
-netwidget = {
-    color_background = beautiful.widget_bg[widget_pos],
-    color_rx = beautiful.widget_graph_fg,
-    color_tx = beautiful.widget_graph_fg,
-    width = 40,
-}
-
-netwidget.interfaces = {}
-function netwidget:update_interfaces()
-    netwidget.interfaces = {}
-    for interface in string.gmatch(awful.util.pread("ls --ignore={lo,tun0,virbr*} /sys/class/net/"), "%S+") do
-       netwidget.interfaces = awful.util.table.join(netwidget.interfaces, { interface })
-    end
-end
-netwidget:update_interfaces()
-
-netwidget.buttons = awful.util.table.join(
-    awful.button({}, 1, function()
-        awful.util.spawn(netstat)
-    end)
-)
-
-netwidget.txt_tx = wibox.widget.textbox()
-netwidget.txt_tx:buttons(netwidget.buttons)
-
-netwidget.txt_rx = wibox.widget.textbox()
-netwidget.txt_rx:buttons(netwidget.buttons)
-
-netwidget.graph_tx = awful.widget.graph()
-netwidget.graph_tx:set_width(netwidget.width)
-netwidget.graph_tx:set_background_color(netwidget.color_background)
-netwidget.graph_tx:set_color(netwidget.color_tx)
-netwidget.graph_tx:set_max_value(20)
-netwidget.graph_tx:set_scale(true)
-netwidget.graph_tx:buttons(netwidget.buttons)
-
-netwidget.graph_rx = awful.widget.graph()
-netwidget.graph_rx:set_width(netwidget.width)
-netwidget.graph_rx:set_background_color(netwidget.color_background)
-netwidget.graph_rx:set_color(netwidget.color_rx)
-netwidget.graph_rx:set_max_value(70)
-netwidget.graph_rx:set_scale(true)
-netwidget.graph_rx:buttons(netwidget.buttons)
-
-netwidget.tooltip = awful.tooltip({ objects = {
-    netwidget.txt_tx,
-    netwidget.txt_rx,
-    netwidget.graph_tx,
-    netwidget.graph_rx
-}})
-
-function netwidget:suspend()
-    netwidget.graph_rx:clear()
-    netwidget.graph_tx:clear()
-    netwidget.tooltip:set_text("[Suspended]")
-    netwidget.txt_tx:set_text("[x]")
-    netwidget.txt_rx:set_text("[x]")
-end
-
-vicious.register(netwidget, vicious.widgets.net, function(widget, args)
-    local sum_rx = 0
-    local sum_tx = 0
-    local text = ""
-
-    netwidget:update_interfaces()
-    for _, iface in pairs(netwidget.interfaces) do
-        local tx = args["{" .. iface .. " up_kb}"]
-        local rx = args["{" .. iface .. " down_kb}"]
-        sum_tx = sum_tx + tx
-        sum_rx = sum_rx + rx
-        text = text .. "\n" .. iface .. ":\nTX: " .. tx .. "kB/s\tRX: " .. rx .. "kB/s\n"
-    end
-    netwidget.graph_tx:add_value(sum_tx)
-    netwidget.graph_rx:add_value(sum_rx)
-    netwidget.tooltip:set_text(text)
-
-    if sum_tx > 100 then
-        sum_tx = sum_tx / 1000
-        sum_tx = string.format("%.1f", sum_tx) .. "M "
-    else
-        sum_tx = string.format("%.1f", sum_tx) .. "K "
-    end
-
-    if sum_rx > 100 then
-        sum_rx = sum_rx / 1000
-        sum_rx = string.format("%.1f", sum_rx) .. "M "
-    else
-        sum_rx = string.format("%.1f", sum_rx) .. "K "
-    end
-
-    netwidget.txt_tx:set_text("↑ " .. sum_tx)
-    netwidget.txt_rx:set_text(" ↓ " .. sum_rx)
-
-    return nil
-end, 2)
-
-netwidget_container = wibox.layout.fixed.horizontal()
-netwidget_container:add(netwidget.txt_tx)
-netwidget_container:add(netwidget.graph_tx)
-netwidget_container:add(netwidget.txt_rx)
-netwidget_container:add(netwidget.graph_rx)
-netwidget_container = add_background(netwidget_container, netwidget.color_background)
-
-add_widget(netwidget_container)
-
-----------------
--- CPU widget --
-----------------
--- Color settings
-cpuwidget = {
-    color_graph = beautiful.widget_graph_fg,
-    color_background = beautiful.widget_bg[widget_pos],
-    number_of_cores = awful.util.pread("nproc")
-}
-
-cpuwidget.high_load = false
-cpuwidget.buttons = awful.util.table.join(
-    awful.button({}, 1, function()
-        awful.util.spawn(htop)
-    end)
-)
-
-local function cpu_notification(cpu_load)
-    if cpu_load > 60 then
-        cpuwidget.high_load = true
-        cpuwidget.txt:set_markup('<span color="' .. beautiful.color.red .. '">▦ ' .. cpu_load .. '% </span>')
-        cpuwidget.graph:set_color(beautiful.color.red)
-    else
-        cpuwidget.high_load = false
-        cpuwidget.txt:set_markup('<span color="' .. beautiful.widget_text_fg .. '">▦ ' .. cpu_load .. '% </span>')
-        cpuwidget.graph:set_color(cpuwidget.color_graph)
-    end
-end
-
-cpuwidget.txt = wibox.widget.textbox()
-cpuwidget.txt:buttons(cpuwidget.buttons)
-
-cpuwidget.graph = awful.widget.graph()
-cpuwidget.graph:buttons(cpuwidget.buttons)
-cpuwidget.graph:set_width(40)
-cpuwidget.graph:set_background_color(cpuwidget.color_background)
-cpuwidget.graph:set_max_value(10)
-cpuwidget.graph:set_scale(true)
-cpuwidget.graph:set_color(cpuwidget.color_graph)
-
-cpuwidget.tooltip = awful.tooltip({ objects = { cpuwidget.graph, cpuwidget.txt }})
-
-function cpuwidget:suspend()
-    cpuwidget.graph:clear()
-    cpuwidget.tooltip:set_text("[Suspended]")
-    cpuwidget.txt:set_text("[x]")
-end
-
-vicious.register(cpuwidget, vicious.widgets.cpu, function(widget, args)
-    local text = "\t\ttotal: " .. args[1] .. "%"
-    for i = 2, cpuwidget.number_of_cores + 1 do
-        if i % 2 == 0 then
-            text = text .. "\ncpu" .. i - 2 .. ": " .. string.format("%3i", args[i]) .. "%"
-        else
-            text = text .. " \tcpu" .. i - 2 .. ": " .. string.format("%3i", args[i]) .. "%"
-        end
-    end
-    cpuwidget.tooltip:set_text(text)
-    cpu_notification(args[1])
-    cpuwidget.graph:add_value(args[1])
-return nil
-end, 2)
-
-cpu_widget = wibox.layout.fixed.horizontal()
-cpu_widget:add(cpuwidget.txt)
-cpu_widget:add(cpuwidget.graph)
-cpu_widget = add_background(cpu_widget, cpuwidget.color_background)
-
-add_widget(cpu_widget)
 
 
------------------
--- ALSA widget --
------------------
--- Settings
-local alsawidget = {
-    channel = "Master",
-    step = "2%",
-    mixer = "pavucontrol" --or terminal .. " -e alsamixer"
-}
+netwidget = wwidgets.netwidget({interfaces = {"enp2s0"}})
 
-alsawidget.toggle_mute = function()
-    awful.util.pread("amixer sset " .. alsawidget.channel .. " toggle", false)
-    vicious.force({ alsawidget.txt })
-end
+cpuwidget = wwidgets.cpuwidget()
 
-alsawidget.increase_vol = function()
-    awful.util.pread("amixer sset " .. alsawidget.channel .. " " .. alsawidget.step .. "+", false)
-    vicious.force({ alsawidget.txt })
-end
+alsawidget = wwidgets.alsawidget()
 
-alsawidget.decrease_vol = function()
-    awful.util.pread("amixer sset " .. alsawidget.channel .. " " .. alsawidget.step .. "-", false)
-    vicious.force({ alsawidget.txt })
-end
-
-alsawidget.txt = wibox.widget.textbox()
-alsawidget.txt:buttons(awful.util.table.join(
-    awful.button({}, 1, function()
-        awful.util.spawn(alsawidget.mixer)
-    end),
-    awful.button({}, 3, function()
-        alsawidget.toggle_mute()
-    end),
-    awful.button({}, 4, function()
-        alsawidget.increase_vol()
-    end),
-    awful.button({}, 5, function()
-        alsawidget.decrease_vol()
-    end)
-))
-
-alsawidget.txt_bg = add_background(alsawidget.txt, beautiful.widget_bg[widget_pos])
-
-alsawidget.tooltip = awful.tooltip({ objects = { alsawidget.txt } })
-
-vicious.register(alsawidget.txt, vicious.widgets.volume, function(widget, args)
-    if args[2] == "♩" then
-        alsawidget.tooltip:set_text("[Muted]")
-        return "🔇"
-    end
-    alsawidget.tooltip:set_text(" " .. alsawidget.channel .. ": " .. args[1] .. "% ")
-    return "🔊 " .. args[1] .. "%"
-end, 10, alsawidget.channel)
-
-add_widget(alsawidget.txt_bg)
-
---------------------
--- Battery widget --
---------------------
 -- No battery widget for desktop computers
 if awful.util.file_readable("/sys/class/power_supply/BAT0/present") then
-
-    -- Color settings
-    local batwidget = {
-        color_default = beautiful.widget_text_fg,
-        color_low = beautiful.color.red,
-        color_powersave = beautiful.color.green,
-    }
-
-    batwidget.powersave_enabled = false
-    batwidget.low_bat = false
-    batwidget.backlight_brightness = 0
-    batwidget.color = batwidget.color_default
-
-    local function toggle_powersave()
-        if batwidget.powersave_enabled then
-            vicious.activate()
-            awful.util.spawn("xbacklight -set " .. batwidget.backlight_brightness, false)
-            batwidget.powersave_enabled = false
-            batwidget.color = batwidget.color_default
-            vicious.force(batwidget)
-        else
-            vicious.suspend()
-            vicious.activate(batwidget.txt)
-            batwidget.powersave_enabled = true
-            batwidget.color = batwidget.color_powersave
-            netwidget:suspend()
-            cpuwidget:suspend()
-            batwidget.backlight_brightness = math.floor(awful.util.pread("xbacklight -get") + 1)
-            awful.util.spawn("xbacklight -set 8", false)
-            vicious.force(batwidget)
-        end
-    end
-
-    batwidget.txt = wibox.widget.textbox()
-    batwidget.tooltip = awful.tooltip({ objects = { batwidget.txt }})
-
-    batwidget.txt:buttons(awful.util.table.join(
-        awful.button({}, 1, function()
-            toggle_powersave()
-        end),
-        awful.button({}, 2, function()
-            awful.util.spawn("xbacklight -set 100", false)
-        end),
-        awful.button({}, 3, function()
-            awful.util.spawn_with_shell("sleep .3; xset dpms force off")
-        end),
-        awful.button({}, 4, function()
-            awful.util.spawn("xbacklight -inc 1 -steps 1", false)
-        end),
-        awful.button({}, 5, function()
-            awful.util.spawn("xbacklight -dec 1 -steps 1", false)
-        end)
-    ))
-
-    vicious.register(batwidget.txt, vicious.widgets.bat, function(widget, args)
-        batwidget.tooltip:set_text(args[1].. "," .. args[3])
-        local capacity = args[2]
-        local loading = args[1]
-        if capacity < 8 and loading == "−" then
-            naughty.notify({
-                screen = mouse.screen,
-                title = "Warning",
-                text = "Low Battery: " .. capacity .. "%",
-                bg = beautiful.color.red,
-                border_color = beautiful.color.red,
-                fg = beautiful.color.black,
-                timeout = 17,
-                icon = beautiful.low_battery_icon
-            })
-            batwidget.low_bat = true
-            return '<span color="' .. batwidget.color_low .. '">⛽ ' .. capacity .. '%</span>'
-        else
-            batwidget.low_bat = false
-            return '<span color="' .. batwidget.color .. '">⛽ ' .. capacity .. '%</span>'
-        end
-    end, 61, "BAT0")
-
-    batwidget_container = add_background(batwidget.txt, beautiful.widget_bg[widget_pos])
-
-    add_widget(batwidget_container)
+    batterywidget = wwidgets.batterywidget()
+    add_widget(batterywidget.widget)
 end
 
-----------------------
--- Textclock widget --
-----------------------
-clock = {}
-clock.txt = awful.widget.textclock("%H:%M  %a %d")
-clock.txt = add_background(clock.txt, beautiful.widget_bg[widget_pos])
-clock.tooltip = awful.tooltip({ objects = { clock.txt } })
-clock.month = math.floor(os.date("%m"))
-clock.year = math.floor(os.date("%Y"))
-clock.tooltip:set_markup('<span font="Ubuntu Mono 12">' .. awful.util.pread("cal -m") .. '</span>')
-clock.txt:buttons(awful.util.table.join(
-    awful.button({}, 1, function()
-        local matcher = function(c)
-            return awful.rules.match(c, { class = mail.class })
-        end
-        awful.client.run_or_raise(mail.prog, matcher)
-    end),
-    awful.button({}, 2, function()
-        clock.tooltip:set_markup('<span font="Ubuntu Mono 12">' .. awful.util.pread("cal -m") .. '</span>')
-    end),
-    awful.button({}, 4, function()
-        clock.month = clock.month + 1
-        if clock.month > 12 then
-            clock.month = 1
-            clock.year = clock.year + 1
-        end
-        clock.tooltip:set_markup('<span font="Ubuntu Mono 12">' .. awful.util.pread("cal -m " .. clock.month .. " " .. clock.year) .. '</span>')
-    end),
-    awful.button({}, 5, function()
-        clock.month = clock.month - 1
-        if clock.month < 1 then
-            clock.month = 12
-            clock.year = clock.year - 1
-        end
-        clock.tooltip:set_markup('<span font="Ubuntu Mono 12">' .. awful.util.pread("cal -m " .. clock.month .. " " .. clock.year) .. '</span>')
-    end)
-    ))
-add_widget(clock.txt)
+clock = wwidgets.clock()
+-- }}}
 
 -- Create a wibox for each screen and add it
-mywibox = {}
-mypromptbox = {}
-mylayoutbox = {}
-mytaglist = {}
-mytaglist.buttons = awful.util.table.join(
+local taglist_buttons = awful.util.table.join(
     awful.button({ }, 1, awful.tag.viewonly),
     awful.button({ modkey }, 1, awful.client.movetotag),
     awful.button({ }, 3, awful.tag.viewtoggle),
@@ -591,8 +188,8 @@ mytaglist.buttons = awful.util.table.join(
     awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
     awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end)
 )
-mytasklist = {}
-mytasklist.buttons = awful.util.table.join(
+
+local tasklist_buttons = awful.util.table.join(
     awful.button({ }, 1, function(c)
         if c == client.focus then
             c.minimized = true
@@ -627,52 +224,67 @@ mytasklist.buttons = awful.util.table.join(
     end)
 )
 
-for s = 1, screen.count() do
+
+awful.screen.connect_for_each_screen(function(s)
+    set_wallpaper(s)
+
+    local layout = layouts[1]
+    if get_screen_orientation(s) == "landscape" then
+        layout = awful.layout.suit.tile
+    else
+        layout = awful.layout.suit.tile.top
+    end
+
+    local tagnames = {}
+    tagnames[1] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
+    tagnames[2] = { "Q", "W", "E", "R", "T", "Z", "U", "I", "O" }
+    tagnames[3] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
+
+    -- Each screen has its own tag table.
+    awful.tag(tagnames[s.index], s, layout)
+
     -- Create a promptbox for each screen
-    mypromptbox[s] = awful.widget.prompt()
+    s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
-    mylayoutbox[s] = awful.widget.layoutbox(s)
-    mylayoutbox[s]:buttons(awful.util.table.join(
+    s.mylayoutbox = awful.widget.layoutbox(s)
+    s.mylayoutbox:buttons(awful.util.table.join(
         awful.button({ }, 1, function() awful.layout.inc(layouts, 1) end),
         awful.button({ }, 3, function() awful.layout.inc(layouts, -1) end),
         awful.button({ }, 4, function() awful.layout.inc(layouts, 1) end),
         awful.button({ }, 5, function() awful.layout.inc(layouts, -1) end)
     ))
-    mylayoutbox[s] = add_background(mylayoutbox[s], beautiful.widget_bg[widget_pos])
+    s.mylayoutbox = wwidgets.helpers.add_background(s.mylayoutbox, beautiful.widget_bg[widget_pos])
 
     -- Create a taglist widget
-    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
+    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
     -- Create a tasklist widget
-    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
+    s.mytasklist= awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s })
+    s.mywibox = awful.wibox({ position = "top", screen = s })
 
-    -- Widgets that are aligned to the left
-    local left_layout = wibox.layout.fixed.horizontal()
-    left_layout:add(mytaglist[s])
-    left_layout:add(mypromptbox[s])
-
-    -- Widgets that are aligned to the right
-    local right_layout = wibox.layout.fixed.horizontal()
-    if s == 1 then
-        right_layout:add(add_background(wibox.widget.systray(), beautiful.widget_bg[1]))
-    end
-    for pos, widget in pairs(widgets) do
-        right_layout:add(widget)
-    end
-    right_layout:add(mylayoutbox[s])
-
-    -- Now bring it all together (with the tasklist in the middle)
-    local layout = wibox.layout.align.horizontal()
-    layout:set_left(left_layout)
-    layout:set_middle(mytasklist[s])
-    layout:set_right(right_layout)
-
-    mywibox[s]:set_widget(layout)
-end
+    s.mywibox:setup {
+        layout = wibox.layout.align.horizontal(),
+        { -- Left widgets
+            layout = wibox.layout.fixed.horizontal,
+            s.mytaglist,
+            s.mypromptbox,
+        },
+        s.mytasklist, -- Middle widget
+        { -- Right widgets
+            layout = wibox.layout.fixed.horizontal,
+            -- mykeyboardlayout,
+            wwidgets.helpers.add_background(wibox.widget.systray(), beautiful.widget_bg[1]),
+            netwidget.widget,
+            cpuwidget.widget,
+            alsawidget.widget,
+            clock.widget,
+            s.mylayoutbox,
+        },
+    }
+end)
 -- }}}
 
 -- {{{ Mouse bindings
@@ -686,19 +298,21 @@ root.buttons(awful.util.table.join(
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
     -- Fn and multimedia keys
-    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("xbacklight -dec 1 -steps 1", false) end),
-    awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn("xbacklight -inc 1 -steps 1", false) end),
+    awful.key({ }, "XF86MonBrightnessDown",
+        function () awful.spawn("xbacklight -dec 1 -steps 1", false) end,
+        {description = "Decrease screen brightness"}),
+    awful.key({ }, "XF86MonBrightnessUp", function () awful.spawn("xbacklight -inc 1 -steps 1", false) end),
     awful.key({ }, "XF86AudioRaiseVolume", function () alsawidget.increase_vol() end),
     awful.key({ }, "XF86AudioLowerVolume", function () alsawidget.decrease_vol() end),
     awful.key({ }, "XF86AudioMute", function () alsawidget.toggle_mute() end),
-    awful.key({ }, "XF86Display", function () awful.util.spawn("arandr") end),
-    awful.key({ }, "XF86WebCam", function () awful.util.spawn("guvcview") end),
-    awful.key({ }, "XF86AudioNext", function () awful.util.spawn("mocp --next", false) end),
-    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("mocp --previous", false) end),
-    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn(homedir .. "/.moc/mocp_toggle", false) end),
-    awful.key({ }, "KP_Right", function() awful.util.spawn("mocp --next", false) end),
-    awful.key({ }, "KP_Left", function() awful.util.spawn("mocp --previous", false) end),
-    awful.key({ }, "KP_Begin", function() awful.util.spawn(homedir .. "/.moc/mocp_toggle", false) end),
+    awful.key({ }, "XF86Display", function () awful.spawn("arandr") end),
+    awful.key({ }, "XF86WebCam", function () awful.spawn("guvcview") end),
+    awful.key({ }, "XF86AudioNext", function () awful.spawn("mocp --next", false) end),
+    awful.key({ }, "XF86AudioPrev", function () awful.spawn("mocp --previous", false) end),
+    awful.key({ }, "XF86AudioPlay", function () awful.spawn(homedir .. "/.moc/mocp_toggle", false) end),
+    awful.key({ }, "KP_Right", function() awful.spawn("mocp --next", false) end),
+    awful.key({ }, "KP_Left", function() awful.spawn("mocp --previous", false) end),
+    awful.key({ }, "KP_Begin", function() awful.spawn(homedir .. "/.moc/mocp_toggle", false) end),
 
     -- Layout manipulation
     awful.key({ modkey, altkey }, "l", function() awful.tag.incncol(1) end),
@@ -812,13 +426,13 @@ globalkeys = awful.util.table.join(
             .. " --textcolor='" .. beautiful.color.white .. "ff'"
             .. " --keyhlcolor='" .. beautiful.color.blue .. "ff'"
             .. " --bshlcolor='" .. beautiful.color.blue .. "ff'"
-        awful.util.spawn(lockcmd, false)
+        awful.spawn(lockcmd, false)
     end),
 
     -- Take a screenshot
     awful.key({ modkey }, "Print", function()
         local filename = homedir .. "/Pictures/Screenshots/screenshot_" .. os.date("%Y-%m-%d_%H-%M-%S") .. ".png"
-        awful.util.spawn("scrot " .. filename, false)
+        awful.spawn("scrot " .. filename, false)
         naughty.notify({
             title = "Screenshot taken",
             text = "The screenshot was saved as \n" .. filename,
@@ -830,36 +444,26 @@ globalkeys = awful.util.table.join(
 
     -- Start xfce screenshooter
     awful.key({ }, "Print", function()
-        awful.util.spawn("xfce4-screenshooter", false)
+        awful.spawn("xfce4-screenshooter", false)
     end),
 
     -- Touchpad on/off
     awful.key({ modkey, "Control" }, "t",
          function ()
-             awful.util.spawn_with_shell("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')")
+             awful.spawn.with_shell("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')")
          end),
 
     -- Restore default screen layout
     awful.key({ modkey, "Control" }, "n",
         function ()
-            awful.util.spawn("xrandr --output LVDS1 --mode 1366x768 --output HDMI1 --off --output VGA1 --off", false)
+            awful.spawn("xrandr --output LVDS1 --mode 1366x768 --output HDMI1 --off --output VGA1 --off", false)
         end),
 
     -- External dual Monitor setup
     awful.key({ modkey, "Control" }, "d",
         function ()
-            awful.util.spawn("xrandr --output LVDS1 --off --output HDMI1 --mode 1920x1080 --primary --output VGA1 --mode 1920x1080 --right-of HDMI1", false)
+            awful.spawn("xrandr --output LVDS1 --off --output HDMI1 --mode 1920x1080 --primary --output VGA1 --mode 1920x1080 --right-of HDMI1", false)
         end),
-
-    -- Rotate Monitor
-    awful.key({ modkey, "Control" }, "v", function()
-        local orientation = awful.util.pread("xrandr -q --verbose | grep DisplayPort-0 | cut -d ' ' -f5 | tr -d ' \n'")
-        if orientation == "normal" then
-            awful.util.spawn("xrandr --output DisplayPort-0 --rotate left", false)
-        else
-            awful.util.spawn("xrandr --output DisplayPort-0 --rotate normal", false)
-        end
-    end),
 
 
     -------------------------------------
@@ -880,14 +484,14 @@ globalkeys = awful.util.table.join(
         awful.client.run_or_raise(music, matcher)
     end),
 
-    awful.key({ modkey, altkey }, "r", function() awful.util.spawn(filemanager) end),
-    awful.key({ modkey, altkey }, "f", function() awful.util.spawn("nautilus --no-desktop") end),
-    awful.key({ modkey, altkey }, "t", function() awful.util.spawn("telegram") end),
-    awful.key({ modkey, altkey }, "b", function() awful.util.spawn(browser) end),
-    awful.key({ modkey, altkey }, "c", function() awful.util.spawn("chromium --incognito") end),
-    awful.key({ modkey, altkey }, "p", function() awful.util.spawn("keepassx2 '/home/popeye/sync/passwords.kdbx'") end),
+    awful.key({ modkey, altkey }, "r", function() awful.spawn(filemanager) end),
+    awful.key({ modkey, altkey }, "f", function() awful.spawn("nautilus --no-desktop") end),
+    awful.key({ modkey, altkey }, "t", function() awful.spawn("telegram") end),
+    awful.key({ modkey, altkey }, "b", function() awful.spawn(browser) end),
+    awful.key({ modkey, altkey }, "c", function() awful.spawn("chromium --incognito") end),
+    awful.key({ modkey, altkey }, "p", function() awful.spawn("keepassx2 '/home/popeye/sync/passwords.kdbx'") end),
     awful.key({ modkey, altkey }, "n", function() drop(notes, "top", "right", 500, 1, true, 1) end),
-    awful.key({ modkey, }, "Return", function() awful.util.spawn(terminal) end)
+    awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end)
 )
 
 clientkeys = awful.util.table.join(
@@ -961,7 +565,9 @@ awful.rules.rules = {
             keys = clientkeys,
             raise = true,
             size_hints_honor = false,
-            buttons = clientbuttons
+            buttons = clientbuttons,
+            screen = awful.screen.preferred,
+            placement = awful.placement.no_overlap+awful.placement.no_offscreen,
         }
     },
      -- Force the first Firefox window to tag 1 on screen 1
@@ -1011,33 +617,29 @@ awful.rules.rules = {
         properties = { floating = true, size_hints_honor = true }
     },
     { rule = { class = mail.class },
-        properties = { tag = tags[1][9] }
+        properties = { screen = 1, tag = "9" }
     },
 }
 -- }}}
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
-client.connect_signal("manage", function(c, startup)
-    -- Enable sloppy focus
-    c:connect_signal("mouse::enter", function(c)
-        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
-            client.focus = c
-            --client.focus:raise()
-        end
-    end)
+client.connect_signal("manage", function(c)
+    if awesome.startup and
+        not c.size_hints.user_position
+        and not c.size_hints.program_position then
 
-    if not startup then
-        -- Set the windows at the slave,
-        -- i.e. put it at the end of others instead of setting it master.
-        -- awful.client.setslave(c)
+        -- Prevent clients from being unreachable after screen count changes.
+        awful.placement.no_offscreen(c)
+    end
+end)
 
-        -- Put windows in a smart way, only if they do not set an initial position.
-        if not c.size_hints.user_position and not c.size_hints.program_position and c.size_hints_honor then
-            awful.placement.no_overlap(c)
-            awful.placement.no_offscreen(c)
-        end
+-- Enable sloppy focus
+client.connect_signal("mouse::enter", function(c)
+    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+        and awful.client.focus.filter(c) then
+        client.focus = c
+        --client.focus:raise()
     end
 end)
 

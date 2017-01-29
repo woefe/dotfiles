@@ -92,18 +92,9 @@ theme.menu_width  = 100
 theme.menu_border_width = 0 or theme.border_width
 
 -- Different wallpaper for horizontal and vertical screen orientation
-theme.wallpaper = {
-    landscape = {
-        theme_dir .. "wallpaper.png", -- screen 1
-        theme_dir .. "wallpaper.png", -- screen 2
-        theme_dir .. "wallpaper.png"  -- screen 2
-    },
-    portrait = {
-        theme_dir .. "wallpaper_vertical.png", -- screen 1
-        theme_dir .. "wallpaper_vertical.png", -- screen 2
-        theme_dir .. "wallpaper_vertical.png"  -- screen 2
-    }
-}
+theme.wallpaper = {}
+theme.wallpaper["landscape"] = theme_dir .. "wallpaper.png"
+theme.wallpaper["portrait"] = theme_dir .. "wallpaper_vertical.png" -- screen 1
 
 -- You can use your own layout icons like this:
 theme.layout_fairh      = theme_dir .. "layouts/fairhw.png"
