@@ -1,5 +1,5 @@
 -- This module is havily inspired by https://github.com/jorenheit/awesome_alttab
--- but it has many (useless) features removed and introduces instant switching of
+-- but it has many fancy features removed and introduces instant switching of
 -- windows
 
 local mouse = mouse
@@ -8,6 +8,7 @@ local keygrabber = keygrabber
 local awful = require('awful')
 local client = client
 local pairs = pairs
+local screen = screen
 
 module("simpletab")
 
@@ -51,7 +52,7 @@ end
 
 local function getClients()
     -- Get focus history for current tag
-    local s = mouse.screen;
+    local s = awful.screen.focused()
     local idx = 0
     local c = awful.client.focus.history.get(s, idx)
     local clients = {}
@@ -67,7 +68,7 @@ local function getClients()
     -- if not already there.
     -- This will preserve the history AND enable you to focus on minimized clients
 
-    local t = awful.tag.selected(s)
+    local t = s.selected_tag
     local all = client.get(s)
 
     for i = 1, #all do

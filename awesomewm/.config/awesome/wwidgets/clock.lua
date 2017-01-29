@@ -13,6 +13,8 @@ function clock.setup(settings)
     end
     local color_fg = settings.color_fg or beautiful.fg_normal
     local color_bg = settings.color_bg or beautiful.bg_normal
+    local mail_class = settings.mail.class or "Thunderbird"
+    local mail_cmd = settings.mail.cmd or "thunderbird"
 
     local txt = wibox.widget.textclock("%H:%M  %a %d")
     local tooltip = awful.tooltip({ objects = { txt } })
@@ -30,9 +32,9 @@ function clock.setup(settings)
     txt:buttons(awful.util.table.join(
         awful.button({}, 1, function()
             local matcher = function(c)
-                return awful.rules.match(c, { class = mail.class })
+                return awful.rules.match(c, { class = mail_class })
             end
-            awful.client.run_or_raise(mail.prog, matcher)
+            awful.client.run_or_raise(mail_cmd, matcher)
         end),
         awful.button({}, 2, function()
             set_tooltip_async(tooltip, "cal -m")

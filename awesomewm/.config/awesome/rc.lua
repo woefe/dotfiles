@@ -52,7 +52,7 @@ editor = terminal .. " -e nvim"
 htop = terminal .. " -e htop"
 browser = "firefox"
 mail = {}
-mail.prog = "thunderbird"
+mail.cmd = "thunderbird"
 mail.class = "Thunderbird"
 
 filemanager = terminal .. " -e ranger"
@@ -163,7 +163,6 @@ menubar.utils.terminal = terminal
 
 -- {{{ Widgets
 
-
 netwidget = wwidgets.netwidget({interfaces = {"enp2s0"}})
 
 cpuwidget = wwidgets.cpuwidget()
@@ -176,7 +175,7 @@ if awful.util.file_readable("/sys/class/power_supply/BAT0/present") then
     add_widget(batterywidget.widget)
 end
 
-clock = wwidgets.clock()
+clock = wwidgets.clock({mail = mail})
 -- }}}
 
 -- Create a wibox for each screen and add it
@@ -263,7 +262,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist= awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibox({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "top", screen = s })
 
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal(),
@@ -371,7 +370,7 @@ globalkeys = awful.util.table.join(
     end),
 
     awful.key({ modkey, "Shift" }, "Tab", function()
-        simpletab.switch(-2, "Super_L", "Tab", "ISO_Left_Tab")
+        simpletab.switch(-1, "Super_L", "Tab", "ISO_Left_Tab")
     end),
 
     -- miscellaneous
@@ -403,7 +402,8 @@ globalkeys = awful.util.table.join(
     end),
 
     awful.key({ modkey, "Control" }, "b", function()
-        mywibox[mouse.screen].visible = not mywibox[mouse.screen].visible
+        local screen = awful.screen.focused()
+        screen.mywibox.visible = not screen.mywibox.visible
     end),
 
     awful.key({ modkey }, ".", function()
@@ -448,23 +448,14 @@ globalkeys = awful.util.table.join(
     end),
 
     -- Touchpad on/off
-    awful.key({ modkey, "Control" }, "t",
-         function ()
-             awful.spawn.with_shell("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')")
-         end),
+    awful.key({ modkey, "Control" }, "t", function ()
+        awful.spawn.with_shell("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')")
+    end),
 
     -- Restore default screen layout
-    awful.key({ modkey, "Control" }, "n",
-        function ()
-            awful.spawn("xrandr --output LVDS1 --mode 1366x768 --output HDMI1 --off --output VGA1 --off", false)
-        end),
-
-    -- External dual Monitor setup
-    awful.key({ modkey, "Control" }, "d",
-        function ()
-            awful.spawn("xrandr --output LVDS1 --off --output HDMI1 --mode 1920x1080 --primary --output VGA1 --mode 1920x1080 --right-of HDMI1", false)
-        end),
-
+    awful.key({ modkey, "Control" }, "n", function ()
+        awful.spawn("xrandr --output LVDS1 --mode 1366x768 --output HDMI1 --off --output VGA1 --off", false)
+    end),
 
     -------------------------------------
     -- Shortcuts for favorite programs --
@@ -474,7 +465,7 @@ globalkeys = awful.util.table.join(
         local matcher = function(c)
             return awful.rules.match(c, { class = mail.class })
         end
-        awful.client.run_or_raise(mail.prog, matcher)
+        awful.client.run_or_raise(mail.cmd, matcher)
     end),
 
     awful.key({ modkey, altkey }, "m", function()
@@ -520,24 +511,22 @@ local screen_keys = {}
 screen_keys[1] = { "#10", "#11", "#12", "#13", "#14", "#15", "#16", "#17", "#18" }
 screen_keys[2] = { "q", "w", "e", "r", "t", "z", "u", "i", "o" }
 screen_keys[3] = { "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"}
-for s = 1, screen.count() do
-    for i,_ in pairs(screen_keys[s]) do
+for s in screen do
+    for i,_ in pairs(screen_keys[s.index]) do
         globalkeys = awful.util.table.join(globalkeys,
-            awful.key({ modkey }, screen_keys[s][i], function()
-                local tag = awful.tag.gettags(s)[i]
+            awful.key({ modkey }, screen_keys[s.index][i], function()
+                local tag = s.tags[i]
                 if tag then
-                    awful.screen.focus(s)
-                    awful.tag.viewonly(tag)
+                    tag:view_only()
                 end
             end),
 
-            awful.key({ modkey, "Shift" }, screen_keys[s][i], function()
+            awful.key({ modkey, "Shift" }, screen_keys[s.index][i], function()
                 if client.focus then
-                    local screen = client.focus.screen
-                    local tag = awful.tag.gettags(s)[i]
+                    local tag = s.tags[i]
                     if tag then
-                        awful.client.movetotag(tag)
-                        awful.screen.focus(screen)
+                        client.focus:move_to_tag(tag)
+                        -- awful.screen.focus(screen)
                     end
                 end
             end)
@@ -581,9 +570,7 @@ awful.rules.rules = {
                 ff_windows = ff_windows + 1
             end
             if ff_windows <= 1 then
-                c.screen = 1
-                local first_tag = awful.tag.gettags(1)[1]
-                c:tags({first_tag})
+                c:tags({screen[1].tags[1]})
             end
         end
     },

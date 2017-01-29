@@ -72,7 +72,8 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
             dropdown[prog][screen] = c
 
             -- Scratchdrop clients are floaters
-            awful.client.floating.set(c, true)
+            c.floating = true
+            -- awful.client.floating.set(c, true)
 
             -- Client geometry and placement
             local screengeom = capi.screen[screen].workarea
@@ -99,7 +100,7 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
             c.size_hints_honor = false
             if sticky then c.sticky = true end
             if c.titlebar then awful.titlebar.remove(c) end
-            c:geometry({ x = x, y = y + mywibox[screen].height, width = width, height = height })
+            c:geometry({ x = x, y = y + capi.screen[screen].mywibox.height, width = width, height = height })
 
             c:raise()
             capi.client.focus = c
@@ -108,7 +109,7 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
 
         -- Add manage signal and spawn the program
         attach_signal("manage", spawnw)
-        awful.util.spawn(prog, false)
+        awful.spawn(prog, false)
     else
         -- Get a running client
         c = dropdown[prog][screen]
@@ -116,7 +117,7 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
         -- Switch the client to the current workspace
         if c:isvisible() == false then
             c.hidden = true
-            awful.client.movetotag(awful.tag.selected(screen), c)
+            c:move_to_tag(capi.screen[screen].selected_tag)
         end
 
         -- Focus and raise if hidden
