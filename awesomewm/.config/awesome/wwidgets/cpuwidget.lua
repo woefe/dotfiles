@@ -14,7 +14,7 @@ function cpuwidget.setup(settings)
     end
     local color_fg = settings.color_fg or beautiful.fg_normal
     local color_bg = settings.color_bg or beautiful.bg_normal
-    local color_high = settings.color_high or beautiful.fg_urgent
+    local color_high = settings.color_high or beautiful.color.red
     local width = settings.graph_width or 40
     local htop_cmd = settings.htop_cmd or "xterm -e htop"
     local number_of_cores = tonumber(io.popen("nproc"):read())

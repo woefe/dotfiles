@@ -176,11 +176,14 @@ end
 
 netwidget = wwidgets.netwidget({
     interfaces = interfaces,
+    netstat_cmd = netstat,
     color_bg = widget_background()
 })
 
 cpuwidget = wwidgets.cpuwidget({
-    color_bg = widget_background()
+    color_bg = widget_background(),
+    color_high = beautiful.color.red,
+    htop_cmd = htop
 })
 
 alsawidget = wwidgets.alsawidget({
@@ -188,10 +191,11 @@ alsawidget = wwidgets.alsawidget({
 })
 
 -- No battery widget for desktop computers
-batterywidget = nil
+batterywidget = {}
 if awful.util.file_readable("/sys/class/power_supply/BAT0/present") then
     batterywidget = wwidgets.batterywidget({
-        color_bg = widget_background()
+        color_bg = widget_background(),
+        color_low = beautiful.color.red
     })
 end
 
