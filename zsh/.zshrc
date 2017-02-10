@@ -40,8 +40,11 @@ PROMPT='%B%F{red}%(?..%? )%f%b%B%40<..<%~ %b$(git_super_status)> '
 # Enable fasd, a command-line productivity booster
 eval "$(fasd --init auto)"
 
-# Enable thefuck
-eval $(thefuck --alias)
+# Enable thefuck. Lazy loading thefuck improves the startup time by almost a second.
+fuck() {
+    eval $(thefuck --alias)
+    eval $(whence fuck)
+}
 
 # Setup default aliases
 source ~/.aliases
