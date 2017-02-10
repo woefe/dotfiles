@@ -15,6 +15,10 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=white'
 # command not found
 source /usr/share/doc/pkgfile/command-not-found.zsh
 
+# fzf keybindings and completion
+source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/key-bindings.zsh
+
 # vi-mode
 #source $HOME/.zsh-plugins/vi-mode.plugin.zsh
 
