@@ -1,36 +1,17 @@
-
 general {
     output_format = "i3bar"
     colors = true
-    interval = 5
+    interval = 3
     color_good = "#ffffff"
-    color_degraded = "#a76200"
-    color_bad = "#c93737"
+    color_degraded = "#f46067"
+    color_bad = "#f46067"
 }
 
-order += "wireless wlp2s0"
-order += "ethernet enp8s0"
-order += "battery 0"
-order += "volume master"
 order += "load"
 order += "cpu_usage"
+order += "volume master"
+order += "battery 0"
 order += "tztime local"
-
-wireless wlp2s0 {
-    format_up = "📡 %ip (%quality)"
-    format_down = "📡 down"
-}
-
-ethernet wlp2s0 {
-    format_up = "📡 %ip (%speed)"
-    format_down = "📡 down"
-}
-
-ethernet enp8s0 {
-# if you use %speed, i3status requires the cap_net_admin capability
-    format_up = "🔌 %ip (%speed)"
-    format_down = "🔌 down"
-}
 
 cpu_usage {
     format = "▦ %usage"
@@ -38,10 +19,10 @@ cpu_usage {
 
 battery 0 {
     format = "%status %percentage %remaining %consumption"
-    format_down = "No battery"
-    status_chr = "⚇ CHR"
-    status_bat = "⚡ BAT"
-    status_full = "☻ FULL"
+    format_down = ""
+    status_chr = "🔌 CHR"
+    status_bat = "  BAT"
+    status_full = "  FULL"
     path = "/sys/class/power_supply/BAT%d/uevent"
     last_full_capacity = true
     low_threshold = 10
@@ -50,11 +31,11 @@ battery 0 {
 }
 
 tztime local {
-    format = "🕑 %H:%M:%S (%-d %b)"
+    format = "🕑 %H:%M (%-d %b)"
 }
 
 load {
-    format = "🌡 %1min, %5min, %15min"
+    format = " %1min, %5min, %15min"
 }
 
 volume master {
