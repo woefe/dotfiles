@@ -153,11 +153,12 @@ bindsym $mod+$alt+r exec $term_cmd -e ranger
 bindsym $mod+$alt+m exec $term_cmd -e mocp
 bindsym $mod+$alt+c exec chromium --incognito
 bindsym $mod+$alt+p exec keepassx2 '/home/popeye/sync/passwords.kdbx'
+bindsym $mod+$alt+t exec telegram-desktop
 bindsym $mod+$alt+Return exec $term_cmd --class tmuxdrop -e 'tmux new-session -A -s drop'
 
 bindsym Print exec xfce4-screenshooter
 
-bindsym $mod+Shift+n exec $term_cmd --class vimnotes -e 'nvim note:Notes'
+bindsym $mod+Shift+n exec gvim --class vimnotes note:Notes
 bindsym $mod+$alt+n [class="vimnotes"] scratchpad show
 for_window [class="vimnotes"] move scratchpad
 
@@ -173,7 +174,7 @@ bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle
 bindsym XF86WebCam exec cheese
 bindsym XF86AudioNext exec --no-startup-id mocp --next
 bindsym XF86AudioPrev exec --no-startup-id mocp --previous
-bindsym XF86AudioPlay exec --no-startup-id mocp --toggle-pause
+bindsym XF86AudioPlay exec --no-startup-id /home/popeye/.moc/mocp_toggle
 bindsym KP_Begin exec --no-startup-id /home/popeye/.moc/mocp_toggle
 bindsym KP_Right exec --no-startup-id mocp --next
 bindsym KP_Left exec --no-startup-id mocp --previous
@@ -190,16 +191,17 @@ for_window [class="feh"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Keepassx"] floating enable
 for_window [class="pinentry"] floating enable
+for_window [class="TelegramDesktop"] floating enable
 for_window [class="tmuxdrop"] fullscreen enable
 
 workspace_auto_back_and_forth yes
 
 #disable window title
-new_window pixel 3
+for_window [class="^.*"] border pixel 3
 
 client.focused $color_blue $color_blue $color_white
 client.focused_inactive $color_black $color_black $color_white
-client.unfocused $color_black $color_black $color_white
+client.unfocused $color_darkgray $color_darkgray $color_white
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
