@@ -53,5 +53,5 @@ dex -a &
 
 # finally start a window manager
 #exec qtile
-exec awesome #-c /etc/xdg/awesome/rc.lua
-#exec i3
+#exec awesome #-c /etc/xdg/awesome/rc.lua
+exec i3
