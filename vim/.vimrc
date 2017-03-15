@@ -29,8 +29,9 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'tomasr/molokai'
+"Plug 'NLKNguyen/papercolor-theme'
+"Plug 'tomasr/molokai'
+"Plug 'reedes/vim-colors-pencil'
 "Plug 'sjl/gundo.vim'
 Plug 'mbbill/undotree'
 Plug 'tomtom/tcomment_vim'
@@ -241,7 +242,7 @@ vnoremap <C-C> "*ygv
 nmap <S-CR> i<CR><Esc>
 
 " Insert space in normal mode
-nnoremap <SPACE> i<SPACE><ESC>
+"nnoremap <SPACE> i<SPACE><ESC>
 
 " increment/decrement feature
 nnoremap - <C-X>
@@ -304,7 +305,7 @@ set guioptions-=e  "remove ugly tab bar
 
 set guifont=Hack\ 9
 set background=light
-colorscheme PaperColor
+colorscheme spring-night
 highlight ExtraWhitespace guibg=#f4acbb ctermbg=210
 "highlight Cursor guibg=#65ff51
 
