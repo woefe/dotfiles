@@ -18,7 +18,7 @@ fullscreen = false
 cursor_blink = system
 
 # "block", "underline" or "ibeam"
-cursor_shape = block
+cursor_shape = ibeam
 
 # $BROWSER is used by default if set, with xdg-open as a fallback
 #browser = xdg-open
@@ -33,44 +33,54 @@ filter_unmatched_urls = true
 #modify_other_keys = false
 
 [colors]
+# Base16 OneDark
+# Author: Lalit Magant (http://github.com/tilal6991)
 
-#cursor = #444444
-foreground = #fffeeb
-foreground_bold = #fffeeb
-background = #334152
-highlight = #788898
+foreground      = #abb2bf
+foreground_bold = #b6bdca
+cursor          = #ffffff
+background      = #282c34
 
-# Black + Grey (Comment)
-color0 = #000000
-color8 = #6c7279
+# 16 color space
 
-# Red + Bright Red
-color1 = #fd8489
-color9 = #ebeadb
+# Black, Gray, Silver, White
+color0  = #282c34
+color8  = #545862
+color7  = #545862
+color15 = #c8ccd4
 
-# Green + Bright Green
-color2 = #a9dd9d
-color10 = #5f8770
+# Red
+color1  = #e06c75
+color9  = #e06c75
 
-# Yellow (Orange) + Bright Yellow (Yellow)
-color3 = #f0aa8a
-color11 = #fffaaa
+# Green
+color2  = #98c379
+color10 = #98c379
 
-# Blue + Bright Blue
-color4 = #a8d2eb
-color12 = #3e999f
+# Yellow
+color3  = #e5c07b
+color11 = #e5c07b
 
-# Magenta (Purple) + Bright Magenta
-color5 = #e7d5ff
-color13 = #A25CFF
+# Blue
+color4  = #61afef
+color12 = #61afef
 
-# Cyan (Aqua) + Bright Cyan
-color6 = #32C0D0
-color14 = #96EDF7
+# Purple
+color5  = #c678dd
+color13 = #c678dd
 
-# Light Grey (Selection) + White (Current Line)
-color7 = #545f6e
-color15 = #ffffff
+# Teal
+color6  = #56b6c2
+color14 = #56b6c2
+
+# Extra colors
+color15 = #c8ccd4
+color16 = #d19a66
+color17 = #be5046
+color18 = #353b45
+color19 = #3e4451
+color20 = #565c64
+color21 = #b6bdca
 
 [hints]
 #font = Monospace 12
