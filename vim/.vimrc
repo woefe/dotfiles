@@ -29,16 +29,20 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
-"Plug 'NLKNguyen/papercolor-theme'
-"Plug 'tomasr/molokai'
-"Plug 'reedes/vim-colors-pencil'
-"Plug 'sjl/gundo.vim'
 Plug 'mbbill/undotree'
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
 "Plug 'plasticboy/vim-markdown'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'editorconfig/editorconfig-vim'
+
+" Colorschemes
+Plug 'chriskempson/base16-vim'
+"Plug 'rakr/vim-one'
+"Plug 'NLKNguyen/papercolor-theme'
+"Plug 'tomasr/molokai'
+"Plug 'reedes/vim-colors-pencil'
+"Plug 'sjl/gundo.vim'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -116,9 +120,12 @@ set visualbell
 " is unset, this does nothing.
 set t_vb=
 
+" Disable mouse
+set mouse=
+
 " Display line numbers on the left
 set number
-"set relativenumber
+set relativenumber
 
 " Quickly time out on keycodes, but never time out on mappings
 set notimeout ttimeout ttimeoutlen=100
@@ -254,6 +261,7 @@ nnoremap <A-n> :NERDTreeToggle<CR>
 " Cycle through buffers
 nnoremap <Leader><TAB> :bnext<CR>
 nnoremap <Leader><S-TAB> :bprevious<CR>
+nnoremap <A-b> :b 
 
 " ctags jumping
 nmap <A-a> <C-]>
@@ -304,8 +312,9 @@ set guioptions-=L  "remove left-hand scroll bar
 set guioptions-=e  "remove ugly tab bar
 
 set guifont=Hack\ 9
-set background=light
-colorscheme spring-night
+set termguicolors
+set background=dark
+colorscheme base16-onedark
 highlight ExtraWhitespace guibg=#f4acbb ctermbg=210
 "highlight Cursor guibg=#65ff51
 
@@ -319,7 +328,7 @@ autocmd! BufWritePost * Neomake
 let g:neomake_cpp_enabled_makers = ['gcc']
 
 " Airline settings
-let g:airline_theme='tomorrow'
+"let g:airline_theme='tomorrow'
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
