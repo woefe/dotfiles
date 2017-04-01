@@ -168,9 +168,9 @@ bindsym $mod+Control+t exec --no-startup-id synclient TouchpadOff=$(synclient -l
 # Multimedia controls
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 1 -steps 1
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 1 -steps 1
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer sset Master 2%+
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer sset Master 2%-
-bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer sset Master 2%+ && pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer sset Master 2%- && pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle && pkill -SIGRTMIN+10 i3blocks
 bindsym XF86WebCam exec cheese
 bindsym XF86AudioNext exec --no-startup-id mocp --next
 bindsym XF86AudioPrev exec --no-startup-id mocp --previous
@@ -208,12 +208,12 @@ client.unfocused $color_black $color_black $color_white
 bar {
     position top
     tray_output primary
-    status_command i3status
+    status_command i3blocks
     separator_symbol "🙼"
     #separator_symbol "╱"
     #separator_symbol "┃"
-    bindsym button4 exec --no-startup-id amixer sset Master 2%+
-    bindsym button5 exec --no-startup-id amixer sset Master 2%-
+    bindsym button4 exec true
+    bindsym button5 exec true
     colors {
         background $color_gray
         statusline $color_white
