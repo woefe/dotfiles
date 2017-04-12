@@ -30,7 +30,9 @@ wmname Sawfish
 #urxvtd -q -f -o
 
 # set wallpaper
-if [ -f ~/.wallpaper ]; then
+if [ -x ~/.fehbg ]; then
+    ~/.fehbg
+elif [ -f ~/.wallpaper ]; then
     feh --bg-fill ~/.wallpaper &
 fi
 
