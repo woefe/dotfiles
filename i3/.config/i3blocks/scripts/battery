@@ -8,9 +8,6 @@
 # This script is meant to use with i3blocks. It parses the output of the "acpi"
 # command (often provided by a package of the same name) to read the status of
 # the battery, and eventually its remaining time (to full charge or discharge).
-#
-# The color will gradually change for a percentage below 85%, and the urgency
-# (exit code 33) is set if there is less that 5% remaining.
 
 use strict;
 use warnings;
@@ -38,9 +35,9 @@ $percent = $2;
 $full_text = "$percent%";
 
 if ($status eq 'Discharging') {
-	$full_text .= ' DIS';
+	$full_text .= ' 🗲';
 } elsif ($status eq 'Charging') {
-	$full_text .= ' CHR';
+	$full_text .= ' 🔌';
 }
 
 $short_text = $full_text;
@@ -55,19 +52,8 @@ print "$short_text\n";
 
 # consider color and urgent flag only on discharge
 if ($status eq 'Discharging') {
-
-	if ($percent < 20) {
-		print "#FF0000\n";
-	} elsif ($percent < 40) {
-		print "#FFAE00\n";
-	} elsif ($percent < 60) {
-		print "#FFF600\n";
-	} elsif ($percent < 85) {
-		print "#A8FF00\n";
-	}
-
-	if ($percent < 5) {
-		exit(33);
+	if ($percent < 10) {
+		print "#f46067\n";
 	}
 }
 
