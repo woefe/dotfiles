@@ -22,6 +22,16 @@ source /usr/share/fzf/key-bindings.zsh
 # vi-mode
 #source $HOME/.zsh-plugins/vi-mode.plugin.zsh
 
+#History settings
+HISTSIZE=70000
+SAVEHIST=70000
+setopt append_history         # append history instead of replacing
+setopt hist_expire_dups_first # when cleaning the history, remove duplicates first
+setopt hist_ignore_dups       # ignore duplication command history list
+setopt hist_ignore_space      # ignore commands that start with a space
+setopt hist_verify            # don't execute command from history directly but edit it first
+setopt share_history          # share history between simultaneously running shells
+
 # Ctrl+P to edit current command with $EDITOR
 autoload -Uz edit-command-line
 zle -N edit-command-line
@@ -35,11 +45,15 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-# Git prompt
+# Prompt: git status and hostname for ssh sessions
 prompt off
 source $HOME/.zsh-plugins/zsh-git-prompt/zshrc.sh
 GIT_PROMPT_EXECUTABLE="haskell"
-PROMPT='%B%F{red}%(?..%? )%f%b%B%40<..<%~ %b$(git_super_status)> '
+if [ -n "$SSH_CLIENT" -a -n "$SSH_TTY" ]; then
+    PROMPT='%B%F{red}%(?..%? )%f%b%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(git_super_status)> '
+else
+    PROMPT='%B%F{red}%(?..%? )%f%b%B%40<..<%~ %b$(git_super_status)> '
+fi
 
 # Enable fasd, a command-line productivity booster
 eval "$(fasd --init auto)"
