@@ -16,7 +16,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'kien/ctrlp.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'dag/vim-fish', { 'for': 'fish' }
-Plug 'Valloric/YouCompleteMe', { 'do': 'python2 ./install.py --clang-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer' }
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'lervag/vimtex'
 Plug 'Konfekt/FastFold'
@@ -38,8 +38,8 @@ Plug 'editorconfig/editorconfig-vim'
 
 " Colorschemes
 Plug 'chriskempson/base16-vim'
+Plug 'NLKNguyen/papercolor-theme'
 "Plug 'rakr/vim-one'
-"Plug 'NLKNguyen/papercolor-theme'
 "Plug 'tomasr/molokai'
 "Plug 'reedes/vim-colors-pencil'
 "Plug 'sjl/gundo.vim'
