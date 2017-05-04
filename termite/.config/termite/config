@@ -18,7 +18,7 @@ fullscreen = false
 cursor_blink = system
 
 # "block", "underline" or "ibeam"
-cursor_shape = ibeam
+cursor_shape = block
 
 # $BROWSER is used by default if set, with xdg-open as a fallback
 #browser = xdg-open
@@ -38,7 +38,7 @@ filter_unmatched_urls = true
 
 foreground      = #abb2bf
 foreground_bold = #b6bdca
-cursor          = #ffffff
+#cursor          = #ffffff
 background      = #282c34
 
 # 16 color space
