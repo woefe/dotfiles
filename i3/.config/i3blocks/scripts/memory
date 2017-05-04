@@ -20,6 +20,9 @@ awk -v type=$TYPE '
 /^MemTotal:/ {
 	mem_total=$2
 }
+/^MemAvailable:/ {
+	mem_available=$2
+}
 /^MemFree:/ {
 	mem_free=$2
 }
@@ -40,7 +43,7 @@ END {
 	if (type == "swap")
 		printf("%.1fG\n", (swap_total-swap_free)/1024/1024)
 	else
-		printf("%.1fG\n", (mem_total-mem_free)/1024/1024)
+		printf("%.1fG\n", (mem_total-mem_available)/1024/1024)
 
 	# TODO: short text
 

@@ -24,11 +24,11 @@ else
 fi
 
 # Issue #36 compliant.
-if ! [ -e "/sys/class/net/${INTERFACE}/operstate" ] || ! [ "`cat /sys/class/net/${INTERFACE}/operstate`" = "up" ]
+if ! [ -e "/sys/class/net/${INTERFACE}/carrier" ] || ! [ "`cat /sys/class/net/${INTERFACE}/carrier`" = "1" ]
 then
     echo "$INTERFACE down"
     echo "$INTERFACE down"
-    echo "#FF0000"
+    echo "#f46067"
     exit 0
 fi
 
