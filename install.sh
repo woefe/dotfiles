@@ -2,6 +2,11 @@
 
 # Before executing this script make sure you have GNU Stow installed!!
 
+if ! hash stow > /dev/null 2>&1; then
+    echo "Could not find GNU stow. Aborting..."
+    exit 1
+fi
+
 mkdir -p $HOME/.config
 
 #stow --no-folding autostart
@@ -9,6 +14,7 @@ mkdir -p $HOME/.config
 #stow bash
 #stow compton
 #stow --no-folding fish
+#stow environment
 #stow i3
 #stow --no-folding moc
 #stow --no-folding mpd; mkdir ~/.config/mpd/playlists
