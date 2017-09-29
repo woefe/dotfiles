@@ -48,7 +48,7 @@ bindkey -M vicmd 'j' history-substring-search-down
 # Prompt: git status and hostname for ssh sessions
 prompt off
 source $HOME/.zsh-plugins/zsh-git-prompt/zshrc.sh
-GIT_PROMPT_EXECUTABLE="haskell"
+GIT_PROMPT_EXECUTABLE="python"
 if [ -n "$SSH_CLIENT" -a -n "$SSH_TTY" ]; then
     PROMPT='%B%F{red}%(?..%? )%f%b%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(git_super_status)> '
 else
