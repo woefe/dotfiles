@@ -141,10 +141,10 @@ mode $mode_display {
 bindsym XF86Display mode $mode_display
 
 # Start rofi
-bindsym $mod+p exec --no-startup-id rofi -show drun -terminal $term_cmd -ssh-command '{terminal} -e "{ssh-client} {host}"'
-bindsym $mod+x exec --no-startup-id rofi -show run -terminal $term_cmd -ssh-command '{terminal} -e "{ssh-client} {host}"'
-bindsym $mod+a exec --no-startup-id rofi -show window -terminal $term_cmd -ssh-command '{terminal} -e "{ssh-client} {host}"'
-bindsym $mod+y exec --no-startup-id rofi -show ssh -terminal $term_cmd -ssh-command '{terminal} -e "{ssh-client} {host}"'
+bindsym $mod+p exec --no-startup-id rofi -show drun
+bindsym $mod+x exec --no-startup-id rofi -show run
+bindsym $mod+a exec --no-startup-id rofi -show window
+bindsym $mod+y exec --no-startup-id rofi -show ssh
 
 # Application Quickstart
 bindsym $mod+$alt+b exec firefox
