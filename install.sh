@@ -2,10 +2,15 @@
 
 # Before executing this script make sure you have GNU Stow installed!!
 
-if ! hash stow > /dev/null 2>&1; then
-    echo "Could not find GNU stow. Aborting..."
+function check_prog() {
+if ! hash $1 > /dev/null 2>&1; then
+    echo "Command not found: $1. Aborting..."
     exit 1
 fi
+}
+
+check_prog stow
+check_prog curl
 
 mkdir -p $HOME/.config
 
@@ -21,6 +26,7 @@ mkdir -p $HOME/.config
 #stow --no-folding qtile
 #stow --no-folding ranger
 #stow redshift
+#stow rofi
 #stow tmux
 #stow --no-folding vim; mkdir -p $HOME/.vim/{swapfiles,undodir}; curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 #ln -s ~/.vim ~/.config/nvim; ln -s ~/.vimrc ~/.config/nvim/init.vim #Installs nvim config (important: stow vim first)
