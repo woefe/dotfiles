@@ -1,3 +1,11 @@
+maybe_source() {
+    if test -r "$1"; then
+        source "$1"
+        return 0
+    fi
+    return 1
+}
+
 # grml zsh conf
 source $HOME/.zsh-plugins/grml-zsh-conf
 
@@ -13,11 +21,21 @@ bindkey '^ ' autosuggest-accept
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=white'
 
 # command not found
-source /usr/share/doc/pkgfile/command-not-found.zsh
+maybe_source /usr/share/doc/pkgfile/command-not-found.zsh
 
 # fzf keybindings and completion
-source /usr/share/fzf/completion.zsh
-source /usr/share/fzf/key-bindings.zsh
+maybe_source /usr/share/fzf/completion.zsh
+maybe_source /usr/share/fzf/key-bindings.zsh
+
+# Virtualenv Wrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/workspace
+if test -r /usr/bin/virtualenvwrapper.sh; then
+    export VIRTUALENVWRAPPER_SCRIPT=/usr/bin/virtualenvwrapper.sh
+elif test -r /usr/share/virtualenvwrapper/virtualenvwrapper.sh; then
+    export VIRTUALENVWRAPPER_SCRIPT=/usr/share/virtualenvwrapper/virtualenvwrapper.sh
+fi
+maybe_source /usr/bin/virtualenvwrapper_lazy.sh || maybe_source /usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh
 
 # vi-mode
 #source $HOME/.zsh-plugins/vi-mode.plugin.zsh
