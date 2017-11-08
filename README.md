@@ -6,7 +6,7 @@ This repo holds some config files for my favorite GNU/Linux software.
 
 * Clone this repo:
 ```shell
-git clone --recursive https://github.com/popeye123/dotfiles.git $HOME/.dotfiles
+git clone --recursive https://github.com/woefe/dotfiles.git $HOME/.dotfiles
 cd $HOME/.dotfiles
 ```
 * Install GNU Stow:
@@ -18,7 +18,9 @@ sudo pacman -S stow
 * Execute `./install.sh`
 
 # Screenshots
-Notebook
-![notebook setup](https://raw.githubusercontent.com/popeye123/dotfiles/master/screenshots/notebook.png)
+Laptop
+![laptop setup](https://i.imgur.com/g5fTXnu.png)
 Desktop
-![desktop setup](https://raw.githubusercontent.com/popeye123/dotfiles/master/screenshots/desktop-dual-monitor.png)
+![desktop setup](https://imgur.com/e7NTLIr.png)
+
+Wallpaper based on [Low Poly Wolf by zelda-Freak91](https://zelda-freak91.deviantart.com/art/Low-Poly-Art-Wolf-537626838)
