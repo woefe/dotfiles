@@ -184,6 +184,10 @@ set undodir=~/.vim/undodir
 " Enable increasing of alphabetical characters with <C-A>
 set nrformats+=alpha
 
+" Warn when file changed on disk
+set autoread
+autocmd CursorHold * checktime
+
 "------------------------------------------------------------
 " Indentation options
 "------------------------------------------------------------
