@@ -29,11 +29,13 @@ wmname Sawfish
 # start the urxvt daemon
 #urxvtd -q -f -o
 
-# set wallpaper
+# Set wallpaper using feh
+# Different wallpapers on a multi monitor setup can be set via:
+# feh --bg-fill path/1.png --bg-fill path/2.png
 if [ -x ~/.fehbg ]; then
     ~/.fehbg
-elif [ -f ~/.wallpaper ]; then
-    feh --bg-fill ~/.wallpaper &
+elif [ -f ~/.wallpapers/wallpaper ]; then
+    feh --bg-fill ~/.wallpapers/wallpaper &
 fi
 
 # Initialize X's resource database
