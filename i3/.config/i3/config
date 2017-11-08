@@ -210,6 +210,9 @@ bar {
     position top
     tray_output primary
     status_command i3blocks
+    font pango: DejaVu Sans, Symbola 9
+    #separator_symbol "❮"
+    #separator_symbol "❰"
     separator_symbol "🙼"
     #separator_symbol "╱"
     #separator_symbol "┃"
