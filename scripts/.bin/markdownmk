@@ -9,6 +9,20 @@
 # Dependencies: inotify-tools, zathura, pandoc
 ###
 
+pdf_viewer="zathura"
+watch_file=$(realpath "$1")
+tmp_dir="/tmp/markdownmk"
+pid_file="$tmp_dir/${watch_file//\//%}.pid"
+build_file="$tmp_dir/${watch_file//\//%}.pdf"
+pdf_viewer_pid=-1
+
+
+function check_prog() {
+    if ! hash $1 > /dev/null 2>&1; then
+        echo "Command not found: $1. Aborting..."
+        exit 1
+    fi
+}
 
 maybe_start_pdf_viewer(){
     if [ "$pdf_viewer_pid" -lt 1 ] || ! ps -p "$pdf_viewer_pid" > /dev/null; then
@@ -23,18 +37,14 @@ compile_and_view(){
     maybe_start_pdf_viewer
 }
 
+check_prog pandoc
+check_prog inotifywait
+check_prog $pdf_viewer
 
 if [ ! -r "$1" ];then
     echo "Cannot read file '$1'"
     exit 1
 fi
-
-pdf_viewer="zathura"
-watch_file=$(realpath "$1")
-tmp_dir="/tmp/markdownmk"
-pid_file="$tmp_dir/${watch_file//\//%}.pid"
-build_file="$tmp_dir/${watch_file//\//%}.pdf"
-pdf_viewer_pid=-1
 
 mkdir -p "$tmp_dir"
 if [ -w "$pid_file" ]; then
