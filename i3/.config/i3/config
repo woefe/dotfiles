@@ -145,6 +145,7 @@ bindsym $mod+p exec --no-startup-id rofi -show drun
 bindsym $mod+x exec --no-startup-id rofi -show run
 bindsym $mod+a exec --no-startup-id rofi -show window
 bindsym $mod+y exec --no-startup-id rofi -show ssh
+bindsym $mod+g exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard
 
 # Application Quickstart
 bindsym $mod+$alt+b exec firefox

@@ -20,6 +20,7 @@ mkdir -p $HOME/.config
 #stow compton
 #stow --no-folding fish
 #stow environment
+#stow greenclip
 #stow i3
 #stow --no-folding moc
 #stow --no-folding mpd; mkdir ~/.config/mpd/playlists

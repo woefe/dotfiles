@@ -23,10 +23,10 @@ xset b off
 xset -dpms
 xset s off
 
-# fix Java GUI rendering bugs (qtile sets the wmname itself)
-wmname Sawfish
+# Fix Java GUI rendering bugs (qtile sets the wmname itself)
+#wmname Sawfish
 
-# start the urxvt daemon
+# Start the urxvt daemon
 #urxvtd -q -f -o
 
 # Set wallpaper using feh
@@ -47,10 +47,13 @@ compton &
 # Removes mouse cursor if it did not move for 5 seconds
 unclutter &
 
+# Greenclip clipboard manager
+greenclip daemon &
+
 # Workaround: First execution of amixer might take a few second.
 # Execute it here so that awesome, which also executes amixer, doesn't
 # hang on startup.
-amixer -M sget Master > /dev/null
+#amixer -M sget Master > /dev/null
 
 # Autostart
 dex -a &
