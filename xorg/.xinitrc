@@ -47,6 +47,10 @@ compton &
 # Removes mouse cursor if it did not move for 5 seconds
 unclutter &
 
+# Synchronize all clipboards
+autocutsel -fork &
+autocutsel -selection PRIMARY -fork &
+
 # Greenclip clipboard manager
 greenclip daemon &
 
