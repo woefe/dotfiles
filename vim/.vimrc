@@ -35,6 +35,7 @@ Plug 'godlygeek/tabular'
 "Plug 'plasticboy/vim-markdown'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'machakann/vim-highlightedyank'
 
 " Colorschemes
 Plug 'chriskempson/base16-vim'
@@ -188,10 +189,7 @@ set nrformats+=alpha
 set autoread
 autocmd CursorHold * checktime
 
-"------------------------------------------------------------
 " Indentation options
-"------------------------------------------------------------
-
 set autoindent
 set smartindent
 set expandtab
@@ -199,6 +197,11 @@ set shiftwidth=4
 set softtabstop=4
 set smarttab
 
+
+if has('nvim')
+    " live preview of substitution in split window
+    set inccommand=split
+endif
 
 "------------------------------------------------------------
 " Mappings
@@ -406,3 +409,7 @@ let g:tex_flavor='latex'
 
 " EditorConfig settings
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+" highlightedyank
+let g:highlightedyank_highlight_duration = 600
+hi HighlightedyankRegion cterm=reverse gui=reverse
