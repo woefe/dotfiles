@@ -28,7 +28,7 @@ Plug 'tpope/vim-repeat'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
-Plug 'xolox/vim-notes'
+"Plug 'xolox/vim-notes'
 Plug 'mbbill/undotree'
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
@@ -350,8 +350,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#disable_refresh=1
 
 " vim-notes settings
-let g:notes_directories = ['~/sync/notes']
-let g:notes_suffix = '.txt'
+"let g:notes_directories = ['~/sync/notes']
+"let g:notes_suffix = '.txt'
 
 " vim-autoformat settings
 let g:formatdef_my_custom_java = '"--style=java"'

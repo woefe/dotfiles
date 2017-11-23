@@ -160,7 +160,7 @@ bindsym $mod+$alt+Return exec $term_cmd --class tmuxdrop -e 'tmux new-session -A
 
 bindsym Print exec xfce4-screenshooter
 
-bindsym $mod+Shift+n exec $term_cmd --class vimnotes -e 'nvim note:Notes'
+bindsym $mod+Shift+n exec $term_cmd --class vimnotes -e "nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md"
 bindsym $mod+$alt+n [class="vimnotes"] scratchpad show
 for_window [class="vimnotes"] move scratchpad
 
