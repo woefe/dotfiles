@@ -36,6 +36,7 @@ Plug 'godlygeek/tabular'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'machakann/vim-highlightedyank'
+Plug 'fatih/vim-go', { 'for': 'go' }
 
 " Colorschemes
 Plug 'chriskempson/base16-vim'
