@@ -28,6 +28,10 @@ command=~/.config/i3blocks/scripts/$BLOCK_NAME
 separator_block_width=21
 markup=none
 
+[zec]
+label=
+command=curl https://api.cryptowat.ch/markets/kraken/zeceur/price | grep -Eo '"price":[0-9]+\.?[0-9]*'| cut -d: -f2
+interval=60
 
 # Memory usage
 #
@@ -76,7 +80,7 @@ interval=3
 # The script may be called with -w and -c switches to specify thresholds,
 # see the script for details.
 [cpu_usage]
-label= 
+label= 
 interval=3
 #min_width=▦ 100.00
 #separator=false
@@ -92,7 +96,7 @@ interval=10
 # The second parameter overrides the mixer selection
 # See the script for details.
 [volume]
-label=🔊
+label=
 #label=♪
 instance=Master
 #instance=PCM
@@ -110,7 +114,7 @@ interval=30
 # Date Time
 #
 [time]
-command= date "+🕑 %H:%M (%-d %b)"
+command= date "+ %H:%M (%-d %b)"
 interval=60
 
 # Generic media player support
