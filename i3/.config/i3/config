@@ -27,6 +27,7 @@ bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
+bindsym $mod+Shift+p focus parent
 bindsym $mod+u [urgent=latest] focus
 
 # change focus between tiling / floating windows
