@@ -297,6 +297,7 @@ nmap <Insert> "*p
 " neovim terminal mappings
 if has('nvim')
     tnoremap <Esc> <C-\><C-n>
+    tnoremap <C-v><Esc> <Esc>
     tnoremap <A-h> <C-\><C-n><C-w>h
     tnoremap <A-j> <C-\><C-n><C-w>j
     tnoremap <A-k> <C-\><C-n><C-w>k
