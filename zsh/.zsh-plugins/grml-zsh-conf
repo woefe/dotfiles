@@ -1087,7 +1087,7 @@ function help-show-abk () {
 
 zle -N help-show-abk
 
-# press "ctrl-e d" to insert the actual date in the form yyyy-mm-dd
+# press "ctrl-x d" to insert the actual date in the form yyyy-mm-dd
 function insert-datestamp () { LBUFFER+=${(%):-'%D{%Y-%m-%d}'}; }
 zle -N insert-datestamp
 
@@ -1186,7 +1186,7 @@ function help_zle_parse_keybindings () {
         [[ $load_cache -eq 0 ]] && . $HELP_ZLE_CACHE_FILE && return
     fi
 
-    #fill with default keybindings, possibly to be overwriten in a file later
+    #fill with default keybindings, possibly to be overwritten in a file later
     #Note that due to zsh inconsistency on escaping assoc array keys, we encase the key in '' which we will remove later
     local -A help_zle_keybindings
     help_zle_keybindings['<Ctrl>@']="set MARK"
@@ -1239,7 +1239,7 @@ function help_zle_parse_keybindings () {
             #             ignores lines that are commentend out
             #             grabs first in '' or "" enclosed string with length between 1 and 6 characters
             elif [[ "$cline" == [^#]#(bind2maps[[:space:]](*)-s|bindkey|compdef -k)[[:space:]](*)(#b)(\"((?)(#c1,6))\"|\'((?)(#c1,6))\')(#B)(*)  ]]; then
-                #description prevously found ? description not more than 2 lines away ? keybinding not empty ?
+                #description previously found ? description not more than 2 lines away ? keybinding not empty ?
                 if [[ -n $lastkeybind_desc && $num_lines_elapsed -lt 2 && -n $match[1] ]]; then
                     #substitute keybinding string with something readable
                     k=${${${${${${${match[1]/\\e\^h/<Alt><BS>}/\\e\^\?/<Alt><BS>}/\\e\[5~/<PageUp>}/\\e\[6~/<PageDown>}//(\\e|\^\[)/<Alt>}//\^/<Ctrl>}/3~/<Alt><Del>}
@@ -1477,7 +1477,7 @@ bind2maps emacs viins       -- -s ' ' magic-space
 #k# Trigger menu-complete
 bind2maps emacs viins       -- -s '\ei' menu-complete  # menu completion via esc-i
 #k# Insert a timestamp on the command line (yyyy-mm-dd)
-bind2maps emacs viins       -- -s '^ed' insert-datestamp
+bind2maps emacs viins       -- -s '^xd' insert-datestamp
 #k# Insert last typed word
 bind2maps emacs viins       -- -s "\em" insert-last-typed-word
 #k# A smart shortcut for \kbd{fg<enter>}
@@ -1582,7 +1582,7 @@ function command_not_found_handler () {
 # history
 
 #v#
-HISTFILE=${ZDOTDIR:-${HOME}}/.zsh_history
+HISTFILE=${HISTFILE:-${ZDOTDIR:-${HOME}}/.zsh_history}
 isgrmlcd && HISTSIZE=500  || HISTSIZE=5000
 isgrmlcd && SAVEHIST=1000 || SAVEHIST=10000 # useful for setopt append_history
 
@@ -2001,6 +2001,19 @@ function prompt_grml_help () {
           accordingly. Default (left): rc change-root user at host path vcs
           percent; Default (right): sad-smiley
 
+        - strip-sensitive-characters (boolean): If the \`prompt_subst' option
+          is active in zsh, the shell performs lots of expansions on prompt
+          variable strings, including command substitution. So if you don't
+          control where some of your prompt strings is coming from, this is
+          an exploitable weakness. Grml's zsh setup does not set this option
+          and it is off in the shell in zsh-mode by default. If it *is* turned
+          on however, this style becomes active, and there are two flavours of
+          it: On per default is a global variant in the '*:setup' context. This
+          strips characters after the whole prompt string was constructed. There
+          is a second variant in the '*:items:<item>', that is off by default.
+          It allows fine grained control over which items' data is stripped.
+          The characters that are stripped are: \$ and \`.
+
     Available styles in 'items:<item>' are: pre, post. These are strings that
     are inserted before (pre) and after (post) the item in question. Thus, the
     following would cause the user name to be printed in red instead of the
@@ -2050,7 +2063,7 @@ function grml_prompt_setup () {
     autoload -Uz vcs_info
     # The following autoload is disabled for now, since this setup includes a
     # static version of the ‘add-zsh-hook’ function above. It needs to be
-    # reenabled as soon as that static definition is removed again.
+    # re-enabled as soon as that static definition is removed again.
     #autoload -Uz add-zsh-hook
     add-zsh-hook precmd prompt_$1_precmd
 }
@@ -2255,7 +2268,7 @@ grml_theme_add_token: Token `%s'\'' exists! Giving up!\n\n' $name
     fi
 }
 
-function grml_typeset_and_wrap () {
+function grml_wrap_reply () {
     emulate -L zsh
     local target="$1"
     local new="$2"
@@ -2263,14 +2276,16 @@ function grml_typeset_and_wrap () {
     local right="$4"
 
     if (( ${+parameters[$new]} )); then
-        typeset -g "${target}=${(P)target}${left}${(P)new}${right}"
+        REPLY="${left}${(P)new}${right}"
+    else
+        REPLY=''
     fi
 }
 
 function grml_prompt_addto () {
     emulate -L zsh
     local target="$1"
-    local lr it apre apost new v
+    local lr it apre apost new v REPLY
     local -a items
     shift
 
@@ -2284,21 +2299,21 @@ function grml_prompt_addto () {
             || apost=${grml_prompt_post_default[$it]}
         zstyle -s ":prompt:${grmltheme}:${lr}:items:$it" token new \
             || new=${grml_prompt_token_default[$it]}
-        typeset -g "${target}=${(P)target}${apre}"
         if (( ${+grml_prompt_token_function[$it]} )); then
             ${grml_prompt_token_function[$it]} $it
-            typeset -g "${target}=${(P)target}${REPLY}"
         else
             case $it in
             battery)
-                grml_typeset_and_wrap $target $new '' ''
+                grml_wrap_reply $target $new '' ''
                 ;;
             change-root)
-                grml_typeset_and_wrap $target $new '(' ')'
+                grml_wrap_reply $target $new '(' ')'
                 ;;
             grml-chroot)
                 if [[ -n ${(P)new} ]]; then
-                    typeset -g "${target}=${(P)target}(CHROOT)"
+                    REPLY="$CHROOT"
+                else
+                    REPLY=''
                 fi
                 ;;
             vcs)
@@ -2308,14 +2323,33 @@ function grml_prompt_addto () {
                     vcscalled=1
                 fi
                 if (( ${+parameters[$v]} )) && [[ -n "${(P)v}" ]]; then
-                    typeset -g "${target}=${(P)target}${(P)v}"
+                    REPLY="${(P)v}"
+                else
+                    REPLY=''
                 fi
                 ;;
-            *) typeset -g "${target}=${(P)target}${new}" ;;
+            *) REPLY="$new" ;;
             esac
         fi
-        typeset -g "${target}=${(P)target}${apost}"
+        # Strip volatile characters per item. This is off by default. See the
+        # global stripping code a few lines below for details.
+        if [[ -o prompt_subst ]] && zstyle -t ":prompt:${grmltheme}:${lr}:items:$it" \
+                                           strip-sensitive-characters
+        then
+            REPLY="${REPLY//[$\`]/}"
+        fi
+        typeset -g "${target}=${(P)target}${apre}${REPLY}${apost}"
     done
+
+    # Per default, strip volatile characters (in the prompt_subst case)
+    # globally. If the option is off, the style has no effect. For more
+    # control, this can be turned off and stripping can be configured on a
+    # per-item basis (see above).
+    if [[ -o prompt_subst ]] && zstyle -T ":prompt:${grmltheme}:${lr}:setup" \
+                                       strip-sensitive-characters
+    then
+        typeset -g "${target}=${${(P)target}//[$\`]/}"
+    fi
 }
 
 function prompt_grml_precmd () {
@@ -2484,7 +2518,7 @@ function grml_control_xterm_title () {
 
 # The following autoload is disabled for now, since this setup includes a
 # static version of the ‘add-zsh-hook’ function above. It needs to be
-# reenabled as soon as that static definition is removed again.
+# re-enabled as soon as that static definition is removed again.
 #zrcautoload add-zsh-hook || add-zsh-hook () { :; }
 if [[ $NOPRECMD -eq 0 ]]; then
     add-zsh-hook precmd grml_reset_screen_title
@@ -2663,16 +2697,23 @@ if [[ -r /etc/debian_version ]] ; then
         alias acsh='apt-cache show'
         #a3# Execute \kbd{apt-cache policy}
         alias acp='apt-cache policy'
-        #a3# Execute \kbd{apt-get dist-upgrade}
-        salias adg="apt-get dist-upgrade"
-        #a3# Execute \kbd{apt-get install}
-        salias agi="apt-get install"
+        if check_com -c apt ; then
+          #a3# Execute \kbd{apt dist-upgrade}
+          salias adg="apt dist-upgrade"
+          #a3# Execute \kbd{apt upgrade}
+          salias ag="apt upgrade"
+          #a3# Execute \kbd{apt install}
+          salias agi="apt install"
+          #a3# Execute \kbd{apt-get update}
+          salias au="apt update"
+        else
+          salias adg="apt-get dist-upgrade"
+          salias ag="apt-get upgrade"
+          salias agi="apt-get install"
+          salias au="apt-get update"
+        fi
         #a3# Execute \kbd{aptitude install}
         salias ati="aptitude install"
-        #a3# Execute \kbd{apt-get upgrade}
-        salias ag="apt-get upgrade"
-        #a3# Execute \kbd{apt-get update}
-        salias au="apt-get update"
         #a3# Execute \kbd{aptitude update ; aptitude safe-upgrade}
         salias -a up="aptitude update ; aptitude safe-upgrade"
         #a3# Execute \kbd{dpkg-buildpackage}
@@ -2803,7 +2844,7 @@ compdef _functions freload
 #      Module zstat is loaded by default in grml zshrc, no extra action needed for that.
 #
 #      Known bugs:
-#      If you happen to come accross a symlink that points to a destination on an other partition
+#      If you happen to come across a symlink that points to a destination on another partition
 #      with the same inode number, that will be marked as symlink loop though it is not.
 #      Two hints for this situation:
 #      I)  Play lottery the same day, as you seem to be rather lucky right now.
@@ -3286,7 +3327,7 @@ return 0;;
     return $result
 }
 
-#f5# cd to directoy and list files
+#f5# cd to directory and list files
 function cl () {
     emulate -L zsh
     cd $1 && ls -a
@@ -3303,7 +3344,7 @@ function cd () {
     fi
 }
 
-#f5# Create Directoy and \kbd{cd} to it
+#f5# Create Directory and \kbd{cd} to it
 function mkcd () {
     if (( ARGC != 1 )); then
         printf 'usage: mkcd <new-directory>\n'
@@ -3686,7 +3727,7 @@ fi # end of check whether we have the 'hg'-executable
 
 if (( GRMLSMALL_SPECIFIC > 0 )) && isgrmlsmall ; then
 
-    unset abk[V]
+    unset "abk[V]"
     unalias    'V'      &> /dev/null
     unfunction vman     &> /dev/null
     unfunction viless   &> /dev/null
