@@ -32,7 +32,7 @@ function mktable(){
         field3=$(echo "$line" | cut -f3)
 
         if $highlight; then
-            printf "\033[48;5;252m%${width}s  %-${width}s  %-${width_type}s\e[0m\n" "$field1" "$field2" "$field3"
+            printf "\033[48;5;240m%${width}s  %-${width}s  %-${width_type}s\e[0m\n" "$field1" "$field2" "$field3"
             highlight=false
         else
             printf "%${width}s  %-${width}s  %-${width_type}s\e[0m\n" "$field1" "$field2" "$field3"
