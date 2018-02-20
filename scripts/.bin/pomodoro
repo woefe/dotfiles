@@ -19,7 +19,7 @@ print_enabled=true
 
 function play_beep() {
     if $audio_enabled; then
-        echo $beep | base64 --decode | aplay 2> /dev/null
+        echo $beep | base64 --decode | aplay -f S16_LE -c1 -r44100 2> /dev/null
     fi
 }
 
