@@ -32,7 +32,7 @@ Plug 'xolox/vim-misc'
 Plug 'mbbill/undotree'
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
-"Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'machakann/vim-highlightedyank'
@@ -385,16 +385,19 @@ let g:ycm_semantic_triggers.tex = [
             \ ]
 
 " vimlatex settings
-let g:vimtex_latexmk_enabled = 1
-let g:vimtex_latexmk_continuous = 1
-let g:vimtex_latexmk_build_dir = 'build'
+let g:vimtex_compiler_method = 'latexmk'
+let g:vimtex_compiler_latexmk = {
+            \ 'continuous' : 1,
+            \ 'build_dir' : 'build',
+            \ }
 "let g:vimtex_fold_enabled = 1
 let g:vimtex_imaps_leader = 'ö'
 let g:vimtex_complete_close_braces = 1
 let g:vimtex_quickfix_open_on_warning = 0
 let g:vimtex_quickfix_mode = 2
+let g:vimtex_view_method = 'zathura'
 if has('nvim')
-    let g:vimtex_latexmk_progname = '/usr/bin/nvr'
+    let g:vimtex_compiler_progname = '/usr/bin/nvr'
 endif
 
 let g:tex_fold_enabled=1
@@ -402,9 +405,6 @@ let g:vimsyn_folding='af'
 let g:xml_syntax_folding = 1
 let g:php_folding = 1
 let g:perl_fold = 1
-
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_ViewRule_pdf = 'zathura'
 
 "set filetype=tex on empty tex files.
 let g:tex_flavor='latex'
