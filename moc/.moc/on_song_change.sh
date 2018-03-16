@@ -1,30 +1,40 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 
 # Sends a notification via notify-send with album cover, artist, title
 # Usage: $0 audio.mp3 artist tiltle
 
-SONG_FILE=$1
-ARTIST=$2
-TITLE=$3
-COVER_FILE="/tmp/moc_cover.jpg"
-ICON="/usr/share/icons/Arc/devices/48/audio-headphones.png"
+set -o errexit
+set -o pipefail
+# set -o xtrace
 
+function hash_file() {
+    filename=$1
+    # Redirect from stdin to work around sha1sum's escaping algorithm
+    sha1sum < "${filename}" | cut -d" " -f1
+}
 
-if [ -z "$ARTIST" -o -z "$TITLE" ]; then
-    ARTIST=$(basename "$SONG_FILE")
+song_file=$1
+artist=$2
+title=$3
+cover_basedir="/tmp/mocp"
+cover_file="${cover_basedir}/$(hash_file "${song_file}").jpg"
+icon="/usr/share/icons/Arc/devices/48/audio-headphones.png"
+
+if [ -z "${artist}" ] || [ -z "${title}" ]; then
+    artist=$(basename "${song_file}")
 fi
 
-test -e "${COVER_FILE}" && rm "${COVER_FILE}"
-test -e "${COVER_FILE}.tmp" && rm "${COVER_FILE}.tmp"
+mkdir -p "${cover_basedir}"
 
-if [ -e "${SONG_FILE}" ]; then
-    ffmpeg -loglevel quiet -i "${SONG_FILE}" -an -vcodec copy "${COVER_FILE}"
+if [ -e "${song_file}" ]; then
+    ffmpeg -loglevel quiet -i "${song_file}" -an -vcodec copy "${cover_file}" || true
 fi
 
-if [ -e ${COVER_FILE} ]; then
-    mv "${COVER_FILE}" "${COVER_FILE}.tmp"
-    convert "${COVER_FILE}.tmp" -thumbnail 100x100 "${COVER_FILE}"
-    ICON=${COVER_FILE}
+if [ -e "${cover_file}" ]; then
+    # Optionally scale down: convert "${COVER_FILE}.tmp" -thumbnail 100x100 "${COVER_FILE}"
+    tmp_file="${cover_basedir}/$(hash_file "${cover_file}").jpg"
+    mv "${cover_file}" "${tmp_file}"
+    icon="${tmp_file}"
 fi
 
-notify-send -i "${ICON}" "${ARTIST}" "${TITLE}"
+notify-send -i "${icon}" "${artist}" "${title}"
