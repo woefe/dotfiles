@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ###
 # A small tool to watch a markdown file and convert it to pdf as soon as it changes.

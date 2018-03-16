@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 host_name=$(hostname -f)
 ip_adress=$(hostname -i)
