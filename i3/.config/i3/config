@@ -206,29 +206,31 @@ client.focused $color_blue $color_blue $color_white
 client.focused_inactive $color_black $color_black $color_white
 client.unfocused $color_black $color_black $color_white
 
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-    position top
-    tray_output primary
-    status_command i3blocks
-    font pango: DejaVu Sans, Symbola 9
-    #separator_symbol "❮"
-    #separator_symbol "❰"
-    separator_symbol "🙼"
-    #separator_symbol "╱"
-    #separator_symbol "┃"
-    bindsym button4 exec true
-    bindsym button5 exec true
-    colors {
-        background $color_gray
-        statusline $color_white
-        #separator $color_white
-        separator $color_blue
-        focused_workspace  $color_blue $color_blue $color_white
-        active_workspace   $color_blue $color_blue $color_white
-        inactive_workspace $color_gray $color_gray $color_white
-        urgent_workspace   $color_red $color_red $color_black
-    }
-}
+#bar {
+#    position top
+#    tray_output primary
+#    status_command i3blocks
+#    font pango: DejaVu Sans, Symbola 9
+#    #separator_symbol "❮"
+#    #separator_symbol "❰"
+#    separator_symbol "🙼"
+#    #separator_symbol "╱"
+#    #separator_symbol "┃"
+#    bindsym button4 exec true
+#    bindsym button5 exec true
+#    colors {
+#        background $color_gray
+#        statusline $color_white
+#        #separator $color_white
+#        separator $color_blue
+#        focused_workspace  $color_blue $color_blue $color_white
+#        active_workspace   $color_blue $color_blue $color_white
+#        inactive_workspace $color_gray $color_gray $color_white
+#        urgent_workspace   $color_red $color_red $color_black
+#    }
+#}
 
