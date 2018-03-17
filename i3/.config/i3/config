@@ -7,7 +7,7 @@ set $color_black "#000000"
 set $color_white "#FFFFFF"
 set $color_gray "#3e424d"
 set $color_darkgray "#2f343f"
-set $color_red  "#f46067"
+set $color_red  "#BD2C40"
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -155,7 +155,7 @@ bindsym $mod+$alt+e exec thunderbird
 bindsym $mod+$alt+r exec $term_cmd -e ranger
 bindsym $mod+$alt+m exec $term_cmd -e mocp
 bindsym $mod+$alt+c exec chromium --incognito
-bindsym $mod+$alt+p exec keepassx2 '/home/popeye/sync/passwords.kdbx'
+bindsym $mod+$alt+p exec keepassxc $HOME/sync/passwords.kdbx
 bindsym $mod+$alt+t exec telegram-desktop
 bindsym $mod+$alt+Return exec $term_cmd --class tmuxdrop -e 'tmux new-session -A -s drop'
 
@@ -177,8 +177,8 @@ bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle && pkill -S
 bindsym XF86WebCam exec cheese
 bindsym XF86AudioNext exec --no-startup-id mocp --next
 bindsym XF86AudioPrev exec --no-startup-id mocp --previous
-bindsym XF86AudioPlay exec --no-startup-id /home/popeye/.moc/mocp_toggle
-bindsym KP_Begin exec --no-startup-id /home/popeye/.moc/mocp_toggle
+bindsym XF86AudioPlay exec --no-startup-id $HOME/.moc/mocp_toggle
+bindsym KP_Begin exec --no-startup-id $HOME/.moc/mocp_toggle
 bindsym KP_Right exec --no-startup-id mocp --next
 bindsym KP_Left exec --no-startup-id mocp --previous
 
@@ -192,7 +192,7 @@ for_window [class="mpv"] floating enable
 for_window [class="Vlc"] floating enable
 for_window [class="feh"] floating enable
 for_window [class="Pavucontrol"] floating enable
-for_window [class="Keepassx"] floating enable
+for_window [class="keepassxc"] floating enable
 for_window [class="pinentry"] floating enable
 for_window [class="TelegramDesktop"] floating enable
 for_window [class="tmuxdrop"] fullscreen enable

@@ -98,7 +98,7 @@ while true; do
     if [ $TOGGLE -eq 0 ]; then
         bandwith
     else
-        echo "$INTERFACE"
+        echo " $INTERFACE"
     fi
     sleep 2 &
     wait
