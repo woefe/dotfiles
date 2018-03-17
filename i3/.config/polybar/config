@@ -25,7 +25,7 @@ height = 20
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 0.0
-fixed-center = false
+fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -42,18 +42,18 @@ padding-right = 2
 module-margin-left = 2
 module-margin-right = 2
 
-font-0 = fixed:pixelsize=9;3
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;3
-font-2 = Font Awesome 5 Free:pixelsize=9;3
-font-3 = Font Awesome 5 Free Solid:pixelsize=9;3
-font-4 = Font Awesome 5 Brands:pixelsize=9;3
-font-5 = Symbola:pixelsize=9;3
+font-0 = DejaVu Sans:pixelsize=9;3
+font-1 = Font Awesome 5 Free:pixelsize=9;3
+font-2 = Font Awesome 5 Free Solid:pixelsize=9;3
+font-3 = Font Awesome 5 Brands:pixelsize=9;3
+font-4 = Symbola:pixelsize=9;3
 
 modules-left = i3
 modules-center = xwindow
-modules-right = bandwidth zec monero memory cpu load temperature battery volume date
+modules-right = bandwidth memory cpu load battery volume zec monero date
 
 tray-position = right
+tray-detached = false
 tray-padding = 2
 tray-transparent = false
 tray-background = ${colors.background}
@@ -78,7 +78,8 @@ tray-position =
 
 [module/xwindow]
 type = internal/xwindow
-label = "  %title:0:40:...%  "
+format-prefix = " "
+label = "%title:0:40:...%"
 
 [module/i3]
 type = internal/i3
@@ -158,10 +159,11 @@ format = <ramp-volume> <value>
 format-volume = <ramp-volume> <label-volume>
 value =  %percentage%%
 
-ramp-volume-0 = " "
-ramp-volume-1 = " "
+ramp-volume-0 = " "
+ramp-volume-1 = " "
+ramp-volume-2 = " "
 
-format-muted-prefix = " "
+format-muted-prefix = "🔇 "
 label-muted = MUTED
 
 [module/battery]
@@ -169,27 +171,30 @@ type = internal/battery
 battery = BAT0
 adapter = ADP1
 full-at = 98
+poll-interval = 10
+time-format = %H:%M
 
 format-charging = <animation-charging> <label-charging>
-format-charging-underline = #ffb52a
+label-charging = %percentage%% (%time%)
 
 format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
+label-discharging = %percentage%% %time% %consumption%W
 
-format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = ${self.format-charging-underline}
+format-full-prefix = " "
+label-full = %percentage%%
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 1000
 
 [module/zec]
 type = custom/script
@@ -200,6 +205,8 @@ format = <label>
 format-prefix = " "
 label = %output:3%
 
+click-left = firefox https://cryptowat.ch/markets/kraken/zec/eur
+
 [module/monero]
 type = custom/script
 exec = ~/.config/polybar/scripts/kraken.py xmreur
@@ -209,30 +216,13 @@ format = <label>
 format-prefix = " "
 label = %output:3%
 
+click-left = firefox https://cryptowat.ch/markets/kraken/xmr/eur
+
 [module/bandwidth]
 type = custom/script
 exec = ~/.config/polybar/scripts/bandwidth
 tail = true
 click-left = kill -USR1 %pid%
-
-[module/temperature]
-type = internal/temperature
-thermal-zone = 0
-warn-temperature = 60
-
-format = <ramp> <label>
-format-underline = #f50a4d
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
-
-label = %temperature%
-label-warn = %temperature%
-label-warn-foreground = ${colors.secondary}
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
 
 [settings]
 screenchange-reload = true
