@@ -41,7 +41,7 @@
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing window manager is
     # present (e.g. xcompmgr, compiz, etc.).
-    transparency = 10
+    transparency = 5
 
     # The height of the entire notification.  If the height is smaller
     # than the font height and padding combined, it will be raised
@@ -64,7 +64,7 @@
     frame_width = 0
 
     # Defines color of the frame around the notification window.
-    frame_color = "#aaaaaa"
+    frame_color = "#abb2bf"
 
     # Define a color for the separator.
     # possible values are:
@@ -174,7 +174,7 @@
     sticky_history = yes
 
     # Maximum amount of notifications kept in history
-    history_length = 20
+    history_length = 30
 
     ### Misc/Advanced ###
 
@@ -259,7 +259,7 @@
     #icon = /path/to/icon
 
 [urgency_critical]
-    background = "#900000"
+    background = "#BD2C40"
     foreground = "#ffffff"
     frame_color = "#ff0000"
     timeout = 0
