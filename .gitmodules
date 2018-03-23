@@ -1,6 +1,3 @@
-[submodule "awesomewm/.config/awesome/vicious"]
-	path = awesomewm/.config/awesome/vicious
-	url = http://git.sysphere.org/vicious
 [submodule "zsh/.zsh-plugins/zsh-git-prompt"]
 	path = zsh/.zsh-plugins/zsh-git-prompt
 	url = https://github.com/olivierverdier/zsh-git-prompt.git
