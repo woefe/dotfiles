@@ -44,7 +44,6 @@ Plug 'NLKNguyen/papercolor-theme'
 "Plug 'rakr/vim-one'
 "Plug 'tomasr/molokai'
 "Plug 'reedes/vim-colors-pencil'
-"Plug 'sjl/gundo.vim'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -415,3 +414,6 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " highlightedyank
 let g:highlightedyank_highlight_duration = 600
 hi HighlightedyankRegion cterm=reverse gui=reverse
+
+" vim-markdown
+let g:vim_markdown_math = 1
