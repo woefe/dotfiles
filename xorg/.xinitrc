@@ -23,13 +23,7 @@ xset b off
 xset -dpms
 xset s off
 
-# Fix Java GUI rendering bugs (qtile sets the wmname itself)
-#wmname Sawfish
-
-# Start the urxvt daemon
-#urxvtd -q -f -o
-
-# Set wallpaper using feh
+# Set wallpaper(s) using feh.
 # Different wallpapers on a multi monitor setup can be set via:
 # feh --bg-fill path/1.png --bg-fill path/2.png
 if [ -x ~/.fehbg ]; then
@@ -54,15 +48,8 @@ autocutsel -selection PRIMARY -fork &
 # Greenclip clipboard manager
 greenclip daemon &
 
-# Workaround: First execution of amixer might take a few second.
-# Execute it here so that awesome, which also executes amixer, doesn't
-# hang on startup.
-#amixer -M sget Master > /dev/null
-
 # Autostart; wait until polybar is available, otherwise systray icons do not show up
 (while ! pgrep -u $UID -x polybar >/dev/null; do sleep 1; done; dex -a) &
 
 # finally start a window manager
-#exec qtile
-#exec awesome #-c /etc/xdg/awesome/rc.lua
 exec i3

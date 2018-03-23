@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Before executing this script make sure you have GNU Stow installed!!
 
 function check_prog() {
-if ! hash $1 > /dev/null 2>&1; then
+if ! hash "$1" > /dev/null 2>&1; then
     echo "Command not found: $1. Aborting..."
     exit 1
 fi
@@ -12,22 +12,20 @@ fi
 check_prog stow
 check_prog curl
 
-mkdir -p $HOME/.config
+mkdir -p "$HOME/.config"
 
 #stow --no-folding autostart
-#stow awesomewm
-#stow bash
 #stow compton
-#stow --no-folding fish
+#stow dunst
 #stow environment
+#stow --no-folding fish
 #stow greenclip
 #stow i3
 #stow --no-folding moc
-#stow --no-folding mpd; mkdir ~/.config/mpd/playlists
-#stow --no-folding qtile
 #stow --no-folding ranger
 #stow redshift
 #stow rofi
+#stow scripts
 #stow termite
 #stow tmux
 #stow --no-folding vim; mkdir -p $HOME/.vim/{swapfiles,undodir}; curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
