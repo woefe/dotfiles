@@ -1,17 +1,17 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # load X11 config
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
     for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-        [ -x "$f" ] && . "$f"
+        [ -x "$f" ] && source "$f"
     done
     unset f
 fi
 
 # load custom config
-if [ -d $HOME/.xinitrc.d ]; then
+if [ -d "$HOME/.xinitrc.d" ]; then
     for f in $HOME/.xinitrc.d/?* ; do
-        [ -x "$f" ] && . "$f"
+        [ -x "$f" ] && source "$f"
     done
     unset f
 fi
@@ -59,8 +59,8 @@ greenclip daemon &
 # hang on startup.
 #amixer -M sget Master > /dev/null
 
-# Autostart
-dex -a &
+# Autostart; wait until polybar is available, otherwise systray icons do not show up
+(while ! pgrep -u $UID -x polybar >/dev/null; do sleep 1; done; dex -a) &
 
 # finally start a window manager
 #exec qtile
