@@ -1,6 +1,18 @@
 set $mod Mod4
 set $alt Mod1
 set $term_cmd termite
+set $lock_cmd i3lock -S 0 -f -c "#3e424d" \
+        --insidevercolor=00000000 \
+        --insidewrongcolor=00000000 \
+        --insidecolor=00000000 \
+        --ringvercolor=5294e2ff \
+        --ringwrongcolor=f46067ff \
+        --ringcolor=2f343fff \
+        --linecolor=00000000 \
+        --separatorcolor=00000000 \
+        --textcolor=ffffffff \
+        --keyhlcolor=5294e2ff \
+        --bshlcolor=5294e2ff
 
 set $color_blue "#5294e2"
 set $color_black "#000000"
@@ -99,9 +111,6 @@ bindsym $mod+Control+r reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
-# lock screen
-bindsym $mod+Control+s exec --no-startup-id i3lock -S 0 -f -c $color_gray --insidevercolor=00000000 --insidewrongcolor=00000000 --insidecolor=00000000 --ringvercolor=5294e2ff --ringwrongcolor=f46067ff --ringcolor=2f343fff --linecolor=00000000 --separatorcolor=00000000 --textcolor=ffffffff --keyhlcolor=5294e2ff --bshlcolor=5294e2ff
-
 # resize window (you can also use the mouse for that)
 mode "resize" {
     # These bindings trigger as soon as you enter the resize mode
@@ -119,10 +128,11 @@ bindsym $mod+r mode "resize"
 set $sysmenu "system: (l) lock, (e) exit i3, (s) suspend, (r) reboot, (p) poweroff"
 mode $sysmenu {
     bindsym e         exit
-    bindsym l         exec --no-startup-id i3lock -S 0 -f -c $color_gray --insidevercolor=00000000 --insidewrongcolor=00000000 --insidecolor=00000000 --ringvercolor=5294e2ff --ringwrongcolor=f46067ff --ringcolor=2f343fff --linecolor=00000000 --separatorcolor=00000000 --textcolor=ffffffff --keyhlcolor=5294e2ff --bshlcolor=5294e2ff
+    bindsym l         exec --no-startup-id $lock_cmd, mode "default"
     bindsym p         exec --no-startup-id systemctl poweroff
     bindsym r         exec --no-startup-id systemctl reboot
-    bindsym s         exec --no-startup-id systemctl suspend
+    bindsym s         exec --no-startup-id systemctl suspend && $lock_cmd, mode "default"
+
     bindsym Return    mode "default"
     bindsym Escape    mode "default"
 }
@@ -161,7 +171,10 @@ bindsym $mod+$alt+Return exec $term_cmd --class tmuxdrop -e 'tmux new-session -A
 
 bindsym Print exec xfce4-screenshooter
 
-bindsym $mod+Shift+n exec $term_cmd --class vimnotes -e "nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md"
+# Vim notes
+set $notes termite --class vimnotes -e "nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md"
+exec $notes
+bindsym $mod+Shift+n exec $notes
 bindsym $mod+$alt+n [class="vimnotes"] scratchpad show
 for_window [class="vimnotes"] move scratchpad
 
@@ -196,6 +209,7 @@ for_window [class="keepassxc"] floating enable
 for_window [class="pinentry"] floating enable
 for_window [class="TelegramDesktop"] floating enable
 for_window [class="tmuxdrop"] fullscreen enable
+for_window [title="(Android |)Emulator(.*)"] floating enable
 
 workspace_auto_back_and_forth yes
 
