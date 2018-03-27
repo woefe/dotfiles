@@ -14,6 +14,8 @@ set $lock_cmd i3lock -S 0 -f -c "#3e424d" \
         --keyhlcolor=5294e2ff \
         --bshlcolor=5294e2ff
 
+set $mensa ~/.bin/mensa
+
 set $color_blue "#5294e2"
 set $color_black "#000000"
 set $color_white "#FFFFFF"
@@ -168,6 +170,7 @@ bindsym $mod+$alt+c exec chromium --incognito
 bindsym $mod+$alt+p exec keepassxc $HOME/sync/passwords.kdbx
 bindsym $mod+$alt+t exec telegram-desktop
 bindsym $mod+$alt+Return exec $term_cmd --class tmuxdrop -e 'tmux new-session -A -s drop'
+bindsym $mod+$alt+s exec --no-startup-id rofi -modi "Mensa Monday:$mensa 1#Mensa Tuesday:$mensa 2#Mensa Wednesday:$mensa 3#Mensa Thursday:$mensa 4#Mensa Friday:$mensa 5" -show "$(date +'Mensa %A')"
 
 bindsym Print exec xfce4-screenshooter
 
