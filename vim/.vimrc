@@ -288,6 +288,9 @@ nnoremap <F11> :UndotreeToggle<CR>
 " Don't highlight search matches
 nnoremap <Esc> :nohlsearch<CR>
 
+" Copy to X clipboard
+vmap <C-c> "*y
+
 " Paste from X clipboard
 vmap <Insert> d"*p
 imap <Insert> <Esc>"*pa
