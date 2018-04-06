@@ -22,7 +22,8 @@ INTERFACE=$(ip route | awk '/^default/ { print $5 ; exit }')
 TOGGLE=0
 
 function bandwith(){
-    # Issue #36 compliant.
+    INTERFACE=$(ip route | awk '/^default/ { print $5 ; exit }')
+
     if ! [ -e "/sys/class/net/${INTERFACE}/carrier" ] || ! [ "$(cat /sys/class/net/"${INTERFACE}"/carrier)" = "1" ]
     then
         echo "%{F#f46067}$INTERFACE%{F-}";

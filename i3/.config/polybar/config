@@ -25,7 +25,7 @@ height = 20
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 0.0
-fixed-center = true
+fixed-center = false
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -119,15 +119,24 @@ label-urgent-padding = 2
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
-label = %percentage:2%%
+; format-prefix = " "
+format = <ramp-load> <label>
+label = %percentage:2%% %{B-}
+
+ramp-load-0 = 
+ramp-load-1 = 
+ramp-load-2 = 
+ramp-load-3 = 
+ramp-load-4 = 
+ramp-load-5 = 
+ramp-load-6 = 
+ramp-load-7 = 
+ramp-load-8 = %{B#bd2c40} 
 
 [module/load]
 type = custom/script
 interval = 10
 exec = ~/.config/polybar/scripts/load_average
-
-format-prefix = " "
 
 [module/memory]
 type = internal/memory
@@ -175,19 +184,24 @@ poll-interval = 10
 time-format = %H:%M
 
 format-charging = <animation-charging> <label-charging>
-label-charging = %percentage%% (%time%)
+label-charging = %percentage%% (%time%) %{B-}
 
 format-discharging = <ramp-capacity> <label-discharging>
-label-discharging = %percentage%% %time% %consumption%W
+label-discharging = %percentage%% %time% %consumption%W %{B-}
 
 format-full-prefix = " "
 label-full = %percentage%%
 
-ramp-capacity-0 = 
+ramp-capacity-0 = %{B#bd2c40} 
 ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
+ramp-capacity-6 = 
+ramp-capacity-7 = 
+ramp-capacity-8 = 
+ramp-capacity-9 = 
 
 animation-charging-0 = 
 animation-charging-1 = 

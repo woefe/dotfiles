@@ -22,9 +22,9 @@ cpus="$(nproc)"
 awk -v cpus="$cpus" -v cpuload="$current_load" -v lload="$load" '
     BEGIN {
         if (cpus <= cpuload) {
-            print "%{F#f46067}", lload, "%{F-}";
+            print "%{B#BD2C40}  ", lload, "%{B-}";
         } else {
-            print lload;
+            print "  ", lload;
         }
     }
 '
