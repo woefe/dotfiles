@@ -64,7 +64,7 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
+#bindsym $mod+s layout stacking
 bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
@@ -140,18 +140,17 @@ mode $sysmenu {
 }
 bindsym $mod+Delete mode $sysmenu
 
-set $mode_display "Ext Screen: (v) VGA ON, (V) VGA OFF, (h) HDMI ON, (H) HDMI OFF, (r) reset"
+set $mode_display "External Screen: (e) enable, (r) reset"
 mode $mode_display {
-    bindsym v exec --no-startup-id xrandr --output VGA1 --auto --above LVDS1 && ~/.fehbg, mode "default"
-    bindsym h exec --no-startup-id xrandr --output HDMI1 --auto --above LVDS1 && ~/.fehbg, mode "default"
-    bindsym Shift v exec --no-startup-id xrandr --output VGA1 --auto --off && ~/.fehbg, mode "default"
-    bindsym Shift h exec --no-startup-id xrandr --output HDMI1 --auto --off && ~/.fehbg, mode "default"
-    bindsym r exec --no-startup-id xrandr --output LVDS1 --primary --mode 1366x768 --output HDMI1 --off --output VGA1 --off && ~/.fehbg, mode "default"
+    bindsym e exec --no-startup-id xrandr --output DP-1 --auto --above eDP-1 --output DP-2 --auto --above eDP-1 && ~/.fehbg, mode "default"
+    bindsym r exec --no-startup-id xrandr --output eDP-1 --primary --mode 1920x1080 --output DP-1 --off --output DP-2 --off && ~/.fehbg, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym XF86Display mode $mode_display
+bindsym $mod+s mode $mode_display
+bindsym $mod+Shift+s exec --no-startup-id xrandr --output eDP-1 --primary --mode 1920x1080 --output DP-1 --off --output DP-2 --off && ~/.fehbg, mode "default"
 
 # Start rofi
 bindsym $mod+p exec --no-startup-id rofi -show drun
@@ -185,8 +184,8 @@ for_window [class="vimnotes"] move scratchpad
 bindsym $mod+Control+t exec --no-startup-id synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')
 
 # Multimedia controls
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 1 -steps 1
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 1 -steps 1
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5%
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5%
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer sset Master 2%+
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer sset Master 2%-
 bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle
@@ -197,8 +196,6 @@ bindsym XF86AudioPlay exec --no-startup-id $HOME/.moc/mocp_toggle
 bindsym KP_Begin exec --no-startup-id $HOME/.moc/mocp_toggle
 bindsym KP_Right exec --no-startup-id mocp --next
 bindsym KP_Left exec --no-startup-id mocp --previous
-
-bindsym $mod+Control+n exec --no-startup-id xrandr --output LVDS1 --primary --mode 1366x768 --output HDMI1 --off --output VGA1 --off && ~/.fehbg
 
 #Assign windows to workspaces
 assign [class="Firefox"] 1
