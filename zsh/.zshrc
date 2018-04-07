@@ -66,21 +66,17 @@ bindkey -M vicmd 'j' history-substring-search-down
 # Prompt: git status and hostname for ssh sessions
 prompt off
 source $HOME/.zsh-plugins/zsh-git-prompt/zshrc.sh
+ZSH_THEME_GIT_PROMPT_PREFIX="["
+ZSH_THEME_GIT_PROMPT_SUFFIX="] "
 GIT_PROMPT_EXECUTABLE="python"
 if [ -n "$SSH_CLIENT" -a -n "$SSH_TTY" ]; then
-    PROMPT='%B%F{red}%(?..%? )%f%b%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(git_super_status)> '
+    PROMPT='%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(git_super_status)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
 else
-    PROMPT='%B%F{red}%(?..%? )%f%b%B%40<..<%~ %b$(git_super_status)> '
+    PROMPT='%B%40<..<%~ %b$(git_super_status)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
 fi
 
 # Enable fasd, a command-line productivity booster
 eval "$(fasd --init auto)"
-
-# Enable thefuck. Lazy loading thefuck improves the startup time by almost a second.
-fuck() {
-    eval $(thefuck --alias)
-    eval $(whence fuck)
-}
 
 # Setup default aliases
 source ~/.aliases
@@ -110,27 +106,6 @@ man(){
     unset MANWIDTH
 }
 
-# print a random string
-random-string(){
-    if [[ -n $1 ]] && [[ $1 -gt 0 ]]; then
-        tr -dc "[:print:]" < /dev/urandom | head -c $1
-        echo
-    else
-        echo -e "Usage:\n$0 <length>"
-    fi
-}
-
 ls-by-size(){
     du -hd1 $1 | sort -hr
 }
-
-rename-date-exiv(){
-    if [[ -f $1 ]]; then
-        exiv2 rename $*
-    else
-        echo "Usage:"
-        echo "$0 PICTURES"
-        echo "Example: $0 Pictures/*.jpg"
-    fi
-}
-
