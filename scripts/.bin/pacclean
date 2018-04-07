@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if pacman -Qdtq;
+    then sudo pacman -Rs $(pacman -Qtdq)
+fi
+sudo paccache -vrk2
+sudo paccache -vruk0

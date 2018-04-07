@@ -1,5 +1,5 @@
 # Enable thefuck
-eval (thefuck --alias | tr '\n' ';')
+#eval (thefuck --alias | tr '\n' ';')
 
 # Load default environment variables
 source ~/.environment
@@ -20,7 +20,7 @@ set fish_color_host -o cyan
 set fish_color_match cyan
 set fish_color_normal normal
 set fish_color_operator cyan
-set fish_color_param black
+set fish_color_param normal
 set fish_color_quote green
 set fish_color_redirection brown
 set fish_color_search_match --background=white
@@ -51,12 +51,12 @@ set -g __fish_git_prompt_char_untrackedfiles "…"
 set -g __fish_git_prompt_char_conflictedstate "✖"
 set -g __fish_git_prompt_char_cleanstate "✔"
 set -g __fish_git_prompt_color_dirtystate blue
-set -g __fish_git_prompt_color_stagedstate yellow
+set -g __fish_git_prompt_color_stagedstate red
 set -g __fish_git_prompt_color_invalidstate red --bold
 set -g __fish_git_prompt_color_untrackedfiles $fish_color_normal
 set -g __fish_git_prompt_color_cleanstate green --bold
 
-set -g fish_color_cwd black --bold
+set -g fish_color_cwd --bold
 
 function fish_prompt --description 'Write out the prompt'
     set -l last_status $status
@@ -81,35 +81,9 @@ function fish_prompt --description 'Write out the prompt'
     echo -n '> '
 end
 
-
-# fasd hook into fish preexec event
-function __fasd_run -e fish_preexec
-    command fasd --proc (command fasd --sanitize "$argv") > "/dev/null" 2>&1 &
-end
-
-function fasd_cd
-    if test (count $argv) -le 1
-        fasd "$argv"
-    else
-        set _fasd_ret (fasd -e 'printf %s' $argv)
-        test -z "$_fasd_ret"; and return
-        test -d "$_fasd_ret"; and cd "$_fasd_ret"; or printf "%s\n" "$_fasd_ret"
-    end
-end
-
-# fasd aliases
-function a; command fasd -a $argv; end
-function s; command fasd -si $argv; end
-function d; command fasd -d $argv; end
-function f; command fasd -f $argv; end
-function e; command fasd -e $EDITOR $argv;end
-function sd; command fasd -sid $argv; end
-function sf; command fasd -sif $argv; end
-function z; fasd_cd -d $argv; end
-function zz; fasd_cd -di $argv; end
-
-function reset-kbd
-    ~/.xinitrc.d/keyboard_settings
+# Enable fzf keybindings
+function fish_user_key_bindings
+    fzf_key_bindings
 end
 
 # prevent man from displaying lines wider than 120 characters
@@ -122,23 +96,9 @@ function man
     env MANWIDTH=$MANWIDTH $man_cmd $argv
 end
 
-function random-string
-    if test -n "$argv" -a $argv[1] -gt 0
-        tr -dc "[:print:]" < /dev/urandom  | head -c $argv[1]
-        echo
-    else
-        echo -e "Usage:\nrandom-string <length>"
-    end
-end
-
-function rename-date-exiv
-    if test (count $argv) -gt 0
-        exiv2 rename $argv
-    else
-        echo "Usage:"
-        echo "raname-date-exiv PICTURES"
-        echo "Example: raname-date-exiv Pictures/*.jpg"
-    end
+# Spawn new terminal
+function T
+    eval "$TERMCMD &"
 end
 
 # start X at login
