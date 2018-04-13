@@ -63,16 +63,16 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
+# Set $PATH
+export PATH="$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.gem/ruby/2.5.0/bin"
+
 # Prompt: git status and hostname for ssh sessions
 prompt off
-source $HOME/.zsh-plugins/zsh-git-prompt/zshrc.sh
-ZSH_THEME_GIT_PROMPT_PREFIX="["
-ZSH_THEME_GIT_PROMPT_SUFFIX="] "
-GIT_PROMPT_EXECUTABLE="python"
+setopt PROMPT_SUBST
 if [ -n "$SSH_CLIENT" -a -n "$SSH_TTY" ]; then
-    PROMPT='%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(git_super_status)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
+    PROMPT='%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(gitprompt)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
 else
-    PROMPT='%B%40<..<%~ %b$(git_super_status)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
+    PROMPT='%B%40<..<%~ %b$(gitprompt)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
 fi
 
 # Enable fasd, a command-line productivity booster
@@ -80,9 +80,6 @@ eval "$(fasd --init auto)"
 
 # Setup default aliases
 source ~/.aliases
-
-# Set $PATH
-export PATH="$PATH:$HOME/.bin:$HOME/.local/bin"
 
 # Gets the nth argument from the last command by pressing Alt+1, Alt+2, ... Alt+5
 bindkey -s '\e1' "!:0-0 \t"
