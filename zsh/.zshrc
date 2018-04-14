@@ -68,8 +68,8 @@ export PATH="$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.gem/ruby/2.5.0/bin"
 
 # Prompt: git status and hostname for ssh sessions
 prompt off
-setopt PROMPT_SUBST
-if [ -n "$SSH_CLIENT" -a -n "$SSH_TTY" ]; then
+source ~/.zsh-plugins/zsh-git-prompt/git-prompt.zsh
+if [ -n "$SSH_CLIENT" ] && [ -n "$SSH_TTY" ]; then
     PROMPT='%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(gitprompt)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
 else
     PROMPT='%B%40<..<%~ %b$(gitprompt)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '

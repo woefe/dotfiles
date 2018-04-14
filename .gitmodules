@@ -7,3 +7,6 @@
 [submodule "zsh/.zsh-plugins/zsh-history-substring-search"]
 	path = zsh/.zsh-plugins/zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
+[submodule "zsh/.zsh-plugins/zsh-git-prompt"]
+	path = zsh/.zsh-plugins/zsh-git-prompt
+	url = https://github.com/woefe/zsh-git-prompt.git
