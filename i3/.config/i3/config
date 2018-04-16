@@ -10,7 +10,8 @@ set $lock_cmd i3lock -S 0 -f -c "#3e424d" \
         --ringcolor=2f343fff \
         --linecolor=00000000 \
         --separatorcolor=00000000 \
-        --textcolor=ffffffff \
+        --verifcolor=ffffffff \
+        --wrongcolor=ffffffff \
         --keyhlcolor=5294e2ff \
         --bshlcolor=5294e2ff
 
