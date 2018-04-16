@@ -75,8 +75,10 @@ else
     PROMPT='%B%40<..<%~ %b$(gitprompt)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
 fi
 
-# Enable fasd, a command-line productivity booster
-eval "$(fasd --init auto)"
+# Enable fasd, a command-line productivity booster (if available)
+if hash fasd 2> /dev/null; then
+    eval "$(fasd --init auto)"
+fi
 
 # Setup default aliases
 source ~/.aliases
