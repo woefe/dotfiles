@@ -1,19 +1,7 @@
 set $mod Mod4
 set $alt Mod1
 set $term_cmd termite
-set $lock_cmd i3lock -S 0 -f -c "#3e424d" \
-        --insidevercolor=00000000 \
-        --insidewrongcolor=00000000 \
-        --insidecolor=00000000 \
-        --ringvercolor=5294e2ff \
-        --ringwrongcolor=f46067ff \
-        --ringcolor=2f343fff \
-        --linecolor=00000000 \
-        --separatorcolor=00000000 \
-        --verifcolor=ffffffff \
-        --wrongcolor=ffffffff \
-        --keyhlcolor=5294e2ff \
-        --bshlcolor=5294e2ff
+set $lock_cmd slock
 
 set $mensa ~/.bin/mensa
 
@@ -130,14 +118,14 @@ bindsym $mod+r mode "resize"
 
 set $sysmenu "system: (l) lock, (e) exit i3, (s) suspend, (r) reboot, (p) poweroff"
 mode $sysmenu {
-    bindsym e         exit
-    bindsym l         exec --no-startup-id $lock_cmd, mode "default"
-    bindsym p         exec --no-startup-id systemctl poweroff
-    bindsym r         exec --no-startup-id systemctl reboot
-    bindsym s         exec --no-startup-id systemctl suspend && $lock_cmd, mode "default"
+    bindsym e             exit
+    bindsym --release l   exec --no-startup-id $lock_cmd, mode "default"
+    bindsym p             exec --no-startup-id systemctl poweroff
+    bindsym r             exec --no-startup-id systemctl reboot
+    bindsym           s   exec --no-startup-id systemctl suspend, mode "default"
 
-    bindsym Return    mode "default"
-    bindsym Escape    mode "default"
+    bindsym Return        mode "default"
+    bindsym Escape        mode "default"
 }
 bindsym $mod+Delete mode $sysmenu
 
