@@ -13,26 +13,22 @@ Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'kien/ctrlp.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer' }
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'lervag/vimtex'
 Plug 'Konfekt/FastFold'
-Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'xolox/vim-easytags'
-Plug 'xolox/vim-misc'
-"Plug 'xolox/vim-notes'
-Plug 'mbbill/undotree'
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'machakann/vim-highlightedyank'
@@ -126,7 +122,7 @@ set mouse=
 
 " Display line numbers on the left
 set number
-set relativenumber
+"set relativenumber
 
 " Quickly time out on keycodes, but never time out on mappings
 set notimeout ttimeout ttimeoutlen=100
@@ -334,8 +330,18 @@ highlight ExtraWhitespace guibg=#f4acbb ctermbg=210
 " Plugin Settings
 "------------------------------------------------------------
 
-" Run Neomake when saving the buffer (like syntastic does)
-autocmd! BufWritePost * Neomake
+" Neomake. Run only on write if on battery.
+function! OnBattery()
+    let l:bat_file = '/sys/class/power_supply/AC/online'
+    return filereadable(bat_file) && readfile(bat_file) == ['0']
+endfunction
+
+if OnBattery()
+  call neomake#configure#automake('w')
+else
+  call neomake#configure#automake('nw', 1000)
+endif
+
 let g:neomake_cpp_enabled_makers = ['gcc']
 
 " Airline settings
@@ -420,3 +426,6 @@ hi HighlightedyankRegion cterm=reverse gui=reverse
 
 " vim-markdown
 let g:vim_markdown_math = 1
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_toc_autofit = 1
