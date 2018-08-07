@@ -199,6 +199,9 @@ if has('nvim')
     set inccommand=split
 endif
 
+" Automatically save notes when focus is lost
+autocmd FocusLost ~/sync/Notes* :wa
+
 "------------------------------------------------------------
 " Mappings
 "------------------------------------------------------------
@@ -343,6 +346,7 @@ else
 endif
 
 let g:neomake_cpp_enabled_makers = ['gcc']
+let g:neomake_python_enabled_makers = ['pylint', 'pydocstyle', 'mypy']
 
 " Airline settings
 "let g:airline_theme='tomorrow'
