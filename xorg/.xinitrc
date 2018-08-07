@@ -48,8 +48,11 @@ autocutsel -selection PRIMARY -fork &
 # Greenclip clipboard manager
 greenclip daemon &
 
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
+
 # Autostart; wait until polybar is available, otherwise systray icons do not show up
-(while ! pgrep -u $UID -x polybar >/dev/null; do sleep 1; done; dex -a) &
+#(while ! pgrep -u $UID -x polybar >/dev/null; do sleep 1; done; dex -a) &
 
 # finally start a window manager
 exec i3

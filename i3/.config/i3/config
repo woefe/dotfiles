@@ -210,3 +210,4 @@ client.focused_inactive $color_black $color_black $color_white
 client.unfocused $color_black $color_black $color_white
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec --no-startup-id dex -a
