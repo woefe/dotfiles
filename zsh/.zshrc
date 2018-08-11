@@ -75,11 +75,6 @@ else
     PROMPT='%B%40<..<%~ %b$(gitprompt)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
 fi
 
-# Enable fasd, a command-line productivity booster (if available)
-if hash fasd 2> /dev/null; then
-    eval "$(fasd --init auto)"
-fi
-
 # Setup default aliases
 source ~/.aliases
 
@@ -89,11 +84,6 @@ bindkey -s '\e2' "!:1-1 \t"
 bindkey -s '\e3' "!:2-2 \t"
 bindkey -s '\e4' "!:3-3 \t"
 bindkey -s '\e5' "!:4-4 \t"
-
-o(){
-    fasd -f -e xdg-open $* &
-    disown
-}
 
 # prevent man from displaying lines wider than 120 characters
 man(){
