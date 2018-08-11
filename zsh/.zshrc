@@ -10,7 +10,7 @@ maybe_source() {
 source $HOME/.zsh-plugins/grml-zsh-conf
 
 # Enable syntax highlighting
-source $HOME/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/popeye/.zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 # Enable fish-shell like history searching
 source $HOME/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
@@ -36,6 +36,9 @@ elif test -r /usr/share/virtualenvwrapper/virtualenvwrapper.sh; then
     export VIRTUALENVWRAPPER_SCRIPT=/usr/share/virtualenvwrapper/virtualenvwrapper.sh
 fi
 maybe_source /usr/bin/virtualenvwrapper_lazy.sh || maybe_source /usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh
+
+# Report time stats of commands running longer than 20 sec
+REPORTTIME=20
 
 # vi-mode
 #source $HOME/.zsh-plugins/vi-mode.plugin.zsh
