@@ -366,8 +366,8 @@ endfunction
 
 command! -nargs=* Rg call fzf#run({
 \ 'source':  empty(<q-args>)
-\               ?        'rg --hidden --glob "!.git/" --iglob "!license.*" --iglob "!COPYING" --column --no-heading --color always --colors "match:none" -v "^[\t ]*$"'
-\               : printf('rg --hidden --glob "!.git/" --iglob "!license.*" --iglob "!COPYING" --column --no-heading --color always --colors "match:none" "%s"',
+\               ?        'rg --hidden --glob "!.git/" --iglob "!license*" --iglob "!COPYING" --column --no-heading --color always --colors "match:none" -v "^[\t ]*$"'
+\               : printf('rg --hidden --glob "!.git/" --iglob "!license*" --iglob "!COPYING" --column --no-heading --color always --colors "match:none" "%s"',
 \                       escape(<q-args>, '"\')),
 \ 'sink*':    function('<sid>rg_handler'),
 \ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : --nth 4.. '.
