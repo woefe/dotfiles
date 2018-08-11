@@ -51,8 +51,9 @@ greenclip daemon &
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
-# Autostart; wait until polybar is available, otherwise systray icons do not show up
-#(while ! pgrep -u $UID -x polybar >/dev/null; do sleep 1; done; dex -a) &
+# Blocking call to amixer. Speeds up polybar startup time and avoids that
+# programs don't show up in the system tray
+amixer > /dev/null
 
 # finally start a window manager
 exec i3
