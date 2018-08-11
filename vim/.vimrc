@@ -30,6 +30,8 @@ Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'junegunn/rainbow_parentheses.vim'
+"Plug 'junegunn/fzf'  " On Archlinux this plugin is installed globally when installing fzf
+Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -267,7 +269,6 @@ nnoremap <A-n> :NERDTreeToggle<CR>
 " Cycle through buffers
 nnoremap <Leader><TAB> :bnext<CR>
 nnoremap <Leader><S-TAB> :bprevious<CR>
-nnoremap <A-b> :b 
 
 " ctags jumping
 nmap <A-a> <C-]>
@@ -280,9 +281,6 @@ inoremap <A-left> <ESC>bi
 
 " toggle spellchecking
 map <F12> :setlocal spell! spelllang=de_de<CR>
-
-" Toggle Gundo history graph
-nnoremap <F11> :UndotreeToggle<CR>
 
 " Don't highlight search matches
 nnoremap <Esc> :nohlsearch<CR>
@@ -305,10 +303,12 @@ if has('nvim')
     tnoremap <A-l> <C-\><C-n><C-w>l
 endif
 
+" window navigation
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
+
 
 "------------------------------------------------------------
 " Theming
@@ -332,6 +332,50 @@ highlight ExtraWhitespace guibg=#f4acbb ctermbg=210
 "------------------------------------------------------------
 " Plugin Settings
 "------------------------------------------------------------
+
+" fzf commands and mappings
+command! Fd call fzf#run(fzf#wrap({'source': 'fd --type f --hidden --exclude .git'}))
+
+function! s:rg_to_qf(line)
+  let parts = split(a:line, ':')
+  return {'filename': parts[0], 'lnum': parts[1], 'col': parts[2],
+        \ 'text': join(parts[3:], ':')}
+endfunction
+
+function! s:rg_handler(lines)
+  if len(a:lines) < 2 | return | endif
+
+  let cmd = get({'ctrl-x': 'split',
+               \ 'ctrl-v': 'vertical split',
+               \ 'ctrl-t': 'tabe'}, a:lines[0], 'e')
+  let list = map(a:lines[1:], 's:rg_to_qf(v:val)')
+
+  let first = list[0]
+  execute cmd escape(first.filename, ' %#\')
+  execute first.lnum
+  execute 'normal!' first.col.'|zz'
+
+  if len(list) > 1
+    call setqflist(list)
+    copen
+    wincmd p
+  endif
+endfunction
+
+command! -nargs=* Rg call fzf#run({
+\ 'source':  empty(<q-args>)
+\               ?        'rg --hidden --glob "!.git/" --iglob "!license.*" --iglob "!COPYING" --column --no-heading --color always --colors "match:none" -v "^[\t ]*$"'
+\               : printf('rg --hidden --glob "!.git/" --iglob "!license.*" --iglob "!COPYING" --column --no-heading --color always --colors "match:none" "%s"',
+\                       escape(<q-args>, '"\')),
+\ 'sink*':    function('<sid>rg_handler'),
+\ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : --nth 4.. '.
+\            '--multi --bind=ctrl-a:select-all,ctrl-d:deselect-all ',
+\ 'down':    '50%'
+\ })
+
+nnoremap <A-f> :Fd<CR>
+nnoremap <A-r> :Rg<CR>
+nnoremap <A-b> :Buffers<CR>
 
 " Neomake. Run only on write if on battery.
 function! OnBattery()
