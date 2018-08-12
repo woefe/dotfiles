@@ -327,7 +327,6 @@ set guifont=Hack\ 9
 set termguicolors
 set background=dark
 colorscheme base16-onedark
-highlight ExtraWhitespace guibg=#f4acbb ctermbg=210
 "highlight Cursor guibg=#65ff51
 
 
@@ -473,6 +472,11 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " highlightedyank
 let g:highlightedyank_highlight_duration = 600
 hi HighlightedyankRegion cterm=reverse gui=reverse
+
+" vim-better-whitespace settings
+let g:better_whitespace_filetypes_blacklist=['diff', 'gitcommit', 'unite', 'qf', 'help']
+let g:strip_whitelines_at_eof=1
+highlight ExtraWhitespace guibg=#E06C75 ctermbg=210
 
 " vim-markdown
 let g:vim_markdown_math = 1
