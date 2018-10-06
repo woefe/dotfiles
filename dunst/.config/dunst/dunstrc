@@ -63,17 +63,6 @@
     # Set to 0 to disable.
     frame_width = 0
 
-    # Defines color of the frame around the notification window.
-    frame_color = "#abb2bf"
-
-    # Define a color for the separator.
-    # possible values are:
-    #  * auto: dunst tries to find a color fitting to the background;
-    #  * foreground: use the same color as the foreground;
-    #  * frame: use the same color as the frame;
-    #  * anything else will be interpreted as a X color.
-    separator_color = frame
-
     # Sort messages by urgency.
     sort = yes
 
@@ -242,29 +231,41 @@
     # Context menu.
     context = ctrl+m
 
+
 [urgency_low]
-    # IMPORTANT: colors have to be defined in quotation marks.
-    # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#282c34"
-    foreground = "#545862"
     timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#282c34"
-    foreground = "#ffffff"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_critical]
-    background = "#BD2C40"
-    foreground = "#ffffff"
-    frame_color = "#ff0000"
     timeout = 0
     # Icon for notifications with critical urgency, uncomment to enable
     #icon = /path/to/icon
+
+
+### Theming ###
+frame_color = "#444444"
+separator_color = "#444444"
+
+[base16_low]
+    msg_urgency = low
+    background = "#e4e4e4"
+    foreground = "#878787"
+
+[base16_normal]
+    msg_urgency = normal
+    background = "#e4e4e4"
+    foreground = "#444444"
+
+[base16_critical]
+    msg_urgency = critical
+    background = "#af0000"
+    foreground = "#eeeeee"
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.

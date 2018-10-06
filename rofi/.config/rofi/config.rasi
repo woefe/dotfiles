@@ -48,7 +48,7 @@ configuration {
     // window-format: "{w}    {i}{c}   {t}";
     // click-to-exit: true;
     // show-match: true;
-    theme: "~/.config/rofi/ArcDark.rasi";
+    theme: "~/.config/rofi/Arc.rasi";
     // color-normal: ;
     // color-urgent: ;
     // color-active: ;

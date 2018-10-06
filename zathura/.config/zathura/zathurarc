@@ -3,38 +3,35 @@ set page-padding 2
 set window-icon /usr/share/icons/breeze/mimetypes/64/application-pdf.svg
 set window-title-basename
 
-# Base16 OneDark
-# Author: Lalit Magant (http://github.com/tilal6991)
+set default-bg                  "#eeeeee"
+set default-fg                  "#e4e4e4"
 
-set default-bg                  "#282c34"
-set default-fg                  "#353b45"
+set statusbar-fg                "#eeeeee"
+set statusbar-bg                "#585858"
 
-set statusbar-fg                "#c8ccd4"
-set statusbar-bg                "#3e4451"
+set inputbar-bg                 "#eeeeee"
+set inputbar-fg                 "#444444"
 
-set inputbar-bg                 "#282c34"
-set inputbar-fg                 "#c8ccd4"
+set notification-bg             "#eeeeee"
+set notification-fg             "#e4e4e4"
 
-set notification-bg             "#282c34"
-set notification-fg             "#c8ccd4"
+set notification-error-bg       "#eeeeee"
+set notification-error-fg       "#af0000"
 
-set notification-error-bg       "#282c34"
-set notification-error-fg       "#e06c75"
+set notification-warning-bg     "#eeeeee"
+set notification-warning-fg     "#af0000"
 
-set notification-warning-bg     "#282c34"
-set notification-warning-fg     "#e06c75"
+set highlight-color             "#d75f00"
+set highlight-active-color      "#005f87"
 
-set highlight-color             "#e5c07b"
-set highlight-active-color      "#61afef"
+set completion-bg               "#e4e4e4"
+set completion-fg               "#005f87"
 
-set completion-bg               "#353b45"
-set completion-fg               "#61afef"
+set completion-highlight-fg     "#e4e4e4"
+set completion-highlight-bg     "#005f87"
 
-set completion-highlight-fg     "#c8ccd4"
-set completion-highlight-bg     "#61afef"
-
-set recolor-lightcolor          "#282c34"
-set recolor-darkcolor           "#b6bdca"
+set recolor-lightcolor          "#eeeeee"
+set recolor-darkcolor           "#444444"
 
 set recolor                     "false"
 set recolor-keephue             "false"

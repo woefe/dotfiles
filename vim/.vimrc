@@ -325,8 +325,8 @@ set guioptions-=e  "remove ugly tab bar
 
 set guifont=Hack\ 9
 set termguicolors
-set background=dark
-colorscheme base16-onedark
+set background=light
+colorscheme PaperColor
 "highlight Cursor guibg=#65ff51
 
 

@@ -33,54 +33,52 @@ filter_unmatched_urls = true
 #modify_other_keys = false
 
 [colors]
-# Base16 OneDark
-# Author: Lalit Magant (http://github.com/tilal6991)
 
-foreground      = #abb2bf
-foreground_bold = #b6bdca
-#cursor          = #ffffff
-background      = #282c34
+foreground          = #444444
+foreground_bold     = #444444
+cursor              = #444444
+cursor_foreground   = #eeeeee
+background          = rgba(238, 238, 238)
 
 # 16 color space
 
 # Black, Gray, Silver, White
-color0  = #282c34
-color8  = #545862
-color7  = #545862
-color15 = #c8ccd4
+color0  = #eeeeee
+color8  = #878787
+color7  = #878787
+color15 = #e4e4e4
 
 # Red
-color1  = #e06c75
-color9  = #e06c75
+color1  = #af0000
+color9  = #af0000
 
 # Green
-color2  = #98c379
-color10 = #98c379
+color2  = #5f8700
+color10 = #5f8700
 
 # Yellow
-color3  = #e5c07b
-color11 = #e5c07b
+color3  = #d75f00
+color11 = #d75f00
 
 # Blue
-color4  = #61afef
-color12 = #61afef
+color4  = #005f87
+color12 = #005f87
 
 # Purple
-color5  = #c678dd
-color13 = #c678dd
+color5  = #8700af
+color13 = #8700af
 
 # Teal
-color6  = #56b6c2
-color14 = #56b6c2
+color6  = #0087af
+color14 = #0087af
 
 # Extra colors
-color15 = #c8ccd4
-color16 = #d19a66
-color17 = #be5046
-color18 = #353b45
-color19 = #3e4451
-color20 = #565c64
-color21 = #b6bdca
+color16 = #d70000
+color17 = #d70087
+color18 = #e4e4e4
+color19 = #0087af
+color20 = #585858
+color21 = #444444
 
 [hints]
 #font = Monospace 12
