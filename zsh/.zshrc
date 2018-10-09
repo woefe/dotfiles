@@ -66,9 +66,6 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-# Set $PATH
-export PATH="$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.gem/ruby/2.5.0/bin"
-
 # Prompt: git status and hostname for ssh sessions
 prompt off
 source ~/.zsh-plugins/zsh-git-prompt/git-prompt.zsh
