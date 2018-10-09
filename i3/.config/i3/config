@@ -175,6 +175,8 @@ bindsym $mod+Control+t exec --no-startup-id synclient TouchpadOff=$(synclient -l
 # Multimedia controls
 bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5%
 bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5%
+bindsym $mod+Down exec --no-startup-id ddcutil setvcp 10 20 --display 1 &; exec --no-startup-id ddcutil setvcp 10 20 --display 2
+bindsym $mod+Up exec --no-startup-id ddcutil setvcp 10 100 --display 1 &; exec --no-startup-id ddcutil setvcp 10 100 --display 2
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer sset Master 2%+
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer sset Master 2%-
 bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle
