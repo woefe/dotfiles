@@ -13,7 +13,7 @@ set inputbar-bg                 "#eeeeee"
 set inputbar-fg                 "#444444"
 
 set notification-bg             "#eeeeee"
-set notification-fg             "#e4e4e4"
+set notification-fg             "#444444"
 
 set notification-error-bg       "#eeeeee"
 set notification-error-fg       "#af0000"
