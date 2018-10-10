@@ -99,6 +99,27 @@ bindsym $mod+Control+k move workspace to output up
 # reload the configuration file
 bindsym $mod+Control+r reload
 
+# Gaps
+gaps inner 10
+gaps outer 0
+smart_gaps on
+
+set $mode_gaps_inner gaps: (+) inc, (-) dec, (0) disable, (Shift+...) global
+bindsym $mod+Shift+g mode "$mode_gaps_inner"
+
+mode "$mode_gaps_inner" {
+    bindsym plus  gaps inner current plus 5
+    bindsym minus gaps inner current minus 5
+    bindsym 0     gaps inner current set 0
+
+    bindsym Shift+plus  gaps inner all plus 5
+    bindsym Shift+minus gaps inner all minus 5
+    bindsym Shift+0     gaps inner all set 0
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
