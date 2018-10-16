@@ -14,6 +14,7 @@ check_prog curl
 
 mkdir -p "$HOME/.config"
 
+#stow alacritty
 #stow --no-folding autostart
 #stow compton
 #stow dunst

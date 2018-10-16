@@ -11,9 +11,10 @@ configuration {
     // xoffset: 0;
     // fixed-num-lines: true;
     // show-icons: true;
-    terminal: "termite";
+    terminal: "alacritty";
     ssh-client: "ssh";
-    ssh-command: "{terminal} -e \"{ssh-client} {host}\"";
+    //ssh-command: "{terminal} -e \"{ssh-client} {host}\"";
+    ssh-command: "{terminal} -e {ssh-client} {host}";
     // run-command: "{cmd}";
     // run-list-command: "";
     // run-shell-command: "{terminal} -e {cmd}";

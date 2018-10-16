@@ -1,6 +1,6 @@
 set $mod Mod4
 set $alt Mod1
-set $term_cmd termite
+set $term_cmd alacritty
 set $lock_cmd slock
 
 set $mensa ~/.bin/mensa
@@ -184,11 +184,11 @@ bindsym $mod+$alt+s exec --no-startup-id rofi -modi "Mensa Monday:$mensa 1#Mensa
 bindsym Print exec xfce4-screenshooter
 
 # Vim notes
-set $notes termite --class vimnotes -e "nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md"
+set $notes alacritty --class vimnotes -e nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md
 exec $notes
 bindsym $mod+Shift+n exec $notes
-bindsym $mod+$alt+n [class="vimnotes"] scratchpad show
-for_window [class="vimnotes"] move scratchpad
+bindsym $mod+$alt+n [instance="vimnotes"] scratchpad show
+for_window [instance="vimnotes"] move scratchpad
 
 # Toggle touchpad on/off
 bindsym $mod+Control+t exec --no-startup-id synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')
