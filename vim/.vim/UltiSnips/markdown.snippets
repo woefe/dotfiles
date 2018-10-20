@@ -1,0 +1,25 @@
+snippet head "Pandoc metadata header" b
+---
+title: ${1:title}
+subtitle: ${2:subtitle}
+author: [${3:author1,author2,...}]
+date: ${4:`date +%Y-%m-%d`}
+keywords: [${5:keyword1,keyword2,...}]
+institute: ${6:Institute}
+titlepage: ${7:true}
+linkcolor: ${8:cyan}
+...
+$0
+endsnippet
+
+snippet ZZ "\mathbb{Z}" i
+\mathbb{Z}$0
+endsnippet
+
+snippet NN "\mathbb{N}" i
+\mathbb{N}$0
+endsnippet
+
+snippet RR "\mathbb{R}" i
+\mathbb{R}$0
+endsnippet
