@@ -10,7 +10,7 @@ maybe_source() {
 source $HOME/.zsh-plugins/grml-zsh-conf
 
 # Enable syntax highlighting
-source /home/popeye/.zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source $HOME/.zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 # Enable fish-shell like history searching
 source $HOME/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
