@@ -203,6 +203,7 @@ endif
 
 " Automatically save notes when focus is lost
 autocmd FocusLost ~/sync/Notes* :wa
+autocmd VimEnter ~/sync/Notes* :set nospell
 
 "------------------------------------------------------------
 " Mappings
@@ -311,6 +312,9 @@ nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
+" Disable <F1> showing the help
+map <F1> <nop>
+imap <F1> <nop>
 
 "------------------------------------------------------------
 " Theming
