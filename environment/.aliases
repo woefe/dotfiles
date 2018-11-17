@@ -18,5 +18,5 @@ alias del='trash'
 alias ssh-public-key='cat ~/.ssh/id_rsa.pub'
 alias vim='nvim'
 alias whoneeds='pacman -Qi'
-alias T="$TERMCMD 2> /dev/null &"
+alias T="$TERMCMD 2>&1 > /dev/null &!"
 alias o="rifle"
