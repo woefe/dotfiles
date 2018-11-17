@@ -13,6 +13,7 @@ env:
   # available, otherwise 'xterm-256color' is used.
   #
   TERM: xterm-256color
+  WINIT_HIDPI_FACTOR: 1.0
 
 window:
   # Window dimensions (changes require restart)
@@ -105,7 +106,7 @@ font:
     # style: Italic
 
   # Point size
-  size: 9.0
+  size: 10.5
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -120,19 +121,8 @@ font:
     x: 0
     y: 0
 
-  # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
-  # screens and make reading text a little easier.
-  # On X11 it is possible to change the DPI for each instance of alacritty by using
-  # `WINIT_HIDPI_FACTOR=1.0 alacritty` to scale the font.
-  scale_with_dpi: false
-
 # Display the time it takes to redraw each frame.
 render_timer: false
-
-# Use custom cursor colors. If `true`, the `colors.cursor.foreground` and
-# `colors.cursor.background` colors will be used to display the cursor.
-# Otherwise the cell colors are inverted for the cursor.
-custom_cursor_colors: true
 
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
@@ -153,18 +143,18 @@ colors:
 
   # Normal colors
   normal:
-    black:   '0xeeeeee'
+    black:   '0x444444'
     red:     '0xaf0000'
     green:   '0x5f8700'
     yellow:  '0xd75f00'
     blue:    '0x005f87'
     magenta: '0x8700af'
     cyan:    '0x0087af'
-    white:   '0x878787'
+    white:   '0xbcbcbc'
 
   # Bright colors
   bright:
-    black:   '0x878787'
+    black:   '0x444444'
     red:     '0xd70000'
     green:   '0x008700'
     yellow:  '0xd75f00'
@@ -238,6 +228,7 @@ mouse:
   # or triple click.
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
+  hide_when_typing: false
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
@@ -249,7 +240,6 @@ selection:
 
 dynamic_title: true
 
-hide_cursor_when_typing: false
 
 # Cursor style
 #
@@ -257,11 +247,12 @@ hide_cursor_when_typing: false
 #   - Block
 #   - Underline
 #   - Beam
-cursor_style: Block
+cursor:
+  style: Block
 
-# If this is `true`, the cursor will be rendered as a hollow box when the
-# window is not focused.
-unfocused_hollow_cursor: true
+  # If this is `true`, the cursor will be rendered as a hollow box when the
+  # window is not focused.
+  unfocused_hollow: true
 
 # Live config reload (changes require restart)
 live_config_reload: true
