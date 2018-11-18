@@ -74,6 +74,11 @@ cursor-scroll = ns-resize
 inherit = bar/primary
 tray-position =
 
+[bar/mirrored]
+inherit = bar/primary
+monitor =
+modules-left = i3mirrored
+
 [module/xwindow]
 type = internal/xwindow
 format-prefix = " "
@@ -113,6 +118,10 @@ label-visible-padding = ${self.label-focused-padding}
 label-urgent = %index%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
+
+[module/i3mirrored]
+inherit = module/i3
+pin-workspaces = false
 
 [module/cpu]
 type = internal/cpu
