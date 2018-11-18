@@ -54,11 +54,10 @@ modules-right = bandwidth memory cpu load battery volume zec monero date
 tray-position = right
 tray-detached = false
 tray-padding = 2
-tray-transparent = false
 tray-background = ${colors.background}
 
 ;wm-restack = bspwm
-wm-restack = i3
+;wm-restack = i3
 
 ;override-redirect = true
 
@@ -171,7 +170,7 @@ ramp-volume-0 = " "
 ramp-volume-1 = " "
 ramp-volume-2 = " "
 
-format-muted-prefix = "🔇 "
+format-muted-prefix = " "
 label-muted = MUTED
 
 [module/battery]
