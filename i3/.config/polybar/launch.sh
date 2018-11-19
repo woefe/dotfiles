@@ -10,8 +10,8 @@ if ! type "xrandr"; then
     exit 0
 fi
 
-readarray -t mirrors < <(xrandr --query | grep " connected" | grep -Eo '[0-9]+x[0-9]+\+[0-9]+\+[0-9]')
-if (( ${#mirrors[@]} == 2 )) && [[ "${mirrors[0]}" != "" && "${mirrors[1]}" == "${mirrors[1]}" ]]; then
+readarray -t mirrors < <(xrandr --query | grep " connected" | grep -Eo '[0-9]+x[0-9]+\+[0-9]+\+[0-9]+')
+if (( ${#mirrors[@]} == 2 )) && [[ "${mirrors[0]}" != "" && "${mirrors[0]}" == "${mirrors[1]}" ]]; then
     polybar --reload mirrored &
     exit 0
 fi
