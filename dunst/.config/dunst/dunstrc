@@ -154,7 +154,7 @@
     max_icon_size = 48
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/Arc/status/48/:/usr/share/icons/Arc/actions/48/:/tmp/mocp:/usr/share/icons/hicolor/48x48/apps
+    icon_path = /usr/share/icons/Papirus/48x48/apps/:/usr/share/icons/Papirus/48x48/devices/:/usr/share/icons/Papirus/48x48/status/:/usr/share/icons/Papirus/48x48/emblems/:/usr/share/icons/Papirus/48x48/emotes/:/tmp/mocp:/usr/share/icons/hicolor/48x48/apps
 
     ### History ###
 
