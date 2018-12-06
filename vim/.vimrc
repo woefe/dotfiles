@@ -25,11 +25,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'junegunn/rainbow_parentheses.vim'
 "Plug 'junegunn/fzf'  " On Archlinux this plugin is installed globally when installing fzf
 Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
@@ -203,7 +202,7 @@ endif
 
 " Automatically save notes when focus is lost
 autocmd FocusLost ~/sync/Notes* :wa
-autocmd VimEnter ~/sync/Notes* :set nospell
+autocmd BufRead ~/sync/Notes* :set nospell
 
 "------------------------------------------------------------
 " Mappings
@@ -487,3 +486,6 @@ let g:vim_markdown_math = 1
 let g:vim_markdown_new_list_item_indent = 0
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_toc_autofit = 1
+
+" gutentags
+let g:gutentags_cache_dir = '~/.vim/gutentags'
