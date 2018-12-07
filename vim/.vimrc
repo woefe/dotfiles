@@ -282,10 +282,8 @@ inoremap <A-left> <ESC>bi
 " toggle spellchecking
 map <F12> :setlocal spell! spelllang=de_de<CR>
 
-" Esc to not highlight search matches. Causes vim to start in replace mode
-if has('nvim')
-    nnoremap <Esc> :nohlsearch<CR>
-endif
+" Esc to disable highlighting of search matches
+autocmd TermResponse * nnoremap <Esc> :nohlsearch<CR>
 
 " Copy to X clipboard
 vmap <C-c> "*y
