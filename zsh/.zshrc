@@ -9,12 +9,6 @@ maybe_source() {
 # grml zsh conf
 source $HOME/.zsh-plugins/grml-zsh-conf
 
-# Enable syntax highlighting
-source $HOME/.zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-
-# Enable fish-shell like history searching
-source $HOME/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-
 # Enable fish-shell like autosuggestion
 source $HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept
@@ -26,6 +20,29 @@ maybe_source /usr/share/doc/pkgfile/command-not-found.zsh
 # fzf keybindings and completion
 maybe_source /usr/share/fzf/completion.zsh
 maybe_source /usr/share/fzf/key-bindings.zsh
+
+# vi-mode
+#source $HOME/.zsh-plugins/vi-mode.plugin.zsh
+
+# Ctrl+P to edit current command with $EDITOR
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey "^P" edit-command-line
+
+# Enable syntax highlighting. Must be loaded after all `zle -N` calls (see
+# https://github.com/zsh-users/zsh-syntax-highlighting#faq)
+source $HOME/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+
+# Enable fish-shell like history searching. Must be loaded after zsh-syntax-highlighting.
+source $HOME/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+## bind UP and DOWN arrow keys
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+## bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
 # Virtualenv Wrapper
 export WORKON_HOME=$HOME/.virtualenvs
@@ -40,10 +57,7 @@ maybe_source /usr/bin/virtualenvwrapper_lazy.sh || maybe_source /usr/share/virtu
 # Report time stats of commands running longer than 20 sec
 REPORTTIME=20
 
-# vi-mode
-#source $HOME/.zsh-plugins/vi-mode.plugin.zsh
-
-#History settings
+# History settings
 HISTSIZE=70000
 SAVEHIST=70000
 setopt append_history         # append history instead of replacing
@@ -53,22 +67,9 @@ setopt hist_ignore_space      # ignore commands that start with a space
 setopt hist_verify            # don't execute command from history directly but edit it first
 setopt share_history          # share history between simultaneously running shells
 
-# Ctrl+P to edit current command with $EDITOR
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey "^P" edit-command-line
-
-## bind UP and DOWN arrow keys
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
-
-## bind k and j for VI mode
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
 # Prompt: git status and hostname for ssh sessions
 prompt off
-source ~/.zsh-plugins/zsh-git-prompt/git-prompt.zsh
+source $HOME/.zsh-plugins/zsh-git-prompt/git-prompt.zsh
 if [ -n "$SSH_CLIENT" ] && [ -n "$SSH_TTY" ]; then
     PROMPT='%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(gitprompt)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
 else
@@ -76,7 +77,7 @@ else
 fi
 
 # Setup default aliases
-source ~/.aliases
+source $HOME/.aliases
 
 # Gets the nth argument from the last command by pressing Alt+1, Alt+2, ... Alt+5
 bindkey -s '\e1' "!:0-0 \t"
@@ -88,13 +89,9 @@ bindkey -s '\e5' "!:4-4 \t"
 # prevent man from displaying lines wider than 120 characters
 man(){
     MANWIDTH=120
-    if (( $MANWIDTH > $COLUMNS )); then
+    if (( MANWIDTH > COLUMNS )); then
         MANWIDTH=$COLUMNS
     fi
     MANWIDTH=$MANWIDTH /usr/bin/man $*
     unset MANWIDTH
-}
-
-ls-by-size(){
-    du -hd1 $1 | sort -hr
 }
