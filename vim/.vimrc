@@ -283,7 +283,11 @@ inoremap <A-left> <ESC>bi
 map <F12> :setlocal spell! spelllang=de_de<CR>
 
 " Esc to disable highlighting of search matches
-autocmd TermResponse * nnoremap <Esc> :nohlsearch<CR>
+if has('nvim')
+    nnoremap <Esc> :nohlsearch<CR>
+else
+    autocmd TermResponse * nnoremap <Esc> :nohlsearch<CR>
+endif
 
 " Copy to X clipboard
 vmap <C-c> "*y
