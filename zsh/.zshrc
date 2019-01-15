@@ -37,8 +37,8 @@ source $HOME/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin
 source $HOME/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 ## bind UP and DOWN arrow keys
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+bindkey '^[OA' history-substring-search-up
+bindkey '^[OB' history-substring-search-down
 
 ## bind k and j for VI mode
 bindkey -M vicmd 'k' history-substring-search-up
