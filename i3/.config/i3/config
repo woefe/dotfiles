@@ -32,7 +32,6 @@ bindsym $mod+Shift+p focus parent
 bindsym $mod+u [urgent=latest] focus
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
 bindsym $mod+Tab focus mode_toggle
 
 # move focused window
@@ -166,12 +165,15 @@ bindsym $mod+x exec --no-startup-id rofi -show run
 bindsym $mod+a exec --no-startup-id rofi -show window
 bindsym $mod+y exec --no-startup-id rofi -show ssh
 bindsym $mod+g exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard
+bindsym $mod+m exec --no-startup-id mountmenu
+bindsym $mod+Shift+m exec --no-startup-id mountmenu umount
+bindsym $alt+space exec --no-startup-id emojiselect
 
 # Application Quickstart
 bindsym $mod+$alt+b exec firefox
-bindsym $mod+$alt+f exec nautilus
 bindsym $mod+$alt+e exec thunderbird
 bindsym $mod+$alt+r exec $term_cmd -e ranger
+bindsym $mod+$alt+f exec $term_cmd -e ranger
 bindsym $mod+$alt+m exec $term_cmd -e mocp
 bindsym $mod+$alt+c exec chromium --incognito
 bindsym $mod+$alt+p exec keepassxc $HOME/sync/passwords.kdbx
