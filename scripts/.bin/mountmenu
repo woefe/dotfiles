@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+
+# Mounting script using dmenu/rofi
+# Copyright © 2019 woefe
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+# DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+# OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+# DEPENDENCIES (package/command):
+#   dmenu/rofi, gio/gvfs, sshfs/sshfs, udisks2/udisksctl, libnotify/notify-send, util-linux/findmnt,
+#   findutils/find, findutils/xargs
+#
+# USAGE:
+#   mountmenu [udisks|sshfs|gio|umount]
+
+set -o errexit
+set -o pipefail
+
+DMENU_CMD="rofi -dmenu"
+MOUNTBASEDIR="/media"
+HISTFILE="$HOME/.local/share/mountmenu/history"
+mkdir -p "$(basename "$HISTFILE")"
+
+PROTOCOL=${1:-$(echo -e "udisks\nsshfs\ngio\numount" | $DMENU_CMD -p "mount")}
+HISTFILE="$HISTFILE.$PROTOCOL"
+
+dmenu() {
+    $DMENU_CMD -p "mount > $PROTOCOL"
+}
+
+post_mount() {
+    if $SAVE_HISTORY; then
+        (cat "$HISTFILE"; echo "$MOUNTME") | sort -u -o "$HISTFILE"
+    fi
+    ln -s "$MOUNTPOINT" "$MOUNTBASEDIR/$(basename "$MOUNTPOINT")"
+    notify-send "$PROTOCOL mount" "Mounted '$MOUNTME' at '$MOUNTPOINT'"
+}
+
+mount_udisk() {
+    local extractdevs
+    local mountme
+
+    extractdevs='dev=$(realpath {}); findmnt $dev > /dev/null || echo -e $dev\\t$(lsblk -n -o LABEL,SIZE $dev)'
+    mountme=$(find "/dev/disk/by-uuid/" -mindepth 1 -maxdepth 1 -print0 \
+        | xargs -0 -n1 -I"{}" sh -c "$extractdevs"  \
+        | dmenu \
+        | cut -f1)
+
+    udisksctl mount -b "$mountme" || (notify-send "Mounting failed"; false)
+
+    MOUNTPOINT=$(findmnt "$mountme" -lno TARGET)
+    MOUNTME=$mountme
+    SAVE_HISTORY=false
+}
+
+mount_sshfs() {
+    local filter
+    local mountme
+    local mountpoint
+
+    filter='findmnt {} > /dev/null || echo {}'
+    mountme=$(xargs -d'\n' -n1 -I{} sh -c "$filter" < "$HISTFILE" | dmenu)
+    mountpoint="/run/user/$UID/$PROTOCOL/${mountme/\//_}"
+    mkdir -p "$mountpoint"
+
+    sshfs "$mountme" "$mountpoint" || (notify-send "Mounting failed"; false)
+
+    MOUNTPOINT=$mountpoint
+    MOUNTME=$mountme
+    SAVE_HISTORY=true
+}
+
+mount_gio() {
+    local mountme
+
+    mountme=$( (cat "$HISTFILE"; gio mount -li | grep activation_root | cut -d"=" -f2) | sort -u | dmenu)
+
+    gio mount "$mountme" || (notify-send "Mounting failed"; false)
+
+    MOUNTPOINT="/run/user/$UID/gvfs/${mountme/:\/\//:host=}"
+    MOUNTME=$mountme
+    SAVE_HISTORY=true
+}
+
+do_umount() {
+    local selected
+    local mountpoint
+    local symlink
+
+    selected=$(
+    (
+    find "/run/user/$UID/gvfs/" -maxdepth 1 -mindepth 1 | sed "s/$/  gio/";
+    findmnt -nl -o TARGET,SOURCE,FSTYPE | grep -E '(sshfs|/run/media)' || true
+    ) | $DMENU_CMD -p "umount"
+    )
+    mountpoint="${selected%% *}"
+    symlink="$MOUNTBASEDIR/$(basename "$mountpoint")"
+
+    if [[ "$selected" == *gio* ]]; then
+        gio mount -u "$mountpoint"
+    elif [[ "$selected" == *sshfs* ]]; then
+        fusermount -u "$mountpoint"
+    else
+        umount "$mountpoint"
+    fi
+
+    find "$MOUNTBASEDIR" -maxdepth 1 -xtype l -delete
+    if [[ -L "$symlink" ]]; then
+        rm "$symlink"
+    fi
+
+    notify-send "Unmounted" "Successfully unmounted '$mountpoint'"
+}
+
+case "$PROTOCOL" in
+    udisks )
+        mount_udisk
+        post_mount
+        ;;
+    sshfs )
+        mount_sshfs
+        post_mount
+        ;;
+    gio )
+        mount_gio
+        post_mount
+        ;;
+    umount )
+        do_umount
+        ;;
+esac
