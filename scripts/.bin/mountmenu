@@ -35,7 +35,7 @@ set -o pipefail
 DMENU_CMD="rofi -dmenu"
 MOUNTBASEDIR="/media"
 HISTFILE="$HOME/.local/share/mountmenu/history"
-mkdir -p "$(basename "$HISTFILE")"
+mkdir -p "$(dirname "$HISTFILE")"
 
 PROTOCOL=${1:-$(echo -e "udisks\nsshfs\ngio\numount" | $DMENU_CMD -p "mount")}
 HISTFILE="$HISTFILE.$PROTOCOL"
