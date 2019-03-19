@@ -7,7 +7,7 @@ allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
-font = Hack 9
+font = Hack 10.5
 scrollback_lines = 10000
 search_wrap = true
 icon_name = terminal
@@ -38,7 +38,7 @@ foreground          = #444444
 foreground_bold     = #444444
 cursor              = #444444
 cursor_foreground   = #eeeeee
-background          = rgba(238, 238, 238)
+background          = #eeeeee
 
 # 16 color space
 
