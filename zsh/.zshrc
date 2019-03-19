@@ -80,11 +80,11 @@ fi
 source $HOME/.aliases
 
 # Gets the nth argument from the last command by pressing Alt+1, Alt+2, ... Alt+5
-bindkey -s '\e1' "!:0-0 \t"
-bindkey -s '\e2' "!:1-1 \t"
-bindkey -s '\e3' "!:2-2 \t"
-bindkey -s '\e4' "!:3-3 \t"
-bindkey -s '\e5' "!:4-4 \t"
+bindkey -s '\e1' "!:0-0 "
+bindkey -s '\e2' "!:1-1 "
+bindkey -s '\e3' "!:2-2 "
+bindkey -s '\e4' "!:3-3 "
+bindkey -s '\e5' "!:4-4 "
 
 # prevent man from displaying lines wider than 120 characters
 man(){
@@ -95,3 +95,17 @@ man(){
     MANWIDTH=$MANWIDTH /usr/bin/man $*
     unset MANWIDTH
 }
+
+# use j to jump to position in dirstack
+# Similar behavior can be achieved with `cd +<Tab>`
+_j() {
+    local _dirs
+    _dirs=( "${(@f)$( awk '{printf "%02d:%s\n", NR, $0}' < $HOME/.zdirs )}" )
+    _describe -t values 'dirs' _dirs || compadd "$@"
+}
+
+j(){
+    cd "$(sed -n "$1 p" $HOME/.zdirs)"
+}
+
+compdef _j j
