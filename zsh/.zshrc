@@ -9,9 +9,13 @@ maybe_source() {
 # grml zsh conf
 source $HOME/.zsh-plugins/grml-zsh-conf
 
+# vi-mode
+source $HOME/.zsh-plugins/vi-mode.plugin.zsh
+
 # Enable fish-shell like autosuggestion
 source $HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept
+bindkey '^f' autosuggest-accept
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=white'
 
 # command not found
@@ -21,13 +25,11 @@ maybe_source /usr/share/doc/pkgfile/command-not-found.zsh
 maybe_source /usr/share/fzf/completion.zsh
 maybe_source /usr/share/fzf/key-bindings.zsh
 
-# vi-mode
-#source $HOME/.zsh-plugins/vi-mode.plugin.zsh
-
 # Ctrl+P to edit current command with $EDITOR
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey "^P" edit-command-line
+# Also available in vi-mode
+#autoload -Uz edit-command-line
+#zle -N edit-command-line
+#bindkey "^P" edit-command-line
 
 # Enable syntax highlighting. Must be loaded after all `zle -N` calls (see
 # https://github.com/zsh-users/zsh-syntax-highlighting#faq)
@@ -71,9 +73,9 @@ setopt share_history          # share history between simultaneously running she
 prompt off
 source $HOME/.zsh-plugins/zsh-git-prompt/git-prompt.zsh
 if [ -n "$SSH_CLIENT" ] && [ -n "$SSH_TTY" ]; then
-    PROMPT='%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(gitprompt)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
+    PROMPT='%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(gitprompt)$(vi_mode_status)'
 else
-    PROMPT='%B%40<..<%~ %b$(gitprompt)%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
+    PROMPT='%B%40<..<%~ %b$(gitprompt)$(vi_mode_status)'
 fi
 
 # Setup default aliases
