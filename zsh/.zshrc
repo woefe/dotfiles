@@ -14,8 +14,6 @@ source $HOME/.zsh-plugins/vi-mode.plugin.zsh
 
 # Enable fish-shell like autosuggestion
 source $HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey '^ ' autosuggest-accept
-bindkey '^f' autosuggest-accept
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=white'
 
 # command not found
@@ -25,11 +23,9 @@ maybe_source /usr/share/doc/pkgfile/command-not-found.zsh
 maybe_source /usr/share/fzf/completion.zsh
 maybe_source /usr/share/fzf/key-bindings.zsh
 
-# Ctrl+P to edit current command with $EDITOR
-# Also available in vi-mode
-#autoload -Uz edit-command-line
-#zle -N edit-command-line
-#bindkey "^P" edit-command-line
+# edit current command with $EDITOR
+autoload -Uz edit-command-line
+zle -N edit-command-line
 
 # Enable syntax highlighting. Must be loaded after all `zle -N` calls (see
 # https://github.com/zsh-users/zsh-syntax-highlighting#faq)
@@ -38,13 +34,6 @@ source $HOME/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin
 # Enable fish-shell like history searching. Must be loaded after zsh-syntax-highlighting.
 source $HOME/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 
-## bind UP and DOWN arrow keys
-bindkey '^[OA' history-substring-search-up
-bindkey '^[OB' history-substring-search-down
-
-## bind k and j for VI mode
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
 
 # Virtualenv Wrapper
 export WORKON_HOME=$HOME/.virtualenvs
@@ -82,12 +71,6 @@ fi
 # Setup default aliases
 source $HOME/.aliases
 
-# Gets the nth argument from the last command by pressing Alt+1, Alt+2, ... Alt+5
-bindkey -s '\e1' "!:0-0 "
-bindkey -s '\e2' "!:1-1 "
-bindkey -s '\e3' "!:2-2 "
-bindkey -s '\e4' "!:3-3 "
-bindkey -s '\e5' "!:4-4 "
 
 # prevent man from displaying lines wider than 120 characters
 man(){
@@ -99,16 +82,44 @@ man(){
     unset MANWIDTH
 }
 
-# use j to jump to position in dirstack
-# Similar behavior can be achieved with `cd +<Tab>`
-_j() {
-    local _dirs
-    _dirs=( "${(@f)$( awk '{printf "%02d:%s\n", NR, $0}' < $HOME/.zdirs )}" )
-    _describe -t values 'dirs' _dirs || compadd "$@"
-}
+### Keybindings
+# substring search plugin
+bindkey -M main '^[[A' history-substring-search-up
+bindkey -M main '^[[B' history-substring-search-down
+bindkey -M vicmd '^k' history-substring-search-up
+bindkey -M vicmd '^j' history-substring-search-down
+bindkey '^k' history-substring-search-up
+bindkey '^j' history-substring-search-down
 
-j(){
-    cd "$(sed -n "$1 p" $HOME/.zdirs)"
-}
+# autosuggest plugin
+bindkey '^ ' autosuggest-accept
+bindkey '^f' autosuggest-accept
 
-compdef _j j
+# Gets the nth argument from the last command by pressing Alt+1, Alt+2, ... Alt+5
+bindkey -s '\e1' "!:0-0 "
+bindkey -s '\e2' "!:1-1 "
+bindkey -s '\e3' "!:2-2 "
+bindkey -s '\e4' "!:3-3 "
+bindkey -s '\e5' "!:4-4 "
+
+# edit-command-line module
+bindkey -M vicmd 'v' edit-command-line
+
+# allow ctrl+a and ctrl+e to move to beginning/end of line
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+
+# alt+q to push current line and fetch again on next line
+bindkey '\eq' push-line
+
+# show man page of current command with alt+h
+bindkey '\eh' run-help
+
+# grml config overrides ctrl+r
+bindkey -M vicmd '^r' redo
+
+# allow ctrl+h, ctrl+w, ctrl+? (backspace) for char and word deletion (standard behaviour)
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+
