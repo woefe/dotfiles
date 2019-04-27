@@ -71,6 +71,7 @@ setopt share_history          # share history between simultaneously running she
 
 # Prompt: git status and hostname for ssh sessions
 prompt off
+source $HOME/.zsh-plugins/zsh-async/async.zsh
 source $HOME/.zsh-plugins/zsh-git-prompt/git-prompt.zsh
 if [ -n "$SSH_CLIENT" ] && [ -n "$SSH_TTY" ]; then
     PROMPT='%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(gitprompt)$(vi_mode_status)'
