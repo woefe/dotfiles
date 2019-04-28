@@ -22,3 +22,10 @@ Wallpaper based on [Low Poly Wolf by zelda-Freak91](https://zelda-freak91.devian
 4. Execute `./install.sh`.
     Make sure that you run the script in the main dotfiles directory.
     I.e change directory to `.dotfiles-woefe` first.
+
+## Updating
+To update the dotfiles pull this repo including its submodules.
+
+```
+git pull --recurse-submodules
+```
