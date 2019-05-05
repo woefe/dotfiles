@@ -1,4 +1,3 @@
-zmodload zsh/zprof
 #{{{ Utility functions
 function maybe_source() {
     if test -r "$1"; then
