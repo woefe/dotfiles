@@ -20,6 +20,11 @@ function remove_utils() {
 }
 #}}}
 
+#{{{ Aliases and environment
+source $HOME/.aliases
+source $HOME/.environment
+#}}}
+
 #{{{ Plugins, modules, programs config
 # color setup for ls:
 check_prog dircolors && eval $(dircolors -b)
@@ -76,6 +81,7 @@ source $HOME/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-sea
 
 #{{{ Completion
 COMPDUMPFILE=$HOME/.zcompdump
+COMPDUMPCACHEDIR=$HOME/.zcompdumpcache/
 autoload -Uz compinit && compinit -d $COMPDUMPFILE
 
 # allow one error for every three characters typed in approximate completer
@@ -194,7 +200,7 @@ zstyle ':completion:*:urls' local 'www' '/var/www/' 'public_html'
 # Some functions, like _apt and _dpkg, are very slow. We can use a cache in
 # order to speed things up
 zstyle ':completion:*' use-cache  yes
-zstyle ':completion:*' cache-path "$COMPDUMPFILE"
+zstyle ':completion:*' cache-path "$COMPDUMPCACHEDIR"
 #}}}
 
 #{{{ Options
@@ -342,6 +348,7 @@ bindkey '^[[1;3C' forward-word
 
 # allow backspace, alt+backspace, ctrl+backspace, ctrl+w for char and word deletion
 bindkey '^?' backward-delete-char
+bindkey '^[[3~' delete-char
 bindkey '\e^?' backward-kill-word
 bindkey '^H' backward-kill-word
 bindkey '^w' backward-kill-word
@@ -398,11 +405,6 @@ function cdt() {
     builtin cd "$(mktemp -d)"
     builtin pwd
 }
-#}}}
-
-#{{{ Aliases and environment
-source $HOME/.aliases
-source $HOME/.environment
 #}}}
 
 remove_utils
