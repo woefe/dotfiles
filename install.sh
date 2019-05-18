@@ -36,6 +36,7 @@ mkdir -p "$HOME/.config"
 #stow --target "$HOME"              greenclip
 #stow --target "$HOME"              i3
 #stow --target "$HOME" --no-folding moc
+#stow --target "$HOME" --no-folding qutebrowser
 #stow --target "$HOME" --no-folding ranger
 #stow --target "$HOME"              redshift
 #stow --target "$HOME"              rofi
