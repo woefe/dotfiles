@@ -17,8 +17,8 @@ build_file="$tmp_dir/${watch_file//\//%}.pdf"
 pdf_viewer_pid=-1
 
 
-function check_prog() {
-    if ! hash $1 > /dev/null 2>&1; then
+check_prog() {
+    if ! hash "$1" > /dev/null 2>&1; then
         echo "Command not found: $1. Aborting..."
         exit 1
     fi

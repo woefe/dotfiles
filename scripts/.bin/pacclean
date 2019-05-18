@@ -1,11 +1,11 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 if pacman -Qdtq;
-    then sudo pacman -Rs $(pacman -Qtdq)
+    then sudo pacman -Rs "$(pacman -Qtdq)"
 fi
 sudo paccache -vrk2
 sudo paccache -vruk0
 
 # Clean pikaur cache
-paccache -vrk2 --cachedir $HOME/.cache/pikaur/pkg
-paccache -vruk0 --cachedir $HOME/.cache/pikaur/pkg
+paccache -vrk2 --cachedir "$HOME/.cache/pikaur/pkg"
+paccache -vruk0 --cachedir "$HOME/.cache/pikaur/pkg"

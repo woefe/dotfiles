@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 ###
 # This script provides a simple pomodoro timer. Check out the following link to
@@ -20,11 +20,11 @@ audio_enabled=true
 notification_enabled=true
 print_enabled=true
 
-function warn(){
-    echo -e "${YELLOW}Warning:${NC} $*"
+warn(){
+    printf "%" "${YELLOW}Warning:${NC} $*"
 }
 
-function check_prog() {
+check_prog() {
     if ! command -v "$1" > /dev/null; then
         warn "Command $1 not available!"
         return 1
@@ -32,7 +32,7 @@ function check_prog() {
     return 0
 }
 
-function message() {
+message() {
     if $notification_enabled; then
         notify-send "$@"
     fi
@@ -46,17 +46,17 @@ function message() {
     fi
 }
 
-function work() {
+work() {
     message "Get your work done!"
     sleep 25m
 }
 
-function pause() {
+pause() {
     message "Take a break for ${1} minutes!"
     sleep "${1}m"
 }
 
-function usage() {
+usage() {
     echo "Usage: $0 [OPTIONS]"
     echo
     echo "OPTIONS:"

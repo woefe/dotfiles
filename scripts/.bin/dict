@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 ###
 # This script is a wrapper for grepping the dict.cc wordlist.
@@ -9,24 +9,24 @@
 
 WORDLIST="$HOME/.local/share/dict/dictcc-wordlist.txt"
 
-if [[ $1 == "en" ]]; then
+if [ "$1" = "en" ]; then
     SEARCH_TERM="	$2"
-elif [[ $1 == "de" ]]; then
+elif [ "$1" = "de" ]; then
     SEARCH_TERM="^$2"
-elif [[ $1 == "ext" ]]; then
+elif [ "$1" = "ext" ]; then
     SEARCH_TERM="\<$2\>"
 else
     SEARCH_TERM="$1"
 fi
 
-function mktable(){
+mktable(){
     columns=$(tput cols)
     highlight=false
     width_type=21
     width_separator=4
-    width=$((($columns - $width_type - $width_separator) / 2))
+    width=$(((columns - width_type - width_separator) / 2))
 
-    while read line; do
+    while read -r line; do
         field1=$(echo "$line" | cut -f1 | head -c $width)
         field2=$(echo "$line" | cut -f2 | head -c $width)
         field3=$(echo "$line" | cut -f3)
@@ -41,4 +41,4 @@ function mktable(){
     done
 }
 
-grep -Ei "$SEARCH_TERM" $WORDLIST | recode ..latin1 | mktable
+grep -Ei "$SEARCH_TERM" "$WORDLIST" | recode ..latin1 | mktable
