@@ -286,3 +286,7 @@ c.url.searchengines = {
     "aur": "https://aur.archlinux.org/packages/?O=0&K={}"
 }
 
+config.unbind("<Ctrl-w>", mode="normal")
+config.unbind("gr", mode="normal")
+config.bind("gl", "tab-move +", mode="normal")
+config.bind("gh", "tab-move -", mode="normal")
