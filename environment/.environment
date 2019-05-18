@@ -1,6 +1,6 @@
 export EDITOR='nvim'
 export PAGER='less'
-export BROWSER='firefox'
+export BROWSER='qutebrowser'
 export TERMCMD='alacritty'
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
 export QT_QPA_PLATFORMTHEME='gtk2'
