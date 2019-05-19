@@ -148,7 +148,7 @@ colors:
     green:   '0x5f8700'
     yellow:  '0xd75f00'
     blue:    '0x005f87'
-    magenta: '0x8700af'
+    magenta: '0xd70087'
     cyan:    '0x0087af'
     white:   '0xbcbcbc'
 
@@ -159,7 +159,7 @@ colors:
     green:   '0x008700'
     yellow:  '0xd75f00'
     blue:    '0x005faf'
-    magenta: '0xd70087'
+    magenta: '0x8700af'
     cyan:    '0x0087af'
     white:   '0xbcbcbc'
 
