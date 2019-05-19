@@ -1,6 +1,6 @@
 <h1 align="center">⚫⚫⚫dotfiles⚫⚫⚫</h1>
 
-![laptop setup](https://i.imgur.com/g5fTXnu.png)
+![laptop setup](https://i.imgur.com/LLU81Jl.png)
 Wallpaper based on [Low Poly Wolf by zelda-Freak91](https://zelda-freak91.deviantart.com/art/Low-Poly-Art-Wolf-537626838)
 
 
