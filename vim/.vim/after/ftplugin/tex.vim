@@ -33,3 +33,10 @@ call vimtex#imaps#add_map({
             \ 'rhs' : '\mathbb{Z}',
             \ 'wrapper' : 'vimtex#imaps#wrap_math'
             \})
+
+
+" setup deoplete completion
+call deoplete#custom#var('omni', 'input_patterns', {
+      \ 'tex': g:vimtex#re#deoplete
+      \})
+

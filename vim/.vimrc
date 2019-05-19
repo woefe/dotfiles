@@ -15,17 +15,13 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'Chiel92/vim-autoformat'
 Plug 'dag/vim-fish', { 'for': 'fish' }
-Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer' }
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-Plug 'lervag/vimtex'
+Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'Konfekt/FastFold'
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -33,7 +29,20 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'machakann/vim-highlightedyank'
-Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'neovimhaskell/haskell-vim'
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': './install.sh'
+    \ }
+
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
 " Colorschemes
 Plug 'chriskempson/base16-vim'
@@ -395,6 +404,11 @@ else
   call neomake#configure#automake('nw', 1000)
 endif
 
+hi NeomakeWarningSign guifg=#ff8700 ctermfg=208
+hi NeomakeVirtualtextWarning guifg=#ff8700 ctermfg=208
+hi NeomakeErrorSign guifg=#d70000 ctermfg=160
+hi NeomakeVirtualtextError guifg=#d70000 ctermfg=160
+
 let g:neomake_cpp_enabled_makers = ['gcc']
 let g:neomake_python_enabled_makers = ['pylint', 'pydocstyle', 'mypy']
 
@@ -423,28 +437,12 @@ let g:formatters_java = ['my_custom_java']
 let g:formatdef_my_custom_c = '"--style=java"'
 let g:formatters_c = ['my_custom_c']
 
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsEditSplit = "vertical"
-
-let g:ycm_global_ycm_extra_conf = "~/.vim/ycm_extra_conf.py"
-let g:ycm_filetype_blacklist={'notes': 1, 'unite': 1, 'tagbar': 1, 'pandoc': 1, 'qf': 1, 'vimwiki': 1, 'text': 1, 'infolog': 1, 'mail': 1}
-
-
-if !exists('g:ycm_semantic_triggers')
-    let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers.tex = [
-            \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
-            \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
-            \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
-            \ 're!\\(include(only)?|input){[^}]*'
-            \ ]
 
 " vimlatex settings
 let g:vimtex_compiler_method = 'latexmk'
@@ -462,14 +460,15 @@ if has('nvim')
     let g:vimtex_compiler_progname = '/usr/bin/nvr'
 endif
 
+"set filetype=tex on empty tex files.
+let g:tex_flavor='latex'
+
+" fastfold settings
 let g:tex_fold_enabled=1
 let g:vimsyn_folding='af'
 let g:xml_syntax_folding = 1
 let g:php_folding = 1
 let g:perl_fold = 1
-
-"set filetype=tex on empty tex files.
-let g:tex_flavor='latex'
 
 " EditorConfig settings
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
@@ -491,5 +490,19 @@ let g:vim_markdown_toc_autofit = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_folding_level = 4
 
-" gutentags
-let g:gutentags_cache_dir = '~/.vim/gutentags'
+" deoplete
+let g:deoplete#enable_at_startup = 1
+
+" LanguageClient config
+let g:LanguageClient_serverCommands = {
+    \ 'haskell': ['hie-wrapper'],
+    \ 'python': ['/usr/bin/pyls'],
+    \}
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
+map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
+map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
+map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
+map <Leader>lb :call LanguageClient#textDocument_references()<CR>
+map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
+map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
