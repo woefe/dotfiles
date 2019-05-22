@@ -25,6 +25,19 @@ source $HOME/.aliases
 source $HOME/.environment
 #}}}
 
+#{{{ Zsh Line Editor widgets
+# edit current command with $EDITOR
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+function slash-backward-kill-word () {
+    local WORDCHARS="${WORDCHARS:s@/@}"
+    # zle backward-word
+    zle backward-kill-word
+}
+zle -N slash-backward-kill-word
+#}}}
+
 #{{{ Plugins, modules, programs config
 # color setup for ls:
 check_prog dircolors && eval $(dircolors -b)
@@ -52,10 +65,6 @@ maybe_source /usr/bin/virtualenvwrapper_lazy.sh || maybe_source /usr/share/virtu
 zmodload -i zsh/parameter # access to internal hash tables like builtins, commands, functions
 zmodload -i zsh/complist  # Needed for keybindings in menucomplete mode, and completion styling
 zmodload -i zsh/mathfunc  # Math functions like sin or sqrt
-
-# edit current command with $EDITOR
-autoload -Uz edit-command-line
-zle -N edit-command-line
 
 # vi-mode
 source $HOME/.zsh-plugins/vi-mode.plugin.zsh
@@ -262,10 +271,27 @@ setopt auto_pushd             # make cd push the old directory onto the director
 setopt pushd_ignore_dups      # don't push the same dir twice.
 DIRSTACKSIZE=20               # Max number of items on dirstack
 DIRSTACKFILE="$HOME/.zdirs"
+
+function write_dirstack() {
+    (( $DIRSTACKSIZE <= 0 )) && return
+    [[ -z $DIRSTACKFILE ]] && return
+
+    # Array with unique values
+    typeset -aU dedup
+    dedup=( $PWD "${dirstack[@]}" )
+
+    print -l $dedup >! $DIRSTACKFILE
+}
+
+add-zsh-hook zshexit write_dirstack
+
 if [[ -f ${DIRSTACKFILE} ]]; then
     # Enabling NULL_GLOB via (N) weeds out any non-existing
     # directories from the saved dir-stack file.
     dirstack=( ${(f)"$(< $DIRSTACKFILE)"}(N) )
+
+    # Populate `cd -` behavior after startup
+    [[ -d $dirstack[1] ]] && cd -q $dirstack[1] && cd -q $OLDPWD
 fi
 #}}}
 
@@ -347,11 +373,12 @@ bindkey '^[[1;3D' backward-word
 bindkey '^[[1;3C' forward-word
 
 # allow backspace, alt+backspace, ctrl+backspace, ctrl+w for char and word deletion
+# These escape sequences are different depending on your terminal
 bindkey '^?' backward-delete-char
 bindkey '^[[3~' delete-char
-bindkey '\e^?' backward-kill-word
-bindkey '^H' backward-kill-word
-bindkey '^w' backward-kill-word
+bindkey '\e^?' slash-backward-kill-word
+bindkey '^H' slash-backward-kill-word
+bindkey '^w' slash-backward-kill-word
 
 # Shift-Tab to go back in completion menu
 bindkey -M menuselect '^[[Z' reverse-menu-complete
