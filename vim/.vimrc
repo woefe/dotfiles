@@ -409,6 +409,7 @@ hi NeomakeVirtualtextWarning guifg=#ff8700 ctermfg=208
 hi NeomakeErrorSign guifg=#d70000 ctermfg=160
 hi NeomakeVirtualtextError guifg=#d70000 ctermfg=160
 
+let g:neomake_haskell_enabled_makers = []
 let g:neomake_cpp_enabled_makers = ['gcc']
 let g:neomake_python_enabled_makers = ['pylint', 'pydocstyle', 'mypy']
 
