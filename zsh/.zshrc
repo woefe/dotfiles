@@ -77,8 +77,10 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=white'
 maybe_source /usr/share/doc/pkgfile/command-not-found.zsh
 
 # fzf keybindings and completion
-maybe_source /usr/share/fzf/completion.zsh
-maybe_source /usr/share/fzf/key-bindings.zsh
+if check_prog fzf; then
+    source $HOME/.zsh-plugins/fzf/completion.zsh
+    source $HOME/.zsh-plugins/fzf/key-bindings.zsh
+fi
 
 # Enable syntax highlighting. Must be loaded after all `zle -N` calls (see
 # https://github.com/zsh-users/zsh-syntax-highlighting#faq)
