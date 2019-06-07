@@ -255,7 +255,7 @@ c.messages.timeout = 4000
 c.statusbar.hide = False
 c.statusbar.padding = {"bottom": 3, "left": 5, "right": 5, "top": 3}
 c.statusbar.position = "bottom"
-c.statusbar.widgets = ["keypress", "url", "history", "progress"]
+c.statusbar.widgets = ["keypress", "url", "history", "scroll", "progress"]
 
 c.scrolling.bar = "when-searching"
 c.scrolling.smooth = True
@@ -283,7 +283,8 @@ c.url.searchengines = {
     "y": "https://www.youtube.com/results?search_query={}",
     "g": "https://www.startpage.com/do/search?query={}",
     "sp": "https://www.startpage.com/do/search?query={}",
-    "aur": "https://aur.archlinux.org/packages/?O=0&K={}"
+    "aur": "https://aur.archlinux.org/packages/?O=0&K={}",
+    "h": "https://www.stackage.org/lts/hoogle?q={}"
 }
 
 config.unbind("<Ctrl-w>", mode="normal")
