@@ -285,12 +285,14 @@ function write_dirstack() {
     print -l $dedup >! $DIRSTACKFILE
 }
 
-add-zsh-hook zshexit write_dirstack
+add-zsh-hook chpwd write_dirstack
 
 if [[ -f ${DIRSTACKFILE} ]]; then
-    # Enabling NULL_GLOB via (N) weeds out any non-existing
-    # directories from the saved dir-stack file.
-    dirstack=( ${(f)"$(< $DIRSTACKFILE)"}(N) )
+    # Read dirstack from file and filter out all non-existing directories
+    # (f): split at newline
+    # ${^...}: set RC_EXPAND_PARAM. ${^var} becomes {$var[1],$var[2],...}
+    # (/N): / to filter directories. N for NULL_GLOB to silently ignore nonexisting dirs
+    dirstack=( ${^${(f)"$(< $DIRSTACKFILE)"}}(/N) )
 
     # Populate `cd -` behavior after startup
     [[ -d $dirstack[1] ]] && cd -q $dirstack[1] && cd -q $OLDPWD
