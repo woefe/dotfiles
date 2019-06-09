@@ -1,18 +1,18 @@
 # Updates editor information when the keymap changes.
 function zle-keymap-select() {
-  # update keymap variable for the prompt
-  VI_KEYMAP=$KEYMAP
+    # update keymap variable for the prompt
+    VI_KEYMAP=$KEYMAP
 
-  # change cursor depending on mode.
-  # Block cursor in "normal" mode, Beam in insert mode.
-  if [[ "$VI_KEYMAP" == "vicmd" ]]; then
-      echo -ne '\e[1 q'
-  else
-      echo -ne '\e[5 q'
-  fi
+    # change cursor depending on mode.
+    # Block cursor in "normal" mode, Beam in insert mode.
+    if [[ "$VI_KEYMAP" == "vicmd" ]]; then
+        print -n '\e[1 q'
+    else
+        print -n '\e[5 q'
+    fi
 
-  zle reset-prompt
-  zle -R
+    zle reset-prompt
+    zle -R
 }
 
 function zle-line-init() {
@@ -34,11 +34,11 @@ export KEYTIMEOUT=1
 #setopt PROMPT_SUBST
 #PROMPT='$(vi_mode_status)'
 function vi_mode_status() {
-  local normal_mode_indicator='%(?.%F{blue}•%f%F{cyan}•%f%F{green}•%f.%F{red}•••%f) '
-  local insert_mode_indicator='%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
-  if [[ "$VI_KEYMAP" == "vicmd" ]]; then
-      echo "$normal_mode_indicator"
-  else
-      echo "$insert_mode_indicator"
-  fi
+    local normal_mode_indicator='%(?.%F{blue}•%f%F{cyan}•%f%F{green}•%f.%F{red}•••%f) '
+    local insert_mode_indicator='%(?.%F{blue}❯%f%F{cyan}❯%f%F{green}❯%f.%F{red}❯❯❯%f) '
+    if [[ "$VI_KEYMAP" == "vicmd" ]]; then
+        echo "$normal_mode_indicator"
+    else
+        echo "$insert_mode_indicator"
+    fi
 }

@@ -54,6 +54,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 # Virtualenv Wrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
+export VIRTUAL_ENV_DISABLE_PROMPT=1  # Tell virtualenv to leave my prompt alone
 if test -r /usr/bin/virtualenvwrapper.sh; then
     export VIRTUALENVWRAPPER_SCRIPT=/usr/bin/virtualenvwrapper.sh
 elif test -r /usr/share/virtualenvwrapper/virtualenvwrapper.sh; then
@@ -302,11 +303,63 @@ fi
 #{{{ Prompt
 # Prompt: git status, hostname for ssh sessions, vi mode indicator
 source $HOME/.zsh-plugins/zsh-git-prompt/git-prompt.zsh
-if [ -n "$SSH_CLIENT" ] && [ -n "$SSH_TTY" ]; then
-    PROMPT='%B%F{blue}@%m:%f%b %B%40<..<%~ %b$(gitprompt)$(vi_mode_status)'
-else
-    PROMPT='%B%40<..<%~ %b$(gitprompt)$(vi_mode_status)'
-fi
+
+# Set $psvar[12] to the current Python virtualenv
+function _prompt_update_venv() {
+    psvar[12]=
+    if [[ -n $VIRTUAL_ENV ]] && [[ -n $VIRTUAL_ENV_DISABLE_PROMPT ]]; then
+        psvar[12]="${VIRTUAL_ENV:t}"
+    fi
+}
+
+add-zsh-hook precmd _prompt_update_venv
+
+# Draw a newline between every prompt
+function _prompt_newline(){
+    if [[ -z "$_PROMPT_NEWLINE" ]]; then
+        _PROMPT_NEWLINE=1
+    elif [[ -n "$_PROMPT_NEWLINE" ]]; then
+        echo
+    fi
+}
+add-zsh-hook precmd _prompt_newline
+
+# To avoid glitching with fzf's alt+c binding we override the fzf-redraw-prompt widget.
+# The widget by default reruns all precmd hooks, which prints the newline again.
+# We unset _PROMPT_NEWLINE before running the widget to avoid this.
+# We therefore run all precmd hooks except _prompt_newline.
+function fzf-redraw-prompt() {
+    local precmd
+    for precmd in ${precmd_functions:#_prompt_newline}; do
+        $precmd
+    done
+    zle reset-prompt
+}
+
+ZSH_GIT_PROMPT_FORCE_BLANK=1
+ZSH_THEME_GIT_PROMPT_PREFIX=" · "
+ZSH_THEME_GIT_PROMPT_SUFFIX="›"
+ZSH_THEME_GIT_PROMPT_SEPARATOR=" ‹"
+ZSH_THEME_GIT_PROMPT_BRANCH="⎇ %{$fg_bold[cyan]%}"
+ZSH_THEME_GIT_PROMPT_DETACHED="@%{$fg_no_bold[cyan]%}"
+ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg_no_bold[blue]%}↓"
+ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_no_bold[blue]%}↑"
+ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}✖"
+ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[green]%}●"
+ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[red]%}✚"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="…"
+ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[blue]%}⚑"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
+
+PROMPT=$'┏╸'
+[ -n "$SSH_CLIENT" ] \
+    && [ -n "$SSH_TTY" ] \
+    && PROMPT+='%B%F{blue}@%m:%f%b · '  # Hostname, if in SSH session
+PROMPT+='%B%30<..<%~%b%<<'              # Path truncated to 30 characters
+PROMPT+='%(12V. · %F{244} %12v%f.)'    # Python virtualenv name
+PROMPT+='$(gitprompt)'                  # Git status
+PROMPT+=$'\n┗╸'                         # Newline
+PROMPT+='$(vi_mode_status)'             # Vi mode indicator
 #}}}
 
 #{{{ Window title
