@@ -29,11 +29,12 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'machakann/vim-highlightedyank'
-Plug 'neovimhaskell/haskell-vim'
+Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
-    \ 'do': './install.sh'
+    \ 'do': './install.sh',
+    \ 'for': ['python', 'haskell']
     \ }
 
 if has('nvim')
@@ -45,8 +46,8 @@ else
 endif
 
 " Colorschemes
-Plug 'chriskempson/base16-vim'
 Plug 'NLKNguyen/papercolor-theme'
+"Plug 'chriskempson/base16-vim'
 "Plug 'rakr/vim-one'
 "Plug 'tomasr/molokai'
 "Plug 'reedes/vim-colors-pencil'
@@ -411,7 +412,7 @@ hi NeomakeVirtualtextError guifg=#d70000 ctermfg=160
 
 let g:neomake_haskell_enabled_makers = []
 let g:neomake_cpp_enabled_makers = ['gcc']
-let g:neomake_python_enabled_makers = ['pylint', 'pydocstyle', 'mypy']
+let g:neomake_python_enabled_makers = []
 
 " Airline settings
 "let g:airline_theme='tomorrow'
