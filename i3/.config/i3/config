@@ -9,6 +9,7 @@ set $color_blue "#5294e2"
 set $color_dark_blue "#282C34"
 set $color_white "#FFFFFF"
 set $color_red  "#BD2C40"
+set $color_grey "#EEEEEE"
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -228,13 +229,15 @@ for_window [title="(Android |)Emulator(.*)"] floating enable
 workspace_auto_back_and_forth yes
 
 #disable window title
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 5
 
-# class                  border            background        text          indicator
-client.focused           $color_blue       $color_blue       $color_white  $color_blue
-client.focused_inactive  $color_dark_blue  $color_dark_blue  $color_white  $color_dark_blue
-client.unfocused         $color_dark_blue  $color_dark_blue  $color_white  $color_dark_blue
-client.urgent            $color_red        $color_red        $color_white  $color_red
+# class                  border            background        text          indicator          child_border
+client.focused           $color_blue       $color_blue       $color_white  $color_blue        $color_blue
+client.focused_inactive  $color_grey       $color_grey       #8E8E8E  $color_grey   $color_grey
+client.unfocused         $color_grey       $color_grey       #8E8E8E  $color_grey   $color_grey
+#client.focused_inactive  $color_dark_blue  $color_dark_blue  $color_white  $color_dark_blue   $color_dark_blue
+#client.unfocused         $color_dark_blue  $color_dark_blue  $color_white  $color_dark_blue   $color_dark_blue
+client.urgent            $color_red        $color_red        $color_white  $color_red         $color_red
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id dex -a

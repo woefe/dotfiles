@@ -225,7 +225,7 @@ format = <label>
 format-prefix = " "
 label = %output:3%
 
-click-left = firefox https://cryptowat.ch/markets/kraken/zec/eur
+click-left = xdg-open https://cryptowat.ch/markets/kraken/zec/eur
 
 [module/monero]
 type = custom/script
@@ -236,7 +236,7 @@ format = <label>
 format-prefix = " "
 label = %output:3%
 
-click-left = firefox https://cryptowat.ch/markets/kraken/xmr/eur
+click-left = xdg-open https://cryptowat.ch/markets/kraken/xmr/eur
 
 [module/bandwidth]
 type = custom/script
