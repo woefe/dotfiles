@@ -284,7 +284,8 @@ c.url.searchengines = {
     "g": "https://www.startpage.com/do/search?query={}",
     "sp": "https://www.startpage.com/do/search?query={}",
     "aur": "https://aur.archlinux.org/packages/?O=0&K={}",
-    "h": "https://www.stackage.org/lts/hoogle?q={}"
+    "h": "https://www.stackage.org/lts/hoogle?q={}",
+    "s": "https://scholar.google.de/scholar?q={}"
 }
 
 config.unbind("<Ctrl-w>", mode="normal")
