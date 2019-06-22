@@ -1,7 +1,7 @@
 #{{{ Base config, Plugins, modules, programs config
 source $HOME/.aliases
 source $HOME/.environment
-source $HOME/.zsh-plugins/wbase.zsh
+source $HOME/.zsh-plugins/wbase.zsh/wbase.zsh
 
 # Virtualenv Wrapper
 export WORKON_HOME=$HOME/.virtualenvs
