@@ -1,8 +1,6 @@
 #{{{ Base config, Plugins, modules, programs config
-source $HOME/.aliases
-source $HOME/.environment
-source $HOME/.zsh-plugins/wbase.zsh/wbase.zsh
 source $HOME/.zsh-plugins/vi-mode.zsh/vi-mode.plugin.zsh
+source $HOME/.zsh-plugins/wbase.zsh/wbase.zsh
 
 # Virtualenv Wrapper
 export WORKON_HOME=$HOME/.virtualenvs
@@ -14,7 +12,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 source $HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# command not found
+# command not found on Arch Linux
 maybe_source /usr/share/doc/pkgfile/command-not-found.zsh
 
 # fzf keybindings and completion
@@ -53,6 +51,30 @@ bindkey '^f' autosuggest-accept
 
 # edit-command-line module
 bindkey -M vicmd 'V' edit-command-line
+#}}}
+
+#{{{ Aliases
+alias ...='cd ../..'
+alias cpstat='rsync -haP'
+alias datea='date +%F'
+alias g='git'
+alias d='sudo docker'
+alias grep='grep --color=auto'
+alias ip='ip -c'
+alias la='ls -lah --color=auto'
+alias lh='ls -lh --color=auto'
+alias ls='ls --color=auto'
+alias l='ls --color=auto'
+alias mkqrcode='qrencode -t ansiutf8 -o -'
+alias pacu='pikaur -Syu'
+alias :q='exit'
+alias del='trash'
+alias ssh-public-key='cat ~/.ssh/id_rsa.pub'
+alias vim='nvim'
+alias whoneeds='pacman -Qi'
+alias T="$TERMCMD 2>&1 > /dev/null &!"
+alias o="rifle"
+alias mdstat='cat /proc/mdstat'
 #}}}
 
 # vim:foldmethod=marker
