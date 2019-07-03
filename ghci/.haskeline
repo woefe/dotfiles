@@ -1,0 +1,3 @@
+completionType: ListCompletion
+maxHistorySize: Just 10000
+historyDuplicates: IgnoreAll
