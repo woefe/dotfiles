@@ -13,7 +13,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'Chiel92/vim-autoformat'
+Plug 'sbdchd/neoformat'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'Konfekt/FastFold'
@@ -211,6 +211,7 @@ if has('nvim')
 endif
 
 " Automatically save notes when focus is lost
+autocmd FocusLost ~/workspace/masterthesis/notes* :wa
 autocmd FocusLost ~/sync/Notes* :wa
 autocmd BufRead ~/sync/Notes* :set nospell
 
@@ -433,11 +434,14 @@ let g:airline#extensions#tabline#disable_refresh=1
 "let g:notes_directories = ['~/sync/notes']
 "let g:notes_suffix = '.txt'
 
-" vim-autoformat settings
-let g:formatdef_my_custom_java = '"--style=java"'
-let g:formatters_java = ['my_custom_java']
-let g:formatdef_my_custom_c = '"--style=java"'
-let g:formatters_c = ['my_custom_c']
+" neoformat settings
+let g:neoformat_haskell_brittany = {
+    \ 'exe': 'brittany',
+    \ 'args': ['--indent 4', '--columns 99', '--import-col 49', '--import-as-col 50'],
+    \ 'stdin': 1,
+    \ }
+
+let g:neoformat_enabled_haskell = ['brittany']
 
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
@@ -500,6 +504,9 @@ let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie-wrapper'],
     \ 'python': ['/usr/bin/pyls'],
     \}
+let g:LanguageClient_rootMarkers = {
+    \ 'haskell': ['*.cabal', 'stack.yaml'],
+    \ }
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
 map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
