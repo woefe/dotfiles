@@ -219,7 +219,7 @@ animation-charging-framerate = 1000
 [module/zec]
 type = custom/script
 exec = ~/.config/polybar/scripts/kraken.py zeceur
-interval = 60
+interval = 300
 
 format = <label>
 format-prefix = " "
@@ -230,7 +230,7 @@ click-left = xdg-open https://cryptowat.ch/markets/kraken/zec/eur
 [module/monero]
 type = custom/script
 exec = ~/.config/polybar/scripts/kraken.py xmreur
-interval = 60
+interval = 300
 
 format = <label>
 format-prefix = " "
