@@ -46,6 +46,9 @@ c.colors.completion.item.selected.border.top = alt_bg
 # Bottom border color of the selected completion item.
 c.colors.completion.item.selected.border.bottom = alt_bg
 
+# Foreground color of the matched text in the selected completion item
+c.colors.completion.item.selected.match.fg = blue
+
 # Foreground color of the matched text in the completion.
 c.colors.completion.match.fg = blue
 
@@ -238,19 +241,38 @@ c.colors.tabs.selected.even.fg = default_bg
 # Background color of selected even tabs.
 c.colors.tabs.selected.even.bg = blue
 
-c.hints.border = "1px solid " + cyan
+# Background color of pinned unselected even tabs.
+c.colors.tabs.pinned.even.bg = alt_bg
+
+# Foreground color of pinned unselected even tabs.
+c.colors.tabs.pinned.even.fg = default_fg
+
+# Background color of pinned unselected odd tabs.
+c.colors.tabs.pinned.odd.bg = alt_bg
+
+# Foreground color of pinned unselected odd tabs.
+c.colors.tabs.pinned.odd.fg = default_fg
+
+# Background color of pinned selected even tabs.
+c.colors.tabs.pinned.selected.even.bg = blue
+
+# Foreground color of pinned selected even tabs.
+c.colors.tabs.pinned.selected.even.fg = default_bg
+
+# Background color of pinned selected odd tabs.
+c.colors.tabs.pinned.selected.odd.bg = blue
+
+# Foreground color of pinned selected odd tabs.
+c.colors.tabs.pinned.selected.odd.fg = default_bg
 
 # Background color for webpages if unset (or empty to use the theme's
 # color).
 # c.colors.webpage.bg = default_bg
 
-c.auto_save.session = True
-
-c.content.cookies.accept = "no-3rdparty"
-c.content.autoplay = False
-c.content.default_encoding = "utf-8"
-
-c.messages.timeout = 4000
+c.fonts.monospace = "Hack, DejaVu Sans Mono, Ubuntu Mono, monospace"
+c.fonts.prompts = "11pt monospace"
+c.fonts.statusbar = "11pt monospace"
+c.fonts.tabs = "11pt Noto Sans"
 
 c.statusbar.hide = False
 c.statusbar.padding = {"bottom": 3, "left": 5, "right": 5, "top": 3}
@@ -260,7 +282,11 @@ c.statusbar.widgets = ["keypress", "url", "history", "scroll", "progress"]
 c.scrolling.bar = "when-searching"
 c.scrolling.smooth = True
 
-c.session.lazy_restore = True
+c.hints.border = "1px solid " + cyan
+
+c.content.cookies.accept = "no-3rdparty"
+c.content.autoplay = False
+c.content.default_encoding = "utf-8"
 
 c.tabs.background = True
 c.tabs.close_mouse_button = "middle"
@@ -276,6 +302,13 @@ c.tabs.pinned.frozen = False
 c.tabs.position = "top"
 c.tabs.select_on_remove = "last-used"
 c.tabs.show = "always"
+
+config.unbind("<Ctrl-w>", mode="normal")
+config.unbind("gr", mode="normal")
+config.bind("gl", "tab-move +", mode="normal")
+config.bind("gh", "tab-move -", mode="normal")
+config.bind("m", "spawn mpv {url}", mode="normal")
+
 c.url.searchengines = {
     "DEFAULT": "https://duckduckgo.com/?q={}",
     "aw": "https://wiki.archlinux.org/index.php?search={}",
@@ -288,7 +321,8 @@ c.url.searchengines = {
     "s": "https://scholar.google.de/scholar?q={}"
 }
 
-config.unbind("<Ctrl-w>", mode="normal")
-config.unbind("gr", mode="normal")
-config.bind("gl", "tab-move +", mode="normal")
-config.bind("gh", "tab-move -", mode="normal")
+c.auto_save.session = True
+c.messages.timeout = 4000
+c.session.lazy_restore = True
+c.spellcheck.languages = ["en-US"]
+
