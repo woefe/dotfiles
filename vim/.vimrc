@@ -31,18 +31,14 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': './install.sh',
-    \ 'for': ['python', 'haskell']
-    \ }
-
 if has('nvim')
+    Plug 'autozimu/LanguageClient-neovim', {
+        \ 'branch': 'next',
+        \ 'do': './install.sh',
+        \ 'for': ['python', 'haskell']
+        \ }
+
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
 " Colorschemes
@@ -296,8 +292,6 @@ map <F12> :setlocal spell! spelllang=de_de<CR>
 " Esc to disable highlighting of search matches
 if has('nvim')
     nnoremap <Esc> :nohlsearch<CR>
-else
-    autocmd TermResponse * nnoremap <Esc> :nohlsearch<CR>
 endif
 
 " Copy to X clipboard
@@ -411,9 +405,11 @@ hi NeomakeVirtualtextWarning guifg=#ff8700 ctermfg=208
 hi NeomakeErrorSign guifg=#d70000 ctermfg=160
 hi NeomakeVirtualtextError guifg=#d70000 ctermfg=160
 
-let g:neomake_haskell_enabled_makers = []
-let g:neomake_cpp_enabled_makers = ['gcc']
-let g:neomake_python_enabled_makers = []
+" on nvim the language client already provides warnings
+if has('nvim')
+    let g:neomake_haskell_enabled_makers = []
+    let g:neomake_python_enabled_makers = []
+endif
 
 " Airline settings
 "let g:airline_theme='tomorrow'
