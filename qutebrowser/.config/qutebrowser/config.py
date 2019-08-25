@@ -318,7 +318,9 @@ c.url.searchengines = {
     "sp": "https://www.startpage.com/do/search?query={}",
     "aur": "https://aur.archlinux.org/packages/?O=0&K={}",
     "h": "https://www.stackage.org/lts/hoogle?q={}",
-    "s": "https://scholar.google.de/scholar?q={}"
+    "s": "https://scholar.google.de/scholar?q={}",
+    "dblp": "https://dblp.uni-trier.de/search?q={}",
+    "crossref": "https://search.crossref.org/?q={}"
 }
 
 c.auto_save.session = True
