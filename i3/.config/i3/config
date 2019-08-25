@@ -150,15 +150,18 @@ bindsym $mod+Delete mode $sysmenu
 
 set $mode_display "External Screen: (a) above, (d) duplicate, (r) reset"
 mode $mode_display {
-    bindsym a exec --no-startup-id ~/.bin/monitor.sh above     && ~/.fehbg, mode "default"
-    bindsym d exec --no-startup-id ~/.bin/monitor.sh duplicate && ~/.fehbg, mode "default"
-    bindsym r exec --no-startup-id ~/.bin/monitor.sh reset     && ~/.fehbg, mode "default"
+    bindsym a exec --no-startup-id ~/.bin/monitor.sh above     && ~/.fehbg && ~/.config/polybar/launch.sh, mode "default"
+    bindsym d exec --no-startup-id ~/.bin/monitor.sh duplicate && ~/.fehbg && ~/.config/polybar/launch.sh, mode "default"
+    bindsym r exec --no-startup-id ~/.bin/monitor.sh reset     && ~/.fehbg && ~/.config/polybar/launch.sh, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym XF86Display mode $mode_display
 bindsym $mod+s mode $mode_display
+
+bindsym $mod+d exec --no-startup-id ~/.bin/dock
+bindsym $mod+Shift+d exec --no-startup-id ~/.bin/undock
 
 # Start rofi
 bindsym $mod+p exec --no-startup-id rofi -show drun
