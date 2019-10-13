@@ -11,3 +11,4 @@ export FZF_CTRL_T_COMMAND='fd --type f --hidden --exclude .git --exclude .cache'
 export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git'
 export FZF_DEFAULT_OPTS='--color=16,hl:4,hl+:4,bg+:15,fg+:8,spinner:5,info:2'
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
+export ANDROID_HOME="$HOME/.android"
