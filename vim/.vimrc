@@ -345,7 +345,7 @@ colorscheme PaperColor
 "------------------------------------------------------------
 
 " fzf commands and mappings
-command! Fd call fzf#run(fzf#wrap({'source': 'fd --type f --hidden --exclude .git'}))
+command! Fd call fzf#run(fzf#wrap({'source': 'fd --follow --type f --hidden --exclude .git'}))
 
 function! s:rg_to_qf(line)
   let parts = split(a:line, ':')
