@@ -56,7 +56,7 @@ mount_udisk() {
     local extractdevs
     local mountme
 
-    extractdevs='dev=$(realpath {}); findmnt $dev > /dev/null || echo $dev\\t$(lsblk -n -o LABEL,SIZE $dev)'
+    extractdevs='dev=$(realpath {}); findmnt $dev > /dev/null || echo -e $dev\\t$(lsblk -n -o LABEL,SIZE $dev)'
     mountme=$(find "/dev/disk/by-uuid/" -mindepth 1 -maxdepth 1 -print0 \
         | xargs -0 -n1 -I"{}" sh -c "$extractdevs"  \
         | dmenu \
