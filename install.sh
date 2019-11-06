@@ -31,8 +31,6 @@ mkdir -p "$HOME/.config"
 #stow --target "$HOME" --no-folding autostart
 #stow --target "$HOME"              compton
 #stow --target "$HOME"              dunst
-#stow --target "$HOME"              environment
-#stow --target "$HOME" --no-folding fish
 #stow --target "$HOME"              greenclip
 #stow --target "$HOME"              i3
 #stow --target "$HOME" --no-folding moc
