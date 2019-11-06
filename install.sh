@@ -29,21 +29,24 @@ mkdir -p "$HOME/.config"
 
 #stow --target "$HOME"              alacritty
 #stow --target "$HOME" --no-folding autostart
+#stow --target "$HOME"              bat
 #stow --target "$HOME"              compton
 #stow --target "$HOME"              dunst
-#stow --target "$HOME"              environment
-#stow --target "$HOME" --no-folding fish
+#stow --target "$HOME"              ghci
+#stow --target "$HOME"              git
 #stow --target "$HOME"              greenclip
 #stow --target "$HOME"              i3
+#stow --target "$HOME"              latex
 #stow --target "$HOME" --no-folding moc
 #stow --target "$HOME" --no-folding qutebrowser
 #stow --target "$HOME" --no-folding ranger
 #stow --target "$HOME"              redshift
 #stow --target "$HOME"              rofi
-#stow --target "$HOME"              scripts
+#stow --target "$HOME" --no-folding scripts
 #stow --target "$HOME"              termite
 #stow --target "$HOME"              tmux
 #stow --target "$HOME" --no-folding vim
+#stow --target "$HOME"              vimiv
 #stow --target "$HOME"              xorg
 #stow --target "$HOME"              ytcc
 #stow --target "$HOME"              zathura
