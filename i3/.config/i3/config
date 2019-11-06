@@ -175,7 +175,7 @@ bindsym $alt+space exec --no-startup-id emojiselect
 
 # Application Quickstart
 bindsym $mod+$alt+b exec qutebrowser
-bindsym $mod+$alt+e exec thunderbird
+bindsym $mod+$alt+e exec evolution
 bindsym $mod+$alt+r exec $term_cmd -t ranger -e ranger
 bindsym $mod+$alt+f exec $term_cmd -t ranger -e ranger
 bindsym $mod+$alt+m exec $term_cmd -e mocp
@@ -217,6 +217,7 @@ bindsym KP_Left exec --no-startup-id mocp --previous
 assign [class="Firefox"] 1
 assign [class="qutebrowser"] 1
 assign [class="Thunderbird"] 10
+assign [class="Evolution"] 10
 
 for_window [class="mpv"] floating enable
 for_window [class="Vlc"] floating enable
