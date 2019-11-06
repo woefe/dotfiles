@@ -1,0 +1,20 @@
+[alias]
+    rev = merge --no-ff --no-commit
+    cmm = commit -m
+    cm = commit
+    st = status
+    co = checkout
+    diffs = diff --staged
+    diffw = diff --color-words
+    diffsw = diff --color-words --staged
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    AintNobodyGotTimeForThat = !git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
+
+[color]
+    ui = auto
+
+[credential]
+    helper = cache --timeout=3600
+
+[include]
+    path = ~/.gitconfig.local
