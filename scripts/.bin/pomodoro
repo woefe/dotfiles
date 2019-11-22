@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ###
 # This script provides a simple pomodoro timer. Check out the following link to
@@ -19,9 +19,12 @@ beep='//tQxAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAkAAAeMwAHBw4ODhUVFRwcHCMjKioqMT
 audio_enabled=true
 notification_enabled=true
 print_enabled=true
+minutes_work=25
+minutes_short_break=5
+minutes_long_break=20
 
 warn(){
-    printf "%" "${YELLOW}Warning:${NC} $*"
+    echo "${YELLOW}Warning:${NC} $*"
 }
 
 check_prog() {
@@ -48,7 +51,7 @@ message() {
 
 work() {
     message "Get your work done!"
-    sleep 25m
+    sleep "${minutes_work}m"
 }
 
 pause() {
@@ -60,13 +63,14 @@ usage() {
     echo "Usage: $0 [OPTIONS]"
     echo
     echo "OPTIONS:"
-    echo "  -h  print this help and exit"
-    echo "  -a  disable audio"
-    echo "  -n  disable notification"
-    echo "  -p  disable printing to stdout"
+    echo "  -h        print this help and exit"
+    echo "  -a        disable audio"
+    echo "  -n        disable notification"
+    echo "  -p        disable printing to stdout"
+    echo "  -t w:s:l  set timers. Format is 'work_minutes:short_break_minutes:long_break_minutes'"
 }
 
-while getopts "hapn" opt; do
+while getopts "hapnt:" opt; do
     case $opt in
         h)
             usage
@@ -81,12 +85,22 @@ while getopts "hapn" opt; do
         n)
             notification_enabled=false
             ;;
+        t)
+            time_format="$OPTARG"
+            ;;
         ?)
             usage
             exit 1
             ;;
     esac
 done
+
+if [ -n "$time_format" ]; then
+    IFS=":" read -ra times <<< "$time_format"
+    minutes_work=${times[0]}
+    minutes_short_break=${times[1]}
+    minutes_long_break=${times[2]}
+fi
 
 if $audio_enabled; then
     if ! (check_prog base64 && check_prog mpg123); then
@@ -104,11 +118,11 @@ fi
 
 while true; do
     work
-    pause 5
+    pause "$minutes_short_break"
     work
-    pause 5
+    pause "$minutes_short_break"
     work
-    pause 5
+    pause "$minutes_short_break"
     work
-    pause 30
+    pause "$minutes_long_break"
 done
