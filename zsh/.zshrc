@@ -74,6 +74,10 @@ alias whoneeds='pacman -Qi'
 alias T="$TERMCMD 2>&1 > /dev/null &!"
 alias o="rifle"
 alias mdstat='cat /proc/mdstat'
+
+export CLASSPATH=".:$HOME/.local/lib/antlr-4.7.2-complete.jar:$CLASSPATH"
+alias antlr4='java -Xmx500M -cp "$HOME/.local/lib/antlr-4.7.2-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
+alias grun='java -Xmx500M -cp "$HOME/.local/lib/antlr-4.7.2-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
 #}}}
 
 # vim:foldmethod=marker
