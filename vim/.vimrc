@@ -27,6 +27,7 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 "Plug 'junegunn/fzf'  " On Archlinux this plugin is installed globally when installing fzf
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
