@@ -51,3 +51,13 @@ mkdir -p "$HOME/.config"
 #stow --target "$HOME"              ytcc
 #stow --target "$HOME"              zathura
 #stow --target "$HOME"              zsh
+
+#stow --target "$HOME" --no-folding vscode;
+#cat << EOF | xargs -L1 code --install-extension
+#DavidAnson.vscode-markdownlint
+#EditorConfig.EditorConfig
+#mrworkman.papercolor-vscode-redux
+#ms-python.python
+#RomanPeshkov.vscode-text-tables
+#vscodevim.vim
+#EOF
