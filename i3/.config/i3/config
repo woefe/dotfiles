@@ -174,7 +174,7 @@ bindsym $mod+Shift+m exec --no-startup-id mountmenu umount
 bindsym $alt+space exec --no-startup-id emojiselect
 
 # Application Quickstart
-bindsym $mod+$alt+b exec qutebrowser
+bindsym $mod+$alt+b exec firefox
 bindsym $mod+$alt+e exec evolution
 bindsym $mod+$alt+r exec $term_cmd -t ranger -e ranger
 bindsym $mod+$alt+f exec $term_cmd -t ranger -e ranger
