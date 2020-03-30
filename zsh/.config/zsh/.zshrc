@@ -1,4 +1,16 @@
 #{{{ Base config, Plugins, modules, programs config
+
+# Load hooks installed by other dotfile modules
+() {
+    setopt localoptions null_glob
+    if [[ -d $ZDOTDIR/hooks ]] ; then
+        for f in $ZDOTDIR/hooks/?*.zsh ; do
+            [ -r "$f" ] && source "$f"
+        done
+        unset f
+    fi
+}
+
 source $ZDOTDIR/plugins/vi-mode.zsh/vi-mode.plugin.zsh
 source $ZDOTDIR/plugins/wbase.zsh/wbase.zsh
 

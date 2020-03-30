@@ -44,7 +44,7 @@ mkdir -p "$HOME/.config"
 #stow --target "$HOME"              rofi
 #stow --target "$HOME" --no-folding scripts
 #stow --target "$HOME"              termite
-#stow --target "$HOME"              tmux
+#stow --target "$HOME" --no-folding tmux
 #stow --target "$HOME" --no-folding vim
 #stow --target "$HOME"              vimiv
 #stow --target "$HOME"              xorg
