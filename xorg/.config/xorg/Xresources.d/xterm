@@ -1,5 +1,5 @@
 xterm*faceName:         Hack
-xterm*faceSize:         9
+xterm*faceSize:         10
 xTerm*locale:           true
 xterm*eightBitInput:    false
 xTerm*metaSendsEscape:  true

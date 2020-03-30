@@ -3,8 +3,6 @@ set $alt Mod1
 set $term_cmd alacritty
 set $lock_cmd slock
 
-set $mensa ~/.bin/mensa
-
 set $color_blue "#5294e2"
 set $color_dark_blue "#282C34"
 set $color_white "#FFFFFF"
@@ -150,9 +148,9 @@ bindsym $mod+Delete mode $sysmenu
 
 set $mode_display "External Screen: (a) above, (d) duplicate, (r) reset"
 mode $mode_display {
-    bindsym a exec --no-startup-id ~/.bin/monitor.sh above     && ~/.fehbg && ~/.config/polybar/launch.sh, mode "default"
-    bindsym d exec --no-startup-id ~/.bin/monitor.sh duplicate && ~/.fehbg && ~/.config/polybar/launch.sh, mode "default"
-    bindsym r exec --no-startup-id ~/.bin/monitor.sh reset     && ~/.fehbg && ~/.config/polybar/launch.sh, mode "default"
+    bindsym a exec --no-startup-id $HOME/.local/bin/monitor.sh above     && $HOME/.fehbg && $XDG_CONFIG_HOME/polybar/launch.sh, mode "default"
+    bindsym d exec --no-startup-id $HOME/.local/bin/monitor.sh duplicate && $HOME/.fehbg && $XDG_CONFIG_HOME/polybar/launch.sh, mode "default"
+    bindsym r exec --no-startup-id $HOME/.local/bin/monitor.sh reset     && $HOME/.fehbg && $XDG_CONFIG_HOME/polybar/launch.sh, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -160,8 +158,8 @@ mode $mode_display {
 bindsym XF86Display mode $mode_display
 bindsym $mod+s mode $mode_display
 
-bindsym $mod+d exec --no-startup-id ~/.bin/dock
-bindsym $mod+Shift+d exec --no-startup-id ~/.bin/undock
+bindsym $mod+d exec --no-startup-id $HOME/.local/bin/dock
+bindsym $mod+Shift+d exec --no-startup-id $HOME/.local/bin/undock
 
 # Start rofi
 bindsym $mod+p exec --no-startup-id rofi -show drun
@@ -183,7 +181,6 @@ bindsym $mod+$alt+c exec chromium --incognito
 bindsym $mod+$alt+p exec keepassxc $HOME/sync/passwords.kdbx
 bindsym $mod+$alt+t exec telegram-desktop
 bindsym $mod+$alt+Return exec $term_cmd --class tmuxdrop -e 'tmux new-session -A -s drop'
-bindsym $mod+$alt+s exec --no-startup-id rofi -modi "Mensa Monday:$mensa 1#Mensa Tuesday:$mensa 2#Mensa Wednesday:$mensa 3#Mensa Thursday:$mensa 4#Mensa Friday:$mensa 5" -show "$(date +'Mensa %A')"
 
 bindsym Print exec xfce4-screenshooter
 
@@ -214,7 +211,7 @@ bindsym KP_Right exec --no-startup-id mocp --next
 bindsym KP_Left exec --no-startup-id mocp --previous
 
 #Assign windows to workspaces
-assign [class="Firefox"] 1
+assign [class="firefox"] 1
 assign [class="qutebrowser"] 1
 assign [class="Thunderbird"] 10
 assign [class="Evolution"] 10
@@ -243,5 +240,5 @@ client.unfocused         $color_grey       $color_grey       #8E8E8E  $color_gre
 #client.unfocused         $color_dark_blue  $color_dark_blue  $color_white  $color_dark_blue   $color_dark_blue
 client.urgent            $color_red        $color_red        $color_white  $color_red         $color_red
 
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id $XDG_CONFIG_HOME/polybar/launch.sh
 exec --no-startup-id dex -a

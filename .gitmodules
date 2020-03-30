@@ -1,21 +1,21 @@
 [submodule "zsh/.zsh-plugins/zsh-autosuggestions"]
-	path = zsh/.zsh-plugins/zsh-autosuggestions
+	path = zsh/.config/zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "zsh/.zsh-plugins/zsh-history-substring-search"]
-	path = zsh/.zsh-plugins/zsh-history-substring-search
+	path = zsh/.config/zsh/plugins/zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
 [submodule "zsh/.zsh-plugins/zsh-git-prompt"]
-	path = zsh/.zsh-plugins/git-prompt.zsh
+	path = zsh/.config/zsh/plugins/git-prompt.zsh
 	url = https://github.com/woefe/zsh-git-prompt.git
 [submodule "zsh/.zsh-plugins/zsh-syntax-highlighting"]
-	path = zsh/.zsh-plugins/zsh-syntax-highlighting
+	path = zsh/.config/zsh/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "zsh/.zsh-plugins/zsh-completions"]
-	path = zsh/.zsh-plugins/zsh-completions
+	path = zsh/.config/zsh/plugins/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
 [submodule "zsh/.zsh-plugins/wbase.zsh"]
-	path = zsh/.zsh-plugins/wbase.zsh
+	path = zsh/.config/zsh/plugins/wbase.zsh
 	url = https://github.com/woefe/wbase.zsh.git
 [submodule "zsh/.zsh-plugins/vi-mode.zsh"]
-	path = zsh/.zsh-plugins/vi-mode.zsh
+	path = zsh/.config/zsh/plugins/vi-mode.zsh
 	url = https://github.com/woefe/vi-mode.zsh.git

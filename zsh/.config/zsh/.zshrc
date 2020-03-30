@@ -1,6 +1,6 @@
 #{{{ Base config, Plugins, modules, programs config
-source $HOME/.zsh-plugins/vi-mode.zsh/vi-mode.plugin.zsh
-source $HOME/.zsh-plugins/wbase.zsh/wbase.zsh
+source $ZDOTDIR/plugins/vi-mode.zsh/vi-mode.plugin.zsh
+source $ZDOTDIR/plugins/wbase.zsh/wbase.zsh
 
 # Virtualenv Wrapper
 export WORKON_HOME=$HOME/.virtualenvs
@@ -10,27 +10,27 @@ check_prog "virtualenvwrapper_lazy.sh" && maybe_source "$(which virtualenvwrappe
 # Enable fish-shell like autosuggestion
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
-source $HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # command not found on Arch Linux
 maybe_source /usr/share/doc/pkgfile/command-not-found.zsh
 
 # fzf keybindings and completion
 if check_prog fzf; then
-    source $HOME/.zsh-plugins/fzf/completion.zsh
-    source $HOME/.zsh-plugins/fzf/key-bindings.zsh
+    source $ZDOTDIR/plugins/fzf/completion.zsh
+    source $ZDOTDIR/plugins/fzf/key-bindings.zsh
 fi
 
 # Prompt: git status, hostname for ssh sessions, vi mode indicator
-source $HOME/.zsh-plugins/git-prompt.zsh/git-prompt.zsh
-source $HOME/.zsh-plugins/git-prompt.zsh/examples/wprompt.zsh
+source $ZDOTDIR/plugins/git-prompt.zsh/git-prompt.zsh
+source $ZDOTDIR/plugins/git-prompt.zsh/examples/wprompt.zsh
 
 # Enable syntax highlighting. Must be loaded after all `zle -N` calls (see
 # https://github.com/zsh-users/zsh-syntax-highlighting#faq)
-source $HOME/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
 # Enable fish-shell like history searching. Must be loaded after zsh-syntax-highlighting.
-source $HOME/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+source $ZDOTDIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 #}}}
 
 

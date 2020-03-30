@@ -17,4 +17,4 @@
     helper = cache --timeout=3600
 
 [include]
-    path = ~/.gitconfig.local
+    path = ~/.config/git/config.local
