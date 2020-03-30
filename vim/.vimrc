@@ -39,7 +39,7 @@ if has('nvim')
         \ 'for': ['python', 'haskell']
         \ }
 
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'tag': '5.2' }
 endif
 
 " Colorschemes
