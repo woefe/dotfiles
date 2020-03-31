@@ -6,7 +6,7 @@ if &shell =~# 'fish$'
     set shell=bash
 endif
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 Plug 'neomake/neomake'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'airblade/vim-gitgutter'
@@ -32,15 +32,13 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 
-if has('nvim')
-    Plug 'autozimu/LanguageClient-neovim', {
-        \ 'branch': 'next',
-        \ 'do': './install.sh',
-        \ 'for': ['python', 'haskell']
-        \ }
+Plug 'autozimu/LanguageClient-neovim', {
+\ 'branch': 'next',
+\ 'do': './install.sh',
+\ 'for': ['python', 'haskell']
+\ }
 
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'tag': '5.2' }
-endif
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'tag': '5.2' }
 
 " Colorschemes
 Plug 'NLKNguyen/papercolor-theme'
@@ -76,7 +74,7 @@ set hlsearch
 set incsearch
 
 " store swap files in a central place
-set directory=~/.vim/swapfiles//,/tmp//
+set directory=~/.cache/nvim/swapfiles//,/tmp//
 
 " Command line history
 set history=100
@@ -184,7 +182,7 @@ set updatetime=250
 
 " enable undodir
 set undofile
-set undodir=~/.vim/undodir
+set undodir=~/.local/share/nvim/undodir
 
 " Enable increasing of alphabetical characters with <C-A>
 set nrformats+=alpha
@@ -202,10 +200,7 @@ set softtabstop=4
 set smarttab
 
 
-if has('nvim')
-    " live preview of substitution in split window
-    set inccommand=split
-endif
+set inccommand=split
 
 " Automatically save notes when focus is lost
 autocmd FocusLost ~/workspace/masterthesis/notes* :wa
@@ -291,9 +286,7 @@ inoremap <A-left> <ESC>bi
 map <F12> :setlocal spell! spelllang=de_de<CR>
 
 " Esc to disable highlighting of search matches
-if has('nvim')
-    nnoremap <Esc> :nohlsearch<CR>
-endif
+nnoremap <Esc> :nohlsearch<CR>
 
 " Copy to X clipboard
 vmap <C-c> "*y
@@ -304,14 +297,12 @@ imap <Insert> <Esc>"*pa
 nmap <Insert> "*p
 
 " neovim terminal mappings
-if has('nvim')
-    tnoremap <Esc> <C-\><C-n>
-    tnoremap <C-v><Esc> <Esc>
-    tnoremap <A-h> <C-\><C-n><C-w>h
-    tnoremap <A-j> <C-\><C-n><C-w>j
-    tnoremap <A-k> <C-\><C-n><C-w>k
-    tnoremap <A-l> <C-\><C-n><C-w>l
-endif
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-v><Esc> <Esc>
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
 
 " window navigation
 nnoremap <A-h> <C-w>h
@@ -407,10 +398,8 @@ hi NeomakeErrorSign guifg=#d70000 ctermfg=160
 hi NeomakeVirtualtextError guifg=#d70000 ctermfg=160
 
 " on nvim the language client already provides warnings
-if has('nvim')
-    let g:neomake_haskell_enabled_makers = []
-    let g:neomake_python_enabled_makers = []
-endif
+let g:neomake_haskell_enabled_makers = []
+let g:neomake_python_enabled_makers = []
 
 " Airline settings
 "let g:airline_theme='tomorrow'
@@ -459,9 +448,8 @@ let g:vimtex_complete_close_braces = 1
 let g:vimtex_quickfix_open_on_warning = 0
 let g:vimtex_quickfix_mode = 2
 let g:vimtex_view_method = 'zathura'
-if has('nvim')
-    let g:vimtex_compiler_progname = '/usr/bin/nvr'
-endif
+" TODO
+"let g:vimtex_compiler_progname = '/usr/bin/nvr'
 
 "set filetype=tex on empty tex files.
 let g:tex_flavor='latex'
