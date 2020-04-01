@@ -1,5 +1,8 @@
 #{{{ Base config, Plugins, modules, programs config
 
+source $ZDOTDIR/plugins/vi-mode.zsh/vi-mode.plugin.zsh
+source $ZDOTDIR/plugins/wbase.zsh/wbase.zsh
+
 # Load hooks installed by other dotfile modules
 () {
     setopt localoptions null_glob
@@ -10,14 +13,6 @@
         unset f
     fi
 }
-
-source $ZDOTDIR/plugins/vi-mode.zsh/vi-mode.plugin.zsh
-source $ZDOTDIR/plugins/wbase.zsh/wbase.zsh
-
-# Virtualenv Wrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/workspace
-check_prog "virtualenvwrapper_lazy.sh" && maybe_source "$(which virtualenvwrapper_lazy.sh)"
 
 # Enable fish-shell like autosuggestion
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'

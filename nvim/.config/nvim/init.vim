@@ -38,7 +38,7 @@ Plug 'autozimu/LanguageClient-neovim', {
 \ 'for': ['python', 'haskell']
 \ }
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', 'tag': '5.2' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Colorschemes
 Plug 'NLKNguyen/papercolor-theme'
@@ -206,6 +206,9 @@ set inccommand=split
 autocmd FocusLost ~/workspace/masterthesis/notes* :wa
 autocmd FocusLost ~/sync/Notes* :wa
 autocmd BufRead ~/sync/Notes* :set nospell
+
+let g:python3_host_prog = '/usr/bin/python3' " Path to Python3 to ignore virualenvs
+let g:loaded_python_provider = 0  " Disable Python2
 
 "------------------------------------------------------------
 " Mappings
