@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Nextcloud
+GenericName=File Synchronizer
+Exec=/usr/bin/nextcloud
+Terminal=false
+Icon=nextcloud
+Categories=Network
+Type=Application
+StartupNotify=false
+X-GNOME-Autostart-enabled=true
