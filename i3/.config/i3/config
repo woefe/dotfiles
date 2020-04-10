@@ -146,20 +146,18 @@ mode $sysmenu {
 }
 bindsym $mod+Delete mode $sysmenu
 
-set $mode_display "External Screen: (a) above, (d) duplicate, (r) reset"
+set $mode_display "External Screen: (a) above, (m) mirror, (d) dock, (r) reset"
 mode $mode_display {
-    bindsym a exec --no-startup-id $HOME/.local/bin/monitor.sh above     && $HOME/.fehbg && $XDG_CONFIG_HOME/polybar/launch.sh, mode "default"
-    bindsym d exec --no-startup-id $HOME/.local/bin/monitor.sh duplicate && $HOME/.fehbg && $XDG_CONFIG_HOME/polybar/launch.sh, mode "default"
-    bindsym r exec --no-startup-id $HOME/.local/bin/monitor.sh reset     && $HOME/.fehbg && $XDG_CONFIG_HOME/polybar/launch.sh, mode "default"
+    bindsym a exec --no-startup-id $HOME/.local/bin/monitor.sh above,  mode "default"
+    bindsym m exec --no-startup-id $HOME/.local/bin/monitor.sh mirror, mode "default"
+    bindsym d exec --no-startup-id $HOME/.local/bin/monitor.sh dock,   mode "default"
+    bindsym r exec --no-startup-id $HOME/.local/bin/monitor.sh reset,  mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym XF86Display mode $mode_display
 bindsym $mod+s mode $mode_display
-
-bindsym $mod+d exec --no-startup-id $HOME/.local/bin/dock
-bindsym $mod+Shift+d exec --no-startup-id $HOME/.local/bin/undock
 
 # Start rofi
 bindsym $mod+p exec --no-startup-id rofi -show drun

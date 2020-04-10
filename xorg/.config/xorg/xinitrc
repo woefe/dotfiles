@@ -23,14 +23,8 @@ xset b off
 xset -dpms
 xset s off
 
-# Set wallpaper(s) using feh.
-# Different wallpapers on a multi monitor setup can be set via:
-# feh --bg-fill path/1.png --bg-fill path/2.png
-if [ -x ~/.fehbg ]; then
-    ~/.fehbg
-elif [ -f ~/.wallpapers/wallpaper ]; then
-    feh --bg-fill ~/.wallpapers/wallpaper &
-fi
+# Set wallpaper
+xwallpaper --zoom "$XDG_DATA_HOME/wallpaper.jpg" --daemon &
 
 # Initialize X's resource database
 [ -r "$XDG_CONFIG_HOME/xorg/Xresources" ] && xrdb -merge "$XDG_CONFIG_HOME/xorg/Xresources"
