@@ -178,19 +178,21 @@ bindsym $mod+$alt+m exec $term_cmd -e mocp
 bindsym $mod+$alt+c exec chromium --incognito
 bindsym $mod+$alt+p exec keepassxc $HOME/sync/passwords.kdbx
 bindsym $mod+$alt+t exec telegram-desktop
-bindsym $mod+$alt+Return exec $term_cmd --class tmuxdrop -e 'tmux new-session -A -s drop'
-
 bindsym Print exec xfce4-screenshooter
 
 # Vim notes
 set $notes alacritty --class vimnotes -e nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md
-exec $notes
+exec --no-startup-id $notes
 bindsym $mod+Shift+n exec $notes
 bindsym $mod+$alt+n [instance="vimnotes"] scratchpad show
 for_window [instance="vimnotes"] move scratchpad
 
-# Toggle touchpad on/off
-bindsym $mod+Control+t exec --no-startup-id synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')
+# Tmux "dropdown" terminal
+set $drop alacritty --class tmuxdrop -e tmux -f $HOME/.config/tmux/tmux.conf new-session -A -s drop
+exec --no-startup-id $drop
+bindsym $mod+$alt+Return exec $drop
+bindsym $mod+asciicircum [instance="tmuxdrop"] scratchpad show
+for_window [instance="tmuxdrop"] move scratchpad
 
 # Multimedia controls
 bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5%
@@ -221,7 +223,6 @@ for_window [class="Pavucontrol"] floating enable
 for_window [class="KeePassXC"] floating enable
 for_window [class="pinentry"] floating enable
 for_window [class="TelegramDesktop"] floating enable
-for_window [class="tmuxdrop"] fullscreen enable
 for_window [class="Signal"] floating enable
 for_window [title="(Android |)Emulator(.*)"] floating enable
 
