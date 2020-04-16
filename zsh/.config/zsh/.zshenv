@@ -1,4 +1,4 @@
-autoload -U path
+typeset -U path
 path=(~/.local/bin $path[@])
 fpath=(~/.zsh-plugins/zsh-completions/src $fpath)
 
