@@ -1,3 +1,3 @@
 #!/bin/sh
 
-i3lock --color=3E424D --clock --timecolor=EEEEEEFF --datecolor=EEEEEEFF --datestr="%a, %e %b" --insidevercolor=00000000 --insidewrongcolor=00000000 --insidecolor=00000000 --line-uses-inside --ringcolor=282C34FF --ringwrongcolor=EC1F1FFF --ringvercolor=5294E2FF --keyhlcolor=5294E2FF --bshlcolor=5294E2FF --separatorcolor=00000000 --veriftext="" --wrongtext="" --noinputtext="" --ring-width=10 --radius=120 --timesize=40 --datesize=22 --pass-media-keys
+i3lock --color=3E424D --clock --time-color=EEEEEEFF --date-color=EEEEEEFF --date-str="%a, %e %b" --insidever-color=00000000 --insidewrong-color=00000000 --inside-color=00000000 --line-uses-inside --ring-color=282C34FF --ringwrong-color=EC1F1FFF --ringver-color=5294E2FF --keyhl-color=5294E2FF --bshl-color=5294E2FF --separator-color=00000000 --verif-text="" --wrong-text="" --noinput-text="" --ring-width=10 --radius=120 --time-size=40 --date-size=22 --pass-media-keys
