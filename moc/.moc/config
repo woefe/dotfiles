@@ -637,7 +637,7 @@ Keymap = keymap
 #
 # Example:    OnSongChange = "/home/jack/.moc/myscript %a %r"
 #
-OnSongChange = "/home/popeye/.moc/on_song_change.sh %f %a %t"
+OnSongChange = "/home/woefe/.moc/on_song_change.sh %f %a %t"
 
 # If RepeatSongChange is 'yes' then MOC will execute the command every time
 # a song starts playing regardless of whether or not it is just repeating.
