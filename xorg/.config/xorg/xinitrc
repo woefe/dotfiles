@@ -30,7 +30,7 @@ xwallpaper --zoom "$XDG_DATA_HOME/wallpaper.jpg" --daemon &
 [ -r "$XDG_CONFIG_HOME/xorg/Xresources" ] && xrdb -merge "$XDG_CONFIG_HOME/xorg/Xresources"
 
 # spawn compositing manager
-compton &
+picom &
 
 # Removes mouse cursor if it did not move for 5 seconds
 unclutter &
