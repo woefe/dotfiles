@@ -1,0 +1,271 @@
+set $mod Mod4
+set $alt Mod1
+set $term_cmd alacritty
+
+set $color_focused "#0087af"
+set $color_white "#FFFFFF"
+set $color_urgent  "#df5f00"
+set $color_unfocused "#444444e0"
+set $color_unfocused_text "#878787"
+#set $color_unfocused "#878787"
+#set $color_unfocused_text "#eeeeee"
+
+input type:keyboard {
+    xkb_layout de
+    xkb_variant nodeadkeys
+    xkb_options caps:escape
+    repeat_delay 300
+    repeat_rate 50
+}
+
+input type:touchpad {
+    tap enabled
+    click_method clickfinger
+    dwt enabled
+    scroll_method two_finger
+    tap_button_map lrm
+    pointer_accel 0.3
+    scroll_factor 0.5
+}
+
+output * {
+    background ~/.local/share/wallpaper.jpg fill
+}
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:Noto Sans 10
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec $term_cmd
+
+# kill focused window
+bindsym $mod+c kill
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Shift+p focus parent
+bindsym $mod+u [urgent=latest] focus
+
+# change focus between tiling / floating windows
+bindsym $mod+Tab focus mode_toggle
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal orientation
+bindsym $mod+b split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Control+space floating toggle
+
+# scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+bindsym $mod+Escape workspace back_and_forth
+bindsym $mod+Right workspace next_on_output
+bindsym $mod+Left workspace prev_on_output
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym $mod+Control+h move workspace to output left
+bindsym $mod+Control+l move workspace to output right
+bindsym $mod+Control+j move workspace to output down
+bindsym $mod+Control+k move workspace to output up
+
+# reload the configuration file
+bindsym $mod+Control+r reload
+
+# Gaps
+gaps inner 10
+gaps outer 0
+smart_gaps on
+
+set $mode_gaps_inner <b>gaps</b>: <b>+</b> inc, <b>-</b> dec, <b>0</b> off, <b>s</b> smart, <b>Shift+…</b> global
+
+mode --pango_markup "$mode_gaps_inner" {
+    bindsym plus gaps inner current plus 5
+    bindsym minus gaps inner current minus 5
+    bindsym 0 gaps inner current set 0
+    bindsym s smart_gaps toggle
+
+    bindsym Shift+plus gaps inner all plus 5
+    bindsym Shift+minus gaps inner all minus 5
+    bindsym Shift+0 gaps inner all set 0
+    bindsym Shift+s smart_gaps toggle
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+g mode "$mode_gaps_inner"
+
+# Reload and apply sway config
+bindsym $mod+Shift+r reload
+
+# resize window (you can also use the mouse for that)
+set $mode_resize <b>resize</b>
+mode --pango_markup "$mode_resize" {
+    # These bindings trigger as soon as you enter the resize mode
+    bindsym h resize shrink width 2 px or 2 ppt
+    bindsym j resize grow height 2 px or 2 ppt
+    bindsym k resize shrink height 2 px or 2 ppt
+    bindsym l resize grow width 2 px or 2 ppt
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "$mode_resize"
+
+set $mode_sysmenu system: <b>l</b> lock, <b>e</b> exit sway, <b>s</b> suspend, <b>r</b> reboot, <b>p</b> poweroff
+mode --pango_markup "$mode_sysmenu" {
+    bindsym e exit
+    bindsym --release l exec swaylock -f, mode "default"
+    bindsym p exec systemctl poweroff
+    bindsym r exec systemctl reboot
+    bindsym s exec systemctl suspend, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Delete mode "$mode_sysmenu"
+
+bindsym XF86Display exec wdisplays
+bindsym $mod+s exec wdisplays
+
+# Start launcher
+bindsym $mod+p exec ~/.config/sway/scripts/launcher xdg
+bindsym $mod+x exec ~/.config/sway/scripts/launcher cmd
+bindsym $mod+space exec ~/.config/sway/scripts/launcher emoji
+
+# Application Quickstart
+bindsym $mod+$alt+b exec firefox
+bindsym $mod+$alt+e exec evolution
+bindsym $mod+$alt+r exec $term_cmd -t ranger -e ranger
+bindsym $mod+$alt+f exec $term_cmd -t ranger -e ranger
+bindsym $mod+$alt+m exec $term_cmd -e mocp
+bindsym $mod+$alt+c exec chromium --incognito
+bindsym $mod+$alt+p exec keepassxc $HOME/sync/passwords.kdbx
+bindsym $mod+$alt+t exec telegram-desktop
+bindsym Print exec flameshot gui
+
+# Vim notes
+set $notes alacritty --class vimnotes -e nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md
+exec $notes
+bindsym $mod+Shift+n exec $notes
+bindsym $mod+$alt+n [app_id="vimnotes"] scratchpad show
+for_window [app_id="vimnotes"] move scratchpad
+
+# Multimedia controls
+bindsym XF86MonBrightnessDown exec light -U 5%
+bindsym XF86MonBrightnessUp exec light -A 5%
+bindsym $mod+Down exec "ddcutil setvcp 10 20 --display 1; ddcutil setvcp 10 20 --display 2"
+bindsym $mod+Up exec "ddcutil setvcp 10 100 --display 1; ddcutil setvcp 10 100 --display 2"
+bindsym XF86AudioRaiseVolume exec amixer sset Master 2%+
+bindsym XF86AudioLowerVolume exec amixer sset Master 2%-
+bindsym XF86AudioMute exec amixer sset Master toggle
+bindsym XF86WebCam exec cheese
+bindsym XF86AudioNext exec mocp --next
+bindsym XF86AudioPrev exec mocp --previous
+bindsym XF86AudioPlay exec $HOME/.moc/mocp_toggle
+bindsym KP_Begin exec $HOME/.moc/mocp_toggle
+bindsym KP_Right exec mocp --next
+bindsym KP_Left exec mocp --previous
+
+#Assign windows to workspaces
+assign [class="firefox"] 1
+assign [app_id="evolution"] 10
+
+for_window [app_id="mpv"] floating enable
+for_window [app_id="pavucontrol"] floating enable
+for_window [class="KeePassXC"] floating enable
+for_window [class="pinentry"] floating enable
+for_window [app_id="telegramdesktop"] floating enable
+for_window [class="Signal"] floating enable
+for_window [title="(Android |)Emulator(.*)"] floating enable
+
+
+workspace_auto_back_and_forth yes
+
+# Window borders
+default_border pixel 5
+default_floating_border pixel 5
+for_window [floating] border pixel 5
+
+#class                   border            background        text                   indicator         child_border
+client.focused           $color_focused    $color_focused    $color_white           $color_focused    $color_focused
+client.focused_inactive  $color_unfocused  $color_unfocused  $color_unfocused_text  $color_unfocused  $color_unfocused
+client.unfocused         $color_unfocused  $color_unfocused  $color_unfocused_text  $color_unfocused  $color_unfocused
+client.urgent            $color_urgent     $color_urgent     $color_white           $color_urgent     $color_urgent
+
+bar {
+    swaybar_command waybar
+}
+
+# Start screen layouter; reapply after Sway reload
+exec_always pkill kanshi; exec kanshi
+
+seat * hide_cursor 5000
+
+# Set GTK themes
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+    gsettings set $gnome-schema gtk-theme 'Materia'
+    gsettings set $gnome-schema icon-theme 'Papirus'
+    gsettings set $gnome-schema font-name 'Noto Sans 11'
+}
+
+# Autostart
+exec {
+    swayidle -w \
+        timeout 900 'swaylock -f' \
+        timeout 915 'swaymsg "output * dpms off"' \
+            resume 'swaymsg "output * dpms on"'
+
+    gammastep-indicator -t 6500:4000
+    # XDG autostart
+    dex -a
+}
+
+include /etc/sway/config.d/50-systemd-user.conf

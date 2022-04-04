@@ -1,0 +1,95 @@
+[
+{
+    "layer": "top",
+    "position": "top",
+    "output": ["eDP-1"],
+    "height": 30,
+    "spacing": 10,
+    "fixed-center": false,
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["custom/bandwidth", "memory", "custom/cpuload", "battery", "pulseaudio", "clock", "tray"],
+    "sway/mode": {
+        "format": " {}"
+    },
+    "sway/window": {
+        "all-outputs": false
+    },
+    "custom/bandwidth": {
+        "exec": "~/.config/waybar/scripts/bandwidth",
+        "on-click": "alacritty -e nmtui-connect",
+        "on-click-right": "alacritty -e nmtui",
+        "return-type": "json"
+    },
+    "custom/cpuload": {
+        "exec": "~/.config/waybar/scripts/cpuload",
+        "on-click": "alacritty -e htop",
+        "return-type": "json"
+    },
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 10
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": " {:%a, %d %b<b> ⋅ %H:%M</b>}"
+    },
+    "cpu": {
+        "format": " {usage}% {load}",
+        "tooltip": true
+    },
+    "memory": {
+        "interval": 10,
+        "format": " {used:0.2f} GiB",
+        "tooltip": true,
+        "tooltip-format": "{used:0.2f}GiB of {total:0.2f}GiB used",
+        "states": {
+            "critical": 90
+        }
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "interval": 30,
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{icon} {time}<b> ⋅ </b>{power:0.2f}W",
+        "format-full": " {capacity}%",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{icon} {volume}%<b> ⋅ </b>{format_source}",
+        "format-bluetooth": "{icon}  {volume}%<b> ⋅ </b>{format_source}",
+        "format-muted": " <b> ⋅ </b>{format_source}",
+        "format-bluetooth-muted": " {icon} <b> ⋅ </b>{format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
+        "format-icons": {
+            "default": ["", "", "", "", "", ""]
+        },
+        "on-click": "pavucontrol"
+    }
+},
+{
+    "layer": "top",
+    "position": "top",
+    "output": "!eDP-1",
+    "height": 30,
+    "spacing": 4,
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["clock"],
+    "fixed-center": false,
+    "sway/mode": {
+        "format": " {}"
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": " {:%a, %d %b<b> ⋅ %H:%M</b>}"
+    }
+}
+]

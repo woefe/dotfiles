@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+# Copyright (C) 2012 Stefan Breunig <stefan+measure-net-speed@mathphys.fsk.uni-heidelberg.de>
+# Copyright (C) 2014 kaueraal
+# Copyright (C) 2015 Thiago Perrotta <perrotta dot thiago at poli dot ufrj dot br>
+# Copyright (C) 2022 woefe
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Use the provided interface, otherwise the device used for the default route.
+interface=$(ip route | awk '/^default/ { print $5 ; exit }')
+
+function bandwith(){
+    interface=$(ip route | awk '/^default/ { print $5 ; exit }')
+
+    nic_icon=" "
+    if [[ -e "/sys/class/net/${interface}/phy80211" || -e "/sys/class/net/$interface/wireless" ]]; then
+        nic_icon=" "
+    fi
+
+    if [[ ! -e "/sys/class/net/${interface}/carrier" || ! "$(< /sys/class/net/"${interface}"/carrier)" = "1" ]]
+    then
+        echo "{\"text\": \"$nic_icon  \", \"tooltip\": \"disconnected\", \"class\": \"disconnected\"}"
+        return 0
+    fi
+
+    # path to store the old results in
+    path="/dev/shm/$(basename "$0")-$$-${interface}"
+
+    # grabbing data for each adapter.
+    read -r rx < "/sys/class/net/${interface}/statistics/rx_bytes"
+    read -r tx < "/sys/class/net/${interface}/statistics/tx_bytes"
+
+    # get time
+    time=$(date +%s)
+
+    # write current data if file does not exist. Do not exit, this will cause
+    # problems if this file is sourced instead of executed as another process.
+    if ! [[ -f "${path}" ]]; then
+        echo "${time} ${rx} ${tx}" > "${path}"
+        chmod 0666 "${path}"
+    fi
+
+    # read previous state and update data storage
+    readarray -d ' ' old < "${path}"
+    echo "${time} ${rx} ${tx}" > "${path}"
+
+    # parse old data and calc time passed
+    time_diff=$(( time - old[0] ))
+
+    # sanity check: has a positive amount of time passed
+    [[ "${time_diff}" -gt 0 ]] || return
+
+    # calc bytes transferred, and their rate in byte/s
+    rx_diff=$(( rx - old[1] ))
+    tx_diff=$(( tx - old[2] ))
+    rx_rate=$(( rx_diff / time_diff ))
+    tx_rate=$(( tx_diff / time_diff ))
+
+    # shift by 10 bytes to get KiB/s. If the value is larger than
+    # 1024^2 = 1048576, then display MiB/s instead
+
+    # incoming
+    rx_kib=$(( rx_rate >> 10 ))
+    if [[ "$rx_rate" -gt 1048576 ]]; then
+        rx_human=$(printf '%sM' "$(echo "scale=1; $rx_kib / 1024" | bc)")
+    else
+        rx_human="${rx_kib}K"
+    fi
+
+    # outgoing
+    tx_kib=$(( tx_rate >> 10 ))
+    if [[ "$tx_rate" -gt 1048576 ]]; then
+        tx_human=$(printf '%sM' "$(echo "scale=1; $tx_kib / 1024" | bc)")
+    else
+        tx_human="${tx_kib}K"
+    fi
+    echo "{\"text\": \" $rx_human  $tx_human\", \"tooltip\": \"$nic_icon $interface\", \"class\": \"connected\"}"
+}
+
+while true; do
+    bandwith
+    sleep 2
+done

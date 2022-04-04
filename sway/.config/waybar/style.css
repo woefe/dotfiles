@@ -1,0 +1,94 @@
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: FontAwesome, Noto, sans-serif;
+    font-size: 14px;
+}
+
+window#waybar {
+    background-color: rgba(50, 50, 50, 0.9);
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#workspaces button {
+    padding: 0;
+    margin: 0;
+    min-width: 30px;
+    background-color: transparent;
+    color: #ffffff;
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each workspace name */
+    border: none;
+    border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: inherit;
+    text-shadow: inherit;
+}
+
+#workspaces button.focused {
+    background-color: #0087af;
+}
+
+#workspaces button.urgent {
+    background-color: #df5f00;
+}
+
+#clock,
+#battery,
+#memory,
+#pulseaudio,
+#tray,
+#mode,
+#custom-cpuload,
+#custom-bandwidth {
+    padding: 0 7;
+    background-color: #444444;
+    /* border-bottom: 4px solid #eeeeee; */
+    color: #ffffff;
+}
+
+#mode {
+    background-color: #df5f00;
+}
+
+#window,
+#workspaces {
+    margin: 0 3px;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+#battery.critical:not(.charging),
+#custom-cpuload.high,
+#custom-bandwidth.disconnected,
+#memory.critical {
+    background-color: #df5f00;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #eb4d4b;
+}
