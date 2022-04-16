@@ -4,11 +4,18 @@
     "position": "top",
     "output": ["eDP-1"],
     "height": 30,
-    "spacing": 10,
+    "spacing": 0,
     "fixed-center": false,
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["custom/bandwidth", "memory", "custom/cpuload", "battery", "pulseaudio", "clock", "tray"],
+    "modules-right": ["custom/bandwidth", "memory", "custom/cpuload", "battery", "pulseaudio", "clock", "tray", "idle_inhibitor"],
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
     "sway/mode": {
         "format": " {}"
     },
@@ -64,7 +71,7 @@
         // "scroll-step": 1, // %, can be a float
         "format": "{icon} {volume}%<b> ⋅ </b>{format_source}",
         "format-bluetooth": "{icon}  {volume}%<b> ⋅ </b>{format_source}",
-        "format-muted": " <b> ⋅ </b>{format_source}",
+        "format-muted": " <b>⋅ </b>{format_source}",
         "format-bluetooth-muted": " {icon} <b> ⋅ </b>{format_source}",
         "format-source": " {volume}%",
         "format-source-muted": "",

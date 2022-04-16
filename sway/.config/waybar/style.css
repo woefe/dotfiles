@@ -45,9 +45,11 @@ window#waybar {
 #pulseaudio,
 #tray,
 #mode,
+#idle_inhibitor,
 #custom-cpuload,
 #custom-bandwidth {
     padding: 0 7;
+    margin-left: 10;
     background-color: #444444;
     /* border-bottom: 4px solid #eeeeee; */
     color: #ffffff;
@@ -83,7 +85,18 @@ label:focus {
     background-color: #000000;
 }
 
+#idle_inhibitor {
+    color: #dfdfdf;
+    margin-left: 0;
+}
+#idle_inhibitor.activated {
+    color: #ffffff;
+    background-color: #df5f00;
+}
 
+#tray {
+    padding-right: 4px;
+}
 #tray > .passive {
     -gtk-icon-effect: dim;
 }

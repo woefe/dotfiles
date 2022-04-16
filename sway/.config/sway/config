@@ -188,7 +188,7 @@ bindsym $mod+$alt+m exec $term_cmd -e mocp
 bindsym $mod+$alt+c exec chromium --incognito
 bindsym $mod+$alt+p exec keepassxc $HOME/sync/passwords.kdbx
 bindsym $mod+$alt+t exec telegram-desktop
-bindsym Print exec flameshot gui
+bindsym Print exec slurp | grim -g -
 
 # Vim notes
 set $notes alacritty --class vimnotes -e nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md
@@ -219,10 +219,12 @@ assign [app_id="evolution"] 10
 
 for_window [app_id="mpv"] floating enable
 for_window [app_id="pavucontrol"] floating enable
-for_window [class="KeePassXC"] floating enable
+for_window [app_id="org.keepassxc.KeePassXC"] floating enable
 for_window [class="pinentry"] floating enable
 for_window [app_id="telegramdesktop"] floating enable
+for_window [app_id="yad"] floating enable
 for_window [class="Signal"] floating enable
+for_window [app_id="com.nextcloud.desktopclient.nextcloud"] floating enable
 for_window [title="(Android |)Emulator(.*)"] floating enable
 
 
@@ -243,10 +245,9 @@ bar {
     swaybar_command waybar
 }
 
-# Start screen layouter; reapply after Sway reload
-exec_always pkill kanshi; exec kanshi
-
 seat * hide_cursor 5000
+
+include /etc/sway/config.d/50-systemd-user.conf
 
 # Set GTK themes
 set $gnome-schema org.gnome.desktop.interface
@@ -259,13 +260,18 @@ exec_always {
 # Autostart
 exec {
     swayidle -w \
+        before-sleep 'swaylock -f' \
         timeout 900 'swaylock -f' \
         timeout 915 'swaymsg "output * dpms off"' \
             resume 'swaymsg "output * dpms on"'
 
-    gammastep-indicator -t 6500:4000
+    # Redshift
+    gammastep-indicator -t 6500:4000 -l 48.13:11.57
+
+    # Screenlayouts
+    kanshi
+
     # XDG autostart
-    dex -a
+    dex -a -e sway
 }
 
-include /etc/sway/config.d/50-systemd-user.conf

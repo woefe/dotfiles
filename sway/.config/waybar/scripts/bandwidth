@@ -1,7 +1,4 @@
-#!/usr/bin/env bash
-# Copyright (C) 2012 Stefan Breunig <stefan+measure-net-speed@mathphys.fsk.uni-heidelberg.de>
-# Copyright (C) 2014 kaueraal
-# Copyright (C) 2015 Thiago Perrotta <perrotta dot thiago at poli dot ufrj dot br>
+#!/usr/bin/env python3
 # Copyright (C) 2022 woefe
 
 # This program is free software: you can redistribute it and/or modify
@@ -18,77 +15,127 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Use the provided interface, otherwise the device used for the default route.
-interface=$(ip route | awk '/^default/ { print $5 ; exit }')
 
-function bandwith(){
-    interface=$(ip route | awk '/^default/ { print $5 ; exit }')
+import json
+import re
+import subprocess
+import time
+from pathlib import Path
+from typing import Optional
 
-    nic_icon=" "
-    if [[ -e "/sys/class/net/${interface}/phy80211" || -e "/sys/class/net/$interface/wireless" ]]; then
-        nic_icon=" "
-    fi
+WHITESPACE = re.compile(r"\s+")
 
-    if [[ ! -e "/sys/class/net/${interface}/carrier" || ! "$(< /sys/class/net/"${interface}"/carrier)" = "1" ]]
-    then
-        echo "{\"text\": \"$nic_icon  \", \"tooltip\": \"disconnected\", \"class\": \"disconnected\"}"
-        return 0
-    fi
 
-    # path to store the old results in
-    path="/dev/shm/$(basename "$0")-$$-${interface}"
+def get_default_iface() -> Optional[str]:
+    try:
+        with open("/proc/net/route") as f:
+            while line := f.readline():
+                iface, dest = line.split("\t")[:2]
+                if dest == "00000000" and iface != "lo":
+                    return iface
+    except OSError:
+        pass
 
-    # grabbing data for each adapter.
-    read -r rx < "/sys/class/net/${interface}/statistics/rx_bytes"
-    read -r tx < "/sys/class/net/${interface}/statistics/tx_bytes"
+    try:
+        with open("/proc/net/ipv6_route") as f:
+            while line := f.readline()[:-1]:
+                dest_net, dest_prefix_len, _, _, _, _, _, _, _, iface = WHITESPACE.split(line)
+                if dest_net == "00000000000000000000000000000000" and dest_prefix_len == "00" and iface != "lo":
+                    return iface
+    except OSError:
+        pass
 
-    # get time
-    time=$(date +%s)
+    return None
 
-    # write current data if file does not exist. Do not exit, this will cause
-    # problems if this file is sourced instead of executed as another process.
-    if ! [[ -f "${path}" ]]; then
-        echo "${time} ${rx} ${tx}" > "${path}"
-        chmod 0666 "${path}"
-    fi
 
-    # read previous state and update data storage
-    readarray -d ' ' old < "${path}"
-    echo "${time} ${rx} ${tx}" > "${path}"
+class Bandwidth:
 
-    # parse old data and calc time passed
-    time_diff=$(( time - old[0] ))
+    def __init__(self):
+        self.prev_rx = 0
+        self.prev_tx = 0
+        self.prev_time = time.time_ns()
+        self.prev_iface = ""
+        self.loop_ctr = 0
+        self.text = ""
+        self.tooltip = ""
+        self.tooltip_ssid = ""
+        self.state = ""
 
-    # sanity check: has a positive amount of time passed
-    [[ "${time_diff}" -gt 0 ]] || return
+    def disconnected(self, nic_icon):
+        self.text = f"{nic_icon}  "
+        self.tooltip = "disconnected"
+        self.tooltip_ssid = ""
+        self.state = "disconnected"
 
-    # calc bytes transferred, and their rate in byte/s
-    rx_diff=$(( rx - old[1] ))
-    tx_diff=$(( tx - old[2] ))
-    rx_rate=$(( rx_diff / time_diff ))
-    tx_rate=$(( tx_diff / time_diff ))
+    def bandwidth(self):
+        nic_icon = " "
+        iface = get_default_iface()
+        if iface is None:
+            self.disconnected(nic_icon)
+            return
 
-    # shift by 10 bytes to get KiB/s. If the value is larger than
-    # 1024^2 = 1048576, then display MiB/s instead
+        if Path(f"/sys/class/net/{iface}/phy80211").exists() or Path(f"/sys/class/net/{iface}/wireless").exists():
+            nic_icon = " "
 
-    # incoming
-    rx_kib=$(( rx_rate >> 10 ))
-    if [[ "$rx_rate" -gt 1048576 ]]; then
-        rx_human=$(printf '%sM' "$(echo "scale=1; $rx_kib / 1024" | bc)")
-    else
-        rx_human="${rx_kib}K"
-    fi
+        if Path(f"/sys/class/net/{iface}/carrier").read_text() != "1\n":
+            self.disconnected(nic_icon)
+            return
 
-    # outgoing
-    tx_kib=$(( tx_rate >> 10 ))
-    if [[ "$tx_rate" -gt 1048576 ]]; then
-        tx_human=$(printf '%sM' "$(echo "scale=1; $tx_kib / 1024" | bc)")
-    else
-        tx_human="${tx_kib}K"
-    fi
-    echo "{\"text\": \" $rx_human  $tx_human\", \"tooltip\": \"$nic_icon $interface\", \"class\": \"connected\"}"
-}
+        curr_rx = int(Path(f"/sys/class/net/{iface}/statistics/rx_bytes").read_text())
+        curr_tx = int(Path(f"/sys/class/net/{iface}/statistics/tx_bytes").read_text())
+        curr_time = time.time_ns()
 
-while true; do
-    bandwith
-    sleep 2
-done
+        rx_diff = curr_rx - self.prev_rx
+        tx_diff = curr_tx - self.prev_tx
+        time_diff = curr_time - self.prev_time
+        rx_rate = rx_diff / time_diff * 1000000
+        tx_rate = tx_diff / time_diff * 1000000
+
+        self.prev_rx = curr_rx
+        self.prev_tx = curr_tx
+        self.prev_time = curr_time
+
+        # incoming
+        if rx_rate >= 1000:
+            rx_human = f"{rx_rate / 1000:0.2f}M"
+        else:
+            rx_human = f"{rx_rate:0.2f}K"
+
+        # incoming
+        if tx_rate > 1000:
+            tx_human = f"{tx_rate / 1000:0.2f}M"
+        else:
+            tx_human = f"{tx_rate:0.2f}K"
+
+        self.text = f"{nic_icon}  {rx_human}  {tx_human}"
+        self.tooltip = f"Interface: {iface}"
+        self.state = "connected"
+
+    def slow_tick(self):
+        iwgetid = subprocess.run(["iwgetid", "-r"], capture_output=True)
+        if iwgetid.returncode == 0:
+            self.tooltip_ssid = f"\nSSID: {iwgetid.stdout.decode().strip()}"
+        else:
+            self.tooltip_ssid = ""
+
+    def tick(self):
+        if self.loop_ctr == 0:
+            self.slow_tick()
+
+        self.bandwidth()
+
+        waybar_json = {
+            "text": self.text,
+            "tooltip": self.tooltip + (self.tooltip_ssid if self.tooltip_ssid else ""),
+            "class": self.state
+        }
+        print(json.dumps(waybar_json), flush=True)
+
+        self.loop_ctr = (self.loop_ctr + 1) % 5
+
+
+bandwidth = Bandwidth()
+
+while True:
+    bandwidth.tick()
+    time.sleep(2)
