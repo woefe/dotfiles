@@ -32,3 +32,4 @@ export GOPATH="$XDG_DATA_HOME/go"
 export SQLITE_HISTORY="$XDG_DATA_HOME/sqlite_history"
 export PYLINTHOME="$XDG_CACHE_HOME/pylint"
 export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
+export _JAVA_AWT_WM_NONREPARENTING=1
