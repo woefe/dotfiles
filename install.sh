@@ -30,30 +30,26 @@ mkdir -p "$HOME/.config"
 #stow --target "$HOME"              alacritty
 #stow --target "$HOME" --no-folding autostart
 #stow --target "$HOME"              bat
-#stow --target "$HOME"              compton
 #stow --target "$HOME"              dunst
 #stow --target "$HOME"              git
-#stow --target "$HOME"              greenclip
 #stow --target "$HOME" --no-folding haskell
 #stow --target "$HOME"              i3
 #stow --target "$HOME"              latex
 #stow --target "$HOME" --no-folding moc
+#stow --target "$HOME"              mpv
 #stow --target "$HOME" --no-folding nvim
 #stow --target "$HOME"              python
-#stow --target "$HOME" --no-folding qutebrowser
 #stow --target "$HOME" --no-folding ranger
-#stow --target "$HOME"              redshift
-#stow --target "$HOME"              rofi
 #stow --target "$HOME" --no-folding scripts
-#stow --target "$HOME"              termite
+#stow --target "$HOME"              sway
 #stow --target "$HOME" --no-folding tmux
 #stow --target "$HOME"              vimiv
 #stow --target "$HOME"              vscode
 #stow --target "$HOME"              xdg
-#stow --target "$HOME"              xorg
 #stow --target "$HOME"              ytcc
 #stow --target "$HOME"              zathura
 #stow --target "$HOME" --no-folding zsh
+
 
 #stow --target "$HOME" --no-folding vscode;
 #cat << EOF | xargs -L1 code --install-extension
