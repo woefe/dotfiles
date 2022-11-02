@@ -31,7 +31,8 @@
     "custom/cpuload": {
         "exec": "~/.config/waybar/scripts/cpuload",
         "on-click": "alacritty -e htop",
-        "return-type": "json"
+        "return-type": "json",
+        "escape": false
     },
     "tray": {
         // "icon-size": 21,
@@ -39,7 +40,7 @@
     },
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": " {:%a, %d %b<b> ⋅ %H:%M</b>}"
+        "format": " {:%a, %d %b ・ <b>%H:%M</b>}"
     },
     "cpu": {
         "format": " {usage}% {load}",
@@ -69,10 +70,10 @@
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{icon} {volume}%<b> ⋅ </b>{format_source}",
-        "format-bluetooth": "{icon}  {volume}%<b> ⋅ </b>{format_source}",
-        "format-muted": " <b>⋅ </b>{format_source}",
-        "format-bluetooth-muted": " {icon} <b> ⋅ </b>{format_source}",
+        "format": "{icon} {volume}% ・ {format_source}",
+        "format-bluetooth": "{icon}  {volume}% ・ {format_source}",
+        "format-muted": "  ・ {format_source}",
+        "format-bluetooth-muted": " {icon}  ・ {format_source}",
         "format-source": " {volume}%",
         "format-source-muted": "",
         "format-icons": {

@@ -48,9 +48,10 @@ window#waybar {
 #idle_inhibitor,
 #custom-cpuload,
 #custom-bandwidth {
-    padding: 0 7;
-    margin-left: 10;
+    padding: 0 7px;
+    margin-left: 10px;
     background-color: #444444;
+    border-radius: 0;
     /* border-bottom: 4px solid #eeeeee; */
     color: #ffffff;
 }

@@ -52,7 +52,7 @@ def cpuload():
     load_avg = os.getloadavg()
 
     clazz = "high" if load_avg[0] > CPU_COUNT or usage > 90 else "normal"
-    text = f" {usage:0.2f}%<b> ⋅ </b>{load_avg[0]:0.2f} {load_avg[1]:0.2f} {load_avg[2]:0.2f}"
+    text = f" {usage:0.2f}% ・ {load_avg[0]:0.2f} {load_avg[1]:0.2f} {load_avg[2]:0.2f}"
     tooltip = "\\n".join(f"{'CPU' + str(i):>5}: {freq:0.2f} GHz" for i, freq in enumerate(read_freqs()))
 
     print(f'{{"text": "{text}", "tooltip": "{tooltip}", "class": "{clazz}"}}', flush=True)
