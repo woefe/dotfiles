@@ -27,7 +27,7 @@ def walk(node):
         yield from walk(child)
 
 def is_window(node):
-    return node.get("type") == "con" and not children(node)
+    return node.get("type") in ("con", "floating_con") and not children(node)
 
 delimiter = sys.argv[1] if len(sys.argv) > 1 else " | "
 
