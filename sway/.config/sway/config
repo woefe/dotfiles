@@ -175,6 +175,7 @@ bindsym XF86Display exec wdisplays
 bindsym $mod+s exec wdisplays
 
 # Start launcher
+bindsym $mod+a exec ~/.config/sway/scripts/launcher windowlist
 bindsym $mod+p exec ~/.config/sway/scripts/launcher xdg
 bindsym $mod+x exec ~/.config/sway/scripts/launcher cmd
 bindsym $mod+space exec ~/.config/sway/scripts/launcher emoji

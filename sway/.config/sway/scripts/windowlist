@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+
+import json
+import os
+import socket
+import struct
+import sys
+
+def sway_tree():
+    # see sway-ipc(7)
+    with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as client:
+        client.connect(os.environ["SWAYSOCK"])
+        client.sendall(b'i3-ipc' + struct.pack('=II', 0, 4))  # GET_TREE IPC message
+        client.recv(6)  # magic-string
+        payload_length = struct.unpack('=I', client.recv(4))[0]
+        client.recv(4)  # payload-type
+        payload = client.recv(payload_length)
+
+    return json.loads(payload)
+
+def children(node):
+    return node.get("nodes", []) + node.get("floating_nodes", [])
+
+def walk(node):
+    yield node
+    for child in children(node):
+        yield from walk(child)
+
+def is_window(node):
+    return node.get("type") == "con" and not children(node)
+
+delimiter = sys.argv[1] if len(sys.argv) > 1 else " | "
+
+for window in filter(is_window, walk(sway_tree())):
+    app = window.get("app_id") or window.get("window_properties", {}).get("class", "")
+    print(f"{window['id']:>4}{delimiter}{window['name']}{delimiter}{app}")
