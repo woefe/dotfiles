@@ -28,3 +28,26 @@ To update the dotfiles pull this repo including its submodules.
 ```
 git pull --recurse-submodules
 ```
+
+## Notes
+### Sway dependencies
+```
+pacman -S \
+  fuzzel \
+  gammastep \
+  grim \
+  kanshi \
+  materia-gtk-theme \
+  noto-fonts \
+  noto-fonts-emoji \
+  otf-font-awesome \
+  papirus-icon-theme \
+  python3 \
+  slurp \
+  swaylock \
+  waybar \
+  wdisplays \
+  wireless_tools \
+  wl-clipboard \
+  xorg-xwayland
+```

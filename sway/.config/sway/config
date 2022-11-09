@@ -253,7 +253,7 @@ include /etc/sway/config.d/50-systemd-user.conf
 # Set GTK themes
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
-    gsettings set $gnome-schema gtk-theme 'Materia'
+    gsettings set $gnome-schema gtk-theme 'Materia-light-compact'
     gsettings set $gnome-schema icon-theme 'Papirus'
     gsettings set $gnome-schema font-name 'Noto Sans 11'
 }
