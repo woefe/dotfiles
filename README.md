@@ -19,8 +19,7 @@
     ```
 3. Uncomment the lines in [`install.sh`](./install.sh) of dotfiles you want to install
 4. Execute `./install.sh`.
-    Make sure that you run the script in the main dotfiles directory.
-    I.e change directory to `.dotfiles-woefe` first.
+    Make sure that you run the script in the main dotfiles directory, i.e `cd ~/.dotfiles-woefe` first.
 
 ## Updating
 To update the dotfiles pull this repo including its submodules.
@@ -29,8 +28,7 @@ To update the dotfiles pull this repo including its submodules.
 git pull --recurse-submodules
 ```
 
-## Notes
-### Sway dependencies
+## Sway dependencies
 ```
 pacman -S \
   fuzzel \
