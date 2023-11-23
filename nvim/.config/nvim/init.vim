@@ -484,6 +484,19 @@ let g:vim_markdown_toc_autofit = 1
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_folding_level = 4
 
+function! TodoDone()
+    let line = getline('.')
+    if line =~ ' *\(\*\|-\) \[ \] '
+        let date = strftime('%Y-%m-%d')
+        let done = substitute(line, '\(\*\|-\) \[ \]', "\\1 [x] " . date, '')
+        call setline('.', done)
+        silent! call repeat#set("\<Plug>TodoDone")
+    endif
+endfunction
+
+nnoremap <Plug>TodoDone :call TodoDone()<CR>
+nmap <Leader>x <Plug>TodoDone
+
 " deoplete
 let g:deoplete#enable_at_startup = 1
 
