@@ -1,0 +1,23 @@
+set drawbox true
+set ifs "\n"
+
+cmd open &rifle $f
+
+cmd on-cd &{{
+    printf "\033]0; ${PWD/$HOME/\~} - lf\007" > /dev/tty
+}}
+on-cd
+
+map <tab> &$TERMCMD -e lf $PWD
+map <enter> open
+
+cmd trash-put $gio trash $fx
+map x trash-put
+map <delete> trash-put
+
+cmd bulkrename !{{
+    clear
+    qmv -d --format destination-only $fx
+    lf -remote "send $id unselect"
+}}
+map R bulkrename
