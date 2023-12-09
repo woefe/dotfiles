@@ -2,7 +2,7 @@
 {
     "layer": "top",
     "position": "top",
-    "output": ["eDP-1"],
+    "output": ["eDP-1", "DP-4"],
     "height": 30,
     "spacing": 0,
     "fixed-center": false,
@@ -85,7 +85,7 @@
 {
     "layer": "top",
     "position": "top",
-    "output": "!eDP-1",
+    "output": "!DP-4",
     "height": 30,
     "spacing": 4,
     "modules-left": ["sway/workspaces", "sway/mode"],

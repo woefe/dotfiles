@@ -1,6 +1,5 @@
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] \
-    && eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)" \
-    && export SSH_AUTH_SOCK \
+    && export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh \
     && export GRIM_DEFAULT_DIR="$HOME/pictures" \
     && export WLR_DRM_NO_MODIFIERS=1 \
     && export MOZ_ENABLE_WAYLAND=1 \

@@ -75,7 +75,11 @@ class Bandwidth:
         if Path(f"/sys/class/net/{iface}/phy80211").exists() or Path(f"/sys/class/net/{iface}/wireless").exists():
             nic_icon = " "
 
-        if Path(f"/sys/class/net/{iface}/carrier").read_text() != "1\n":
+        try:
+            # read_text() might also raise OSError under certain conditions
+            if Path(f"/sys/class/net/{iface}/carrier").read_text() != "1\n":
+                raise OSError("Interface not connected")
+        except OSError:
             self.disconnected(nic_icon)
             return
 

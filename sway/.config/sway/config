@@ -1,6 +1,6 @@
 set $mod Mod4
 set $alt Mod1
-set $term_cmd alacritty
+set $term_cmd alacrittyw
 
 set $color_focused "#0087af"
 set $color_white "#FFFFFF"
@@ -26,6 +26,11 @@ input type:touchpad {
     tap_button_map lrm
     pointer_accel 0.3
     scroll_factor 0.5
+}
+
+input type:pointer {
+    accel_profile "flat"
+    pointer_accel 0
 }
 
 output * {
@@ -183,8 +188,8 @@ bindsym $mod+space exec ~/.config/sway/scripts/launcher emoji
 # Application Quickstart
 bindsym $mod+$alt+b exec firefox
 bindsym $mod+$alt+e exec evolution
-bindsym $mod+$alt+r exec $term_cmd -t ranger -e ranger
-bindsym $mod+$alt+f exec $term_cmd -t ranger -e ranger
+bindsym $mod+$alt+r exec nautilus
+bindsym $mod+$alt+f exec $term_cmd -e lf
 bindsym $mod+$alt+m exec $term_cmd -e mocp
 bindsym $mod+$alt+c exec chromium --incognito
 bindsym $mod+$alt+p exec keepassxc $HOME/sync/passwords.kdbx
@@ -215,7 +220,7 @@ bindsym KP_Right exec mocp --next
 bindsym KP_Left exec mocp --previous
 
 #Assign windows to workspaces
-assign [class="firefox"] 1
+assign [app_id="firefox"] 1
 assign [app_id="evolution"] 10
 
 for_window [app_id="mpv"] floating enable
@@ -248,7 +253,7 @@ bar {
 
 seat * hide_cursor 5000
 
-include /etc/sway/config.d/50-systemd-user.conf
+include /etc/sway/config.d/*
 
 # Set GTK themes
 set $gnome-schema org.gnome.desktop.interface
@@ -256,6 +261,8 @@ exec_always {
     gsettings set $gnome-schema gtk-theme 'Materia-light-compact'
     gsettings set $gnome-schema icon-theme 'Papirus'
     gsettings set $gnome-schema font-name 'Noto Sans 11'
+
+    pkill -SIGHUP kanshi
 }
 
 # Autostart
