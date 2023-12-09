@@ -8,13 +8,12 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'neomake/neomake'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'sbdchd/neoformat'
-Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'Konfekt/FastFold'
 Plug 'ervandew/supertab'
@@ -25,27 +24,14 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'tomtom/tcomment_vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-"Plug 'junegunn/fzf'  " On Archlinux this plugin is installed globally when installing fzf
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'machakann/vim-highlightedyank'
-Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
-
-Plug 'autozimu/LanguageClient-neovim', {
-\ 'branch': 'next',
-\ 'do': './install.sh',
-\ 'for': ['python', 'haskell']
-\ }
-
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-" Colorschemes
+" Colorscheme
 Plug 'NLKNguyen/papercolor-theme'
-"Plug 'chriskempson/base16-vim'
-"Plug 'rakr/vim-one'
-"Plug 'tomasr/molokai'
-"Plug 'reedes/vim-colors-pencil'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -439,7 +425,7 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsEditSplit = "vertical"
 
-" vimlatex settings
+" vimtex settings
 let g:vimtex_compiler_method = 'latexmk'
 let g:vimtex_compiler_latexmk = {
             \ 'continuous' : 1,
@@ -499,20 +485,3 @@ nmap <Leader>x <Plug>TodoDone
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-
-" LanguageClient config
-let g:LanguageClient_serverCommands = {
-    \ 'haskell': ['hie-wrapper'],
-    \ 'python': ['/usr/bin/pyls'],
-    \}
-let g:LanguageClient_rootMarkers = {
-    \ 'haskell': ['*.cabal', 'stack.yaml'],
-    \ }
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
-map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
-map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
-map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
-map <Leader>lb :call LanguageClient#textDocument_references()<CR>
-map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
-map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
