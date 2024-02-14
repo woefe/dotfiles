@@ -1,0 +1,84 @@
+live_config_reload = true
+working_directory = "None"
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "0x444444"
+blue = "0x005faf"
+cyan = "0x0087af"
+green = "0x008700"
+magenta = "0x8700af"
+red = "0xd70000"
+white = "0xbcbcbc"
+yellow = "0xd75f00"
+
+[colors.cursor]
+cursor = "0x444444"
+text = "0xeeeeee"
+
+[colors.normal]
+black = "0x444444"
+blue = "0x005f87"
+cyan = "0x0087af"
+green = "0x5f8700"
+magenta = "0xd70087"
+red = "0xaf0000"
+white = "0xbcbcbc"
+yellow = "0xd75f00"
+
+[colors.primary]
+background = "0xeeeeee"
+foreground = "0x444444"
+
+[colors.search.focused_match]
+background = "#d75f00"
+foreground = "#eeeeee"
+
+[colors.search.matches]
+background = "#eeeeee"
+foreground = "#d75f00"
+
+[cursor]
+unfocused_hollow = true
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 10.5
+
+[font.bold]
+family = "Hack"
+
+[font.italic]
+family = "Hack"
+
+[font.normal]
+family = "Hack"
+
+[[hints.enabled]]
+command = "xdg-open"
+hyperlinks = true
+post_processing = true
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-<>\"\\s{-}\\^⟨⟩`]+"
+
+[hints.enabled.mouse]
+enabled = true
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "CreateNewWindow"
+key = "N"
+mods = "Control|Shift"
+
+[scrolling]
+history = 100000
+
+[window]
+dynamic_title = true
+
+[window.padding]
+x = 4
+y = 0
