@@ -178,6 +178,8 @@ bindsym $mod+Delete mode "$mode_sysmenu"
 
 bindsym XF86Display exec wdisplays
 bindsym $mod+s exec wdisplays
+bindsym $mod+d exec dunstctl history-pop
+bindsym $mod+Shift+d exec dunstctl close
 
 # Start launcher
 bindsym $mod+a exec ~/.config/sway/scripts/launcher windowlist
@@ -258,7 +260,7 @@ include /etc/sway/config.d/*
 # Set GTK themes
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
-    gsettings set $gnome-schema gtk-theme 'Materia-light-compact'
+    gsettings set $gnome-schema gtk-theme 'Arc'
     gsettings set $gnome-schema icon-theme 'Papirus'
     gsettings set $gnome-schema font-name 'Noto Sans 11'
 
