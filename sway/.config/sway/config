@@ -196,7 +196,7 @@ bindsym $mod+$alt+m exec $term_cmd -e mocp
 bindsym $mod+$alt+c exec chromium --incognito
 bindsym $mod+$alt+p exec keepassxc $HOME/sync/passwords.kdbx
 bindsym $mod+$alt+t exec telegram-desktop
-bindsym Print exec slurp | grim -g -
+bindsym Print exec slurp | grim -g - -t png - | tee "$HOME/pictures/$(date +%Y%m%d_%Hh%Mm%Ss)_grim.png" | wl-copy -t "image/png"
 
 # Vim notes
 set $notes alacritty --class vimnotes -e nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md
@@ -206,8 +206,8 @@ bindsym $mod+$alt+n [app_id="vimnotes"] scratchpad show
 for_window [app_id="vimnotes"] move scratchpad
 
 # Multimedia controls
-bindsym XF86MonBrightnessDown exec light -U 5%
-bindsym XF86MonBrightnessUp exec light -A 5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 20-
+bindsym XF86MonBrightnessUp exec brightnessctl set 20+
 bindsym $mod+Down exec "ddcutil setvcp 10 20 --display 1; ddcutil setvcp 10 20 --display 2"
 bindsym $mod+Up exec "ddcutil setvcp 10 100 --display 1; ddcutil setvcp 10 100 --display 2"
 bindsym XF86AudioRaiseVolume exec amixer sset Master 2%+
@@ -234,6 +234,7 @@ for_window [app_id="yad"] floating enable
 for_window [class="Signal"] floating enable
 for_window [app_id="com.nextcloud.desktopclient.nextcloud"] floating enable
 for_window [title="(Android |)Emulator(.*)"] floating enable
+for_window [app_id="evolution-alarm-notify"] floating enable
 
 
 workspace_auto_back_and_forth yes
@@ -256,6 +257,7 @@ bar {
 seat * hide_cursor 5000
 
 include /etc/sway/config.d/*
+include ~/config/sway/config.local
 
 # Set GTK themes
 set $gnome-schema org.gnome.desktop.interface
@@ -271,8 +273,8 @@ exec_always {
 exec {
     swayidle -w \
         before-sleep 'swaylock -f' \
-        timeout 900 'swaylock -f' \
-        timeout 915 'swaymsg "output * dpms off"' \
+        timeout 500 'swaylock -f' \
+        timeout 600 'swaymsg "output * dpms off"' \
             resume 'swaymsg "output * dpms on"'
 
     # Redshift
