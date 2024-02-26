@@ -30,8 +30,8 @@ mkdir -p "$HOME/.config"
 #stow --target "$HOME"              alacritty
 #stow --target "$HOME" --no-folding autostart
 #stow --target "$HOME"              bat
-#stow --target "$HOME"              dunst
-#stow --target "$HOME"              git
+#stow --target "$HOME" --no-folding dunst
+#stow --target "$HOME" --no-folding git
 #stow --target "$HOME" --no-folding haskell
 #stow --target "$HOME"              i3
 #stow --target "$HOME"              latex
