@@ -39,6 +39,11 @@ window#waybar {
     background-color: #df5f00;
 }
 
+tooltip label {
+    color: #ffffff;
+}
+
+tooltip,
 #clock,
 #battery,
 #memory,

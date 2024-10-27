@@ -6,6 +6,8 @@ launcher() {
     fuzzel \
         --background=323232f0 \
         --text-color=eeeeeeff \
+        --prompt-color=eeeeeeff \
+        --input-color=eeeeeeff \
         --match-color=0087afff \
         --selection-color=878787ff \
         --selection-text-color=ffffffff \
@@ -13,7 +15,6 @@ launcher() {
         --inner-pad=10 \
         --vertical-pad=10 \
         --horizontal-pad=40 \
-        --no-fuzzy \
         --fields=filename,name,generic,exec \
         --terminal="alacritty -e" \
         --prompt="  " \

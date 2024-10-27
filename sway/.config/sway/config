@@ -1,6 +1,7 @@
 set $mod Mod4
 set $alt Mod1
 set $term_cmd alacrittyw
+set $screenshot 'slurp | grim -g - -t png - | tee "$HOME/pictures/$(date +%Y%m%d_%Hh%Mm%Ss)_grim.png" | wl-copy -t "image/png"'
 
 set $color_focused "#0087af"
 set $color_white "#FFFFFF"
@@ -196,7 +197,8 @@ bindsym $mod+$alt+m exec $term_cmd -e mocp
 bindsym $mod+$alt+c exec chromium --incognito
 bindsym $mod+$alt+p exec keepassxc $HOME/sync/passwords.kdbx
 bindsym $mod+$alt+t exec telegram-desktop
-bindsym Print exec slurp | grim -g - -t png - | tee "$HOME/pictures/$(date +%Y%m%d_%Hh%Mm%Ss)_grim.png" | wl-copy -t "image/png"
+bindsym Print exec $screenshot
+bindsym $mod+Shift+s exec $screenshot
 
 # Vim notes
 set $notes alacritty --class vimnotes -e nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md
@@ -223,7 +225,7 @@ bindsym KP_Left exec mocp --previous
 
 #Assign windows to workspaces
 assign [app_id="firefox"] 1
-assign [app_id="evolution"] 10
+assign [app_id="org.gnome.Evolution"] 10
 
 for_window [app_id="mpv"] floating enable
 for_window [app_id="pavucontrol"] floating enable

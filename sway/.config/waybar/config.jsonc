@@ -1,0 +1,18 @@
+[
+    {
+        "include": [
+            "~/.config/waybar/modules.jsonc",
+            "~/.config/waybar/bar.jsonc"
+        ],
+        "output": ["eDP-1", "DP-4"],
+        "modules-right": ["custom/bandwidth", "memory", "custom/cpuload", "battery", "pulseaudio", "clock", "tray", "idle_inhibitor"]
+    },
+    {
+        "include": [
+            "~/.config/waybar/modules.jsonc",
+            "~/.config/waybar/bar.jsonc"
+        ],
+        "output": "!DP-4",
+        "modules-right": ["clock"]
+    }
+]

@@ -1,14 +1,4 @@
-[
 {
-    "layer": "top",
-    "position": "top",
-    "output": ["eDP-1", "DP-4"],
-    "height": 30,
-    "spacing": 0,
-    "fixed-center": false,
-    "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-center": ["sway/window"],
-    "modules-right": ["custom/bandwidth", "memory", "custom/cpuload", "battery", "pulseaudio", "clock", "tray", "idle_inhibitor"],
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
@@ -35,16 +25,30 @@
         "escape": false
     },
     "tray": {
-        // "icon-size": 21,
         "spacing": 10
     },
     "clock": {
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": " {:%a, %d %b ・ <b>%H:%M</b>}"
-    },
-    "cpu": {
-        "format": " {usage}% {load}",
-        "tooltip": true
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "format": " {:%a, %d %b ・ <b>%H:%M</b>}",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "left",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "locale": "de_DE.UTF-8",
+            "format": {
+                "months": "<b>{}</b>",
+                "days": "{}",
+                "weeks": "<span color='#aaaaaa'><b>W{}</b></span>",
+                "weekdays": "<span color='#aaaaaa'><b>{}</b></span>",
+                "today": "<span background='#df5f00'><b>{}</b></span>"
+            }
+        },
+        "actions":  {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
     },
     "memory": {
         "interval": 10,
@@ -69,7 +73,6 @@
         "format-icons": ["", "", "", "", ""]
     },
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
         "format": "{icon} {volume}% ・ {format_source}",
         "format-bluetooth": "{icon}  {volume}% ・ {format_source}",
         "format-muted": "  ・ {format_source}",
@@ -81,23 +84,4 @@
         },
         "on-click": "pavucontrol"
     }
-},
-{
-    "layer": "top",
-    "position": "top",
-    "output": "!DP-4",
-    "height": 30,
-    "spacing": 4,
-    "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-center": ["sway/window"],
-    "modules-right": ["clock"],
-    "fixed-center": false,
-    "sway/mode": {
-        "format": " {}"
-    },
-    "clock": {
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": " {:%a, %d %b<b> ⋅ %H:%M</b>}"
-    }
 }
-]
