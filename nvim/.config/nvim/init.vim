@@ -8,7 +8,7 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'neomake/neomake'
-Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'lambdalisue/fern.vim', { 'tag': 'v1.51.4' }
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -255,9 +255,6 @@ nmap <S-CR> i<CR><Esc>
 nnoremap - <C-X>
 nnoremap + <C-A>
 
-" Toggle NERDTree
-nnoremap <A-n> :NERDTreeToggle<CR>
-
 " Cycle through buffers
 nnoremap <Leader><TAB> :bnext<CR>
 nnoremap <Leader><S-TAB> :bprevious<CR>
@@ -485,3 +482,21 @@ nmap <Leader>x <Plug>TodoDone
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
+
+" Fern settings
+let g:fern#renderer#default#root_symbol = ""
+let g:fern#renderer#default#leaf_symbol = "  "
+let g:fern#renderer#default#collapsed_symbol = " "
+let g:fern#renderer#default#expanded_symbol = " "
+
+" Return the path of the current buffer when the buffer is a file.
+" Otherwise it returns a current working directory.
+function! s:smart_path() abort
+  if !empty(&buftype) || bufname('%') =~# '^[^:]\+://'
+    return fnamemodify('.', ':p')
+  endif
+  return fnamemodify(expand('%'), ':p')
+endfunction
+
+" Toggle Fern and reveal current buffer in tree
+nnoremap <silent> <A-n> :<C-u>Fern . -drawer -reveal=<C-r>=<SID>smart_path()<CR><CR>
