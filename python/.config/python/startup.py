@@ -1,7 +1,6 @@
 import atexit
 import os
 import readline
-import rlcompleter
 import sys
 
 PY_DIR = os.path.expanduser("~/.local/share/python/")
@@ -19,7 +18,7 @@ except FileNotFoundError:
     pass
 
 readline.parse_and_bind("tab: complete")
-sys.ps1 = "\n\033[38;5;4m 🠪 \033[0m"
+sys.ps1 = "\033[38;5;4m 🠪 \033[0m"
 sys.ps2 = "\033[38;5;8m … \033[0m"
 
 atexit.register(on_exit)
