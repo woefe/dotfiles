@@ -259,7 +259,7 @@ bar {
 seat * hide_cursor 5000
 
 include /etc/sway/config.d/*
-include ~/config/sway/config.local
+include ~/.config/sway/config.local
 
 # Set GTK themes
 set $gnome-schema org.gnome.desktop.interface
