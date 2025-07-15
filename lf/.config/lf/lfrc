@@ -1,7 +1,7 @@
 set drawbox true
 set ifs "\n"
 
-cmd open &rifle $f
+cmd open $gio open "$f"
 
 cmd on-cd &{{
     printf "\033]0; ${PWD/$HOME/\~} - lf\007" > /dev/tty
