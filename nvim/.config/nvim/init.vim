@@ -8,7 +8,7 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'neomake/neomake'
-Plug 'lambdalisue/fern.vim', { 'tag': 'v1.51.4' }
+Plug 'lambdalisue/fern.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -189,7 +189,6 @@ set smarttab
 set inccommand=split
 
 " Automatically save notes when focus is lost
-autocmd FocusLost ~/workspace/masterthesis/notes* :wa
 autocmd FocusLost ~/sync/Notes* :wa
 autocmd BufRead ~/sync/Notes* :set nospell
 
@@ -243,7 +242,7 @@ cnoreabbrev <expr> WQ ((getcmdtype() is# ':' && getcmdline() is# 'WQ')?('wq'):('
 cnoreabbrev <expr> Wq ((getcmdtype() is# ':' && getcmdline() is# 'Wq')?('wq'):('Wq'))
 
 " Copy to clipboard and stay in visualmode
-vnoremap <C-C> "*ygv
+vnoremap <C-C> "+ygv
 
 " Insert new line in normal mode
 nmap <S-CR> i<CR><Esc>
@@ -274,13 +273,13 @@ map <F12> :setlocal spell! spelllang=de_de<CR>
 " Esc to disable highlighting of search matches
 nnoremap <Esc> :nohlsearch<CR>
 
-" Copy to X clipboard
-vmap <C-c> "*y
+" Copy to primary system clipboard
+vmap <C-c> "+y
 
-" Paste from X clipboard
-vmap <Insert> d"*p
-imap <Insert> <Esc>"*pa
-nmap <Insert> "*p
+" Paste from primary system clipboard
+vmap <Insert> d"+p
+imap <Insert> <Esc>"+pa
+nmap <Insert> "+p
 
 " neovim terminal mappings
 tnoremap <Esc> <C-\><C-n>
