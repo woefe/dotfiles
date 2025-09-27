@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Screenlock
-NoDisplay=true
-GenericName=Screenlocker
-Comment=Screenlocker (xss-lock with i3lock)
-Exec=xss-lock screenlock
