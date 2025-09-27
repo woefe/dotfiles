@@ -22,7 +22,7 @@ set notification-warning-bg     "#eeeeee"
 set notification-warning-fg     "#af0000"
 
 set highlight-color             "rgba(215, 95, 0, 0.7)"
-set highlight-active-color      "#005f87"
+set highlight-active-color      "rgba(0, 95, 135, 0.7)"
 
 set completion-bg               "#e4e4e4"
 set completion-fg               "#005f87"
