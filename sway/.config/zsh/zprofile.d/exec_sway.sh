@@ -1,7 +1,6 @@
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] \
     && export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh \
     && export GRIM_DEFAULT_DIR="$HOME/pictures" \
-    && export WLR_DRM_NO_MODIFIERS=1 \
     && export MOZ_ENABLE_WAYLAND=1 \
     && export QT_QPA_PLATFORM=wayland \
     && export QT_WAYLAND_DISABLE_WINDOWDECORATION="1" \

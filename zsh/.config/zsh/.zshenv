@@ -5,7 +5,7 @@ fpath=(~/.zsh-plugins/zsh-completions/src $fpath)
 export EDITOR='nvim'
 export PAGER='less'
 export BROWSER='firefox'
-export TERMCMD='alacritty'
+export TERMCMD='foot'
 export QT_QPA_PLATFORMTHEME='gtk2'
 
 export FZF_CTRL_T_COMMAND='fd --type f --hidden --exclude .git --exclude .cache'
