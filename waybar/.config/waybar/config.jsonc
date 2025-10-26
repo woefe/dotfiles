@@ -5,6 +5,7 @@
             "~/.config/waybar/bar.jsonc"
         ],
         "output": ["eDP-1", "DP-4"],
+        "reload_style_on_change": true,
         "modules-right": ["custom/bandwidth", "memory", "custom/cpuload", "battery", "pulseaudio", "clock", "tray", "idle_inhibitor"]
     },
     {

@@ -28,7 +28,7 @@ To update the dotfiles pull this repo including its submodules.
 git pull --recurse-submodules
 ```
 
-## Sway dependencies
+## Hyprland dependencies
 ```
 pacman -S \
   fuzzel \
@@ -42,10 +42,18 @@ pacman -S \
   papirus-icon-theme \
   python3 \
   slurp \
-  swaylock \
   waybar \
   wdisplays \
   wireless_tools \
   wl-clipboard \
-  xorg-xwayland
+  xorg-xwayland \
+  hyprland \
+  hyprpicker \
+  hyprpaper \
+  hyprsunset \
+  hyperidle \
+  hyprlock \
+  swappy
+
+hyprpm add https://github.com/outfoxxed/hy3
 ```

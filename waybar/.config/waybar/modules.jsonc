@@ -6,11 +6,11 @@
             "deactivated": ""
         }
     },
-    "sway/mode": {
+    "hyprland/submap": {
         "format": " {}"
     },
-    "sway/window": {
-        "all-outputs": false
+    "hyprland/window": {
+
     },
     "custom/bandwidth": {
         "exec": "~/.config/waybar/scripts/bandwidth",
@@ -41,7 +41,7 @@
                 "days": "{}",
                 "weeks": "<span color='#aaaaaa'><b>W{}</b></span>",
                 "weekdays": "<span color='#aaaaaa'><b>{}</b></span>",
-                "today": "<span background='#df5f00'><b>{}</b></span>"
+                "today": "<span color='#1ED8CC'><b>{}</b></span>"
             }
         },
         "actions":  {
@@ -73,14 +73,14 @@
         "format-icons": ["", "", "", "", ""]
     },
     "pulseaudio": {
-        "format": "{icon} {volume}% ・ {format_source}",
+        "format": "{icon}  {volume}% ・ {format_source}",
         "format-bluetooth": "{icon}  {volume}% ・ {format_source}",
         "format-muted": "  ・ {format_source}",
         "format-bluetooth-muted": " {icon}  ・ {format_source}",
         "format-source": " {volume}%",
         "format-source-muted": "",
         "format-icons": {
-            "default": ["", "", "", "", "", ""]
+            "default": ["", "", "", " ", " ", " "]
         },
         "on-click": "pavucontrol"
     }

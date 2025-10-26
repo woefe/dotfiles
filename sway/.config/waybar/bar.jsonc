@@ -1,9 +1,0 @@
-{
-    "layer": "top",
-    "position": "top",
-    "height": 30,
-    "spacing": 0,
-    "fixed-center": false,
-    "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-center": ["sway/window"]
-}

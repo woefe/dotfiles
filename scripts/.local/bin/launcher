@@ -1,0 +1,51 @@
+#!/bin/sh
+
+histfile="$XDG_CACHE_HOME/sway-launch-hist.txt"
+
+launcher() {
+    fuzzel \
+        --background=323232f0 \
+        --text-color=eeeeeeff \
+        --prompt-color=eeeeeeff \
+        --input-color=eeeeeeff \
+        --match-color=0087afff \
+        --selection-color=878787ff \
+        --selection-text-color=ffffffff \
+        --selection-match-color=0087afff \
+        --inner-pad=10 \
+        --vertical-pad=10 \
+        --horizontal-pad=40 \
+        --fields=filename,name,generic,exec \
+        --terminal="alacritty -e" \
+        --prompt="  " \
+        --font=FontAwesome,Noto \
+        --icon-theme=Papirus \
+        --border-width=0 \
+        --border-radius=5 \
+        --dpi-aware=no \
+        --width=50 \
+        "$@"
+}
+
+case $1 in
+    xdg )
+        launcher
+        ;;
+    swaywindowlist )
+        window=$("$XDG_CONFIG_HOME/sway/scripts/windowlist" ・| launcher --dmenu --prompt="  ")
+        swaymsg "[con_id=${window%%・*}]" focus
+        ;;
+    hyprclients )
+        window=$(hyprctl -j clients | jq -r '.[] | .title + "・" + .address' | launcher --dmenu --prompt="  ")
+        hyprctl dispatch focuswindow address:"${window##*・}"
+        ;;
+    cmd )
+        history=$(cat "$histfile")
+        cmd=$(launcher --dmenu < "$histfile")
+        printf "%s\n%s" "$cmd" "$history" | grep -v "^\s*$" | sort -u > "$histfile"
+        $cmd
+        ;;
+    emoji )
+        cat "$XDG_DATA_HOME/emojidata.txt" | launcher --dmenu --prompt="  " | cut -d" " -f1 | tr -d "\n" | wl-copy
+        ;;
+esac

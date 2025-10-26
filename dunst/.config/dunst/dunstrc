@@ -26,14 +26,14 @@
     # constant width of 300
     width = 350
 
-    # The maximum height of a single notification, excluding the frame.
-    height = 300
+    # The minimum and maximum height of a single notification, excluding the frame.
+    height = (0, 300)
 
     # Position the notification in the top right corner
     origin = top-right
 
     # Offset from the origin
-    offset = 20x20
+    offset = (20, 20)
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -77,6 +77,8 @@
     # Set to 0 to disable.
     # If gap_size is greater than 0, this setting will be ignored.
     separator_height = 5
+
+    gap_size = 8
 
     # Padding between text and separator.
     padding = 12
@@ -232,7 +234,7 @@
     # corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
-    corner_radius = 0
+    corner_radius = 8
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
@@ -303,18 +305,18 @@
 
 [theme_low]
     msg_urgency = low
-    background = "#444444"
-    foreground = "#878787"
+    background = "#3c3c3c99"
+    foreground = "#ffffff"
 
 [theme_normal]
     msg_urgency = normal
-    background = "#0087af"
+    background = "#3c3c3c99"
     foreground = "#ffffff"
 
 [theme_critical]
     msg_urgency = critical
-    background = "#df5f00"
-    foreground = "#ffffff"
+    background = "#3c3c3c99"
+    foreground = "#1ed8cc"
+    #foreground = "#ffffff"
 
 # vim: ft=cfg
-

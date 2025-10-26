@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+
+import os
+import requests
+from pathlib import Path
+from bs4 import BeautifulSoup
+
+def extract_lines(rows):
+    for row in rows:
+        cells = row.find_all('td')
+
+        emoji = cells[0].get_text(strip=True)
+        code = cells[1].get_text(strip=True)
+        aliases = cells[2].stripped_strings
+
+        yield " ".join([emoji, code, *aliases]) + "\n"
+
+data_file = Path(os.getenv("XDG_DATA_HOME", "~/.local/share")).expanduser() / "emojidata.txt"
+
+response = requests.get('https://gitlab-org.gitlab.io/ruby/gems/tanuki_emoji/')
+response.raise_for_status()
+
+soup = BeautifulSoup(response.text, 'html.parser')
+rows = soup.css.select('tbody > tr')
+
+# eagerly load lines to ensure all lines can be extracted without error
+lines = list(extract_lines(rows))
+
+with data_file.open("wt") as emojidata:
+    emojidata.writelines(lines)
