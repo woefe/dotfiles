@@ -1,7 +1,3 @@
-typeset -U path
-path=(~/.local/bin $path[@])
-fpath=(~/.zsh-plugins/zsh-completions/src $fpath)
-
 export EDITOR='nvim'
 export PAGER='less'
 export BROWSER='firefox'
@@ -21,6 +17,7 @@ export XINITRC="$XDG_CONFIG_HOME/xorg/xinitrc"
 export XSERVERRC="$XDG_CONFIG_HOME/xorg/xserverrc"
 
 export LESSHISTFILE="$XDG_CACHE_HOME/lesshst"
+export REGISTRY_AUTH_FILE="$XDG_DATA_HOME/containers/auth.json"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
 export ANDROID_AVD_HOME="$XDG_DATA_HOME/android/"
@@ -33,3 +30,7 @@ export SQLITE_HISTORY="$XDG_DATA_HOME/sqlite_history"
 export PYLINTHOME="$XDG_CACHE_HOME/pylint"
 export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
 export _JAVA_AWT_WM_NONREPARENTING=1
+
+typeset -U path
+fpath=(~/.zsh-plugins/zsh-completions/src $fpath)
+path=(~/.local/bin $GOPATH/bin $path[@])
