@@ -13,7 +13,7 @@
             "~/.config/waybar/modules.jsonc",
             "~/.config/waybar/bar.jsonc"
         ],
-        "output": "!DP-4",
+        "output": ["!eDP-1", "!DP-4", "*"],
         "modules-right": ["clock"]
     }
 ]

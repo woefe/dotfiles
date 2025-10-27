@@ -70,7 +70,7 @@
         "format-plugged": " {capacity}%",
         "format-alt": "{icon} {time}<b> ⋅ </b>{power:0.2f}W",
         "format-full": " {capacity}%",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": [" ", " ", " ", " ", " "]
     },
     "pulseaudio": {
         "format": "{icon}  {volume}% ・ {format_source}",
