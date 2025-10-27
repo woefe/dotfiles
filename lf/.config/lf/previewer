@@ -1,0 +1,44 @@
+#!/bin/sh
+
+draw_image(){
+    chafa --format sixel --size "$2x$3" --polite on "$1"
+}
+
+match_filetype(){
+    case "$1" in
+        *.tar.gz|*.tgz|*.tar.bz|*.tbz|*.tar.bz2|*.tbz2|*.tar.Z|*.tZ|*.tar.lz|*.tzo|*.tlz|*.tar.xz|*.txz|*.tar.7z|*.t7z|*.tar|*.zip|*.jar|*.war|*.rar|*.lha|*.lzh|*.7z|*.alz|*.ace|*.a|*.arj|*.arc|*.rpm|*.deb|*.cab|*.gz|*.bz|*.bz2|*.Z|*.lzma|*.lzo|*.lz|*.xz|*.rz|*.lrz|*.cpio)
+            atool --list "$1"
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+match_mimetype(){
+    case "$(file -Lb --mime-type -- "$1")" in
+        image/png|image/jpeg)
+            draw_image "$@"
+            ;;
+        text/*)
+            bat --line-range=0:"$3" --color=always --style=numbers,changes --paging=never "$1"
+            ;;
+        application/pdf)
+            pdftoppm -singlefile -f 1 -l 1 -scale-to-x 1920 -scale-to-y -1 -png "$1" | draw_image - "$2" "$3"
+            ;;
+        application/json)
+            jq -C < "$1"
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+show_metadata(){
+    printf "No preview available.\n"
+    printf "Metadata: "
+    file -Lb -- "$1"
+}
+
+match_filetype "$@" || match_mimetype "$@"  || show_metadata "$1"

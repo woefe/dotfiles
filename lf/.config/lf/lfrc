@@ -1,7 +1,10 @@
 set drawbox true
+set roundbox true
 set ifs "\n"
+set icons
+set previewer ~/.config/lf/previewer
 
-cmd open $gio open "$f"
+cmd open &gio open "$f"
 
 cmd on-cd &{{
     printf "\033]0; ${PWD/$HOME/\~} - lf\007" > /dev/tty
