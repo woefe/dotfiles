@@ -34,6 +34,12 @@ pacman -S \
   fuzzel \
   gammastep \
   grim \
+  hyperidle \
+  hyprland \
+  hyprlock \
+  hyprpaper \
+  hyprpicker \
+  hyprsunset \
   kanshi \
   materia-gtk-theme \
   noto-fonts \
@@ -42,18 +48,13 @@ pacman -S \
   papirus-icon-theme \
   python3 \
   slurp \
+  swappy \
+  ttf-hack-nerd
   waybar \
   wdisplays \
   wireless_tools \
   wl-clipboard \
-  xorg-xwayland \
-  hyprland \
-  hyprpicker \
-  hyprpaper \
-  hyprsunset \
-  hyperidle \
-  hyprlock \
-  swappy
+  xorg-xwayland
 
 hyprpm add https://github.com/outfoxxed/hy3
 ```
