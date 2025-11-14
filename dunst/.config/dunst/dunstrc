@@ -91,7 +91,7 @@
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 0
+    frame_width = 4
 
     # Defines color of the frame around the notification window.
     frame_color = "#eeeeee"
@@ -311,12 +311,13 @@
 [theme_normal]
     msg_urgency = normal
     background = "#3c3c3c99"
+    frame_color = "#3c3c3c99"
     foreground = "#ffffff"
 
 [theme_critical]
     msg_urgency = critical
     background = "#3c3c3c99"
-    foreground = "#1ed8cc"
-    #foreground = "#ffffff"
+    foreground = "#ffffff"
+    frame_color = "#ff3399"
 
 # vim: ft=cfg
