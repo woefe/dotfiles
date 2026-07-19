@@ -183,7 +183,7 @@ bindsym $mod+d exec dunstctl history-pop
 bindsym $mod+Shift+d exec dunstctl close
 
 # Start launcher
-bindsym $mod+a exec launcher windowlist
+bindsym $mod+a exec launcher swaywindowlist
 bindsym $mod+p exec launcher xdg
 bindsym $mod+x exec launcher cmd
 bindsym $mod+space exec launcher emoji
@@ -253,7 +253,7 @@ client.unfocused         $color_unfocused  $color_unfocused  $color_unfocused_te
 client.urgent            $color_urgent     $color_urgent     $color_white           $color_urgent     $color_urgent
 
 bar {
-    swaybar_command waybar
+    swaybar_command swaybar-wrapper
 }
 
 seat * hide_cursor 5000

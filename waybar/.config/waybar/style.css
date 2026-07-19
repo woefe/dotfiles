@@ -1,7 +1,7 @@
 @define-color foreground #ffffff;
 @define-color foreground-active #1ed8cc;
 @define-color foreground-critical #ff3399;
-@define-color background rgba(60, 60, 60, 0.7);
+@define-color background rgba(60, 60, 60, 0.9);
 
 * {
     /* `otf-font-awesome` is required to be installed for icons */
@@ -12,9 +12,7 @@
 window#waybar {
     background-color: @background;
     color: @foreground;
-    border-radius: 0 0 8px 8px;
-    transition-property: background-color;
-    transition-duration: .5s;
+    border-radius: 0;
 }
 
 #workspaces button {
@@ -30,14 +28,36 @@ window#waybar {
     border-radius: 0 0 8px 8px;
 }
 
-#workspaces button.active {
+#workspaces button.focused {
+    color: @foreground-active;
+    font-weight: bold;
+}
+
+#niri-workspaces {
+    padding: 0 7px;
+    margin-left: 0;
+    border-radius: 8px 0 0 8px;
+    color: @foreground;
+}
+
+#niri-workspaces button {
+    padding: 0;
+    margin: 0;
+    min-width: 30px;
+    background-color: transparent;
+    color: @foreground;
+    border: none;
+    border-radius: 0;
+}
+
+#niri-workspaces button.focused {
     color: @foreground-active;
     font-weight: bold;
 }
 
 tooltip {
     background-color: @background;
-    border-radius: 8px;
+    border-radius: 0px;
 }
 tooltip label {
     color: @foreground;

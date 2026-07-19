@@ -234,7 +234,7 @@
     # corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
-    corner_radius = 8
+    corner_radius = 0
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
@@ -305,18 +305,19 @@
 
 [theme_low]
     msg_urgency = low
-    background = "#3c3c3c99"
-    foreground = "#ffffff"
+    background = "#3c3c3cee"
+    frame_color = "#3c3c3cee"
+    foreground = "#bbbbbb"
 
 [theme_normal]
     msg_urgency = normal
-    background = "#3c3c3c99"
-    frame_color = "#3c3c3c99"
+    background = "#3c3c3cee"
+    frame_color = "#3c3c3cee"
     foreground = "#ffffff"
 
 [theme_critical]
     msg_urgency = critical
-    background = "#3c3c3c99"
+    background = "#3c3c3cee"
     foreground = "#ffffff"
     frame_color = "#ff3399"
 

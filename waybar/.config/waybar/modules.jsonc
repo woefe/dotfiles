@@ -1,17 +1,4 @@
 {
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        }
-    },
-    "hyprland/submap": {
-        "format": " {}"
-    },
-    "hyprland/window": {
-
-    },
     "custom/bandwidth": {
         "exec": "~/.config/waybar/scripts/bandwidth",
         "on-click": "alacritty -e nmtui-connect",
@@ -83,5 +70,12 @@
             "default": ["", "", "", " ", " ", " "]
         },
         "on-click": "pavucontrol"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
     }
 }
