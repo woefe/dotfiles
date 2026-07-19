@@ -1,9 +1,9 @@
 set $mod Mod4
 set $alt Mod1
 set $term_cmd foot
-set $screenshot 'slurp | grim -g - -t png - | tee "$HOME/pictures/$(date +%Y%m%d_%Hh%Mm%Ss)_grim.png" | wl-copy -t "image/png"'
+set $screenshot 'slurp | grim -g - -t png - | swappy -f -'
 
-set $color_focused "#0087af"
+set $color_focused "#33ccff"
 set $color_white "#FFFFFF"
 set $color_urgent  "#df5f00"
 set $color_unfocused "#444444e0"
@@ -183,10 +183,10 @@ bindsym $mod+d exec dunstctl history-pop
 bindsym $mod+Shift+d exec dunstctl close
 
 # Start launcher
-bindsym $mod+a exec ~/.config/sway/scripts/launcher windowlist
-bindsym $mod+p exec ~/.config/sway/scripts/launcher xdg
-bindsym $mod+x exec ~/.config/sway/scripts/launcher cmd
-bindsym $mod+space exec ~/.config/sway/scripts/launcher emoji
+bindsym $mod+a exec launcher windowlist
+bindsym $mod+p exec launcher xdg
+bindsym $mod+x exec launcher cmd
+bindsym $mod+space exec launcher emoji
 
 # Application Quickstart
 bindsym $mod+$alt+b exec firefox
@@ -267,8 +267,6 @@ exec_always {
     gsettings set $gnome-schema gtk-theme 'Arc'
     gsettings set $gnome-schema icon-theme 'Papirus'
     gsettings set $gnome-schema font-name 'Noto Sans 11'
-
-    pkill -SIGHUP kanshi
 }
 
 # Autostart
@@ -281,9 +279,6 @@ exec {
 
     # Redshift
     gammastep-indicator -t 6500:4000 -l 48.13:11.57
-
-    # Screenlayouts
-    kanshi
 
     # XDG autostart
     dex -a -e sway
