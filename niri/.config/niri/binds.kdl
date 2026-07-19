@@ -1,0 +1,179 @@
+binds {
+    Mod+Shift+ssharp { show-hotkey-overlay; }
+
+    Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "foot"; }
+    Mod+C repeat=false { close-window; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+
+    Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
+
+    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+
+    Mod+A repeat=false { toggle-overview; }
+
+    Mod+H     { focus-column-or-monitor-left; }
+    Mod+L     { focus-column-or-monitor-right; }
+    Mod+J     { focus-window-down; }
+    Mod+K     { focus-window-up; }
+
+    Mod+Ctrl+Left  { move-column-left; }
+    Mod+Ctrl+Down  { move-window-down; }
+    Mod+Ctrl+Up    { move-window-up; }
+    Mod+Ctrl+Right { move-column-right; }
+
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+    Mod+Ctrl+Home { move-column-to-first; }
+    Mod+Ctrl+End  { move-column-to-last; }
+
+    Mod+Shift+Left  { move-column-left; }
+    Mod+Shift+Down  { move-window-down; }
+    Mod+Shift+Up    { move-window-up; }
+    Mod+Shift+Right { move-column-right; }
+    Mod+Shift+H     { move-column-left; }
+    Mod+Shift+J     { move-window-down; }
+    Mod+Shift+K     { move-window-up; }
+    Mod+Shift+L     { move-column-right; }
+
+    Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+    Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+
+    Mod+Shift+Alt+Left  { focus-monitor-left; }
+    Mod+Shift+Alt+Down  { focus-monitor-down; }
+    Mod+Shift+Alt+Up    { focus-monitor-up; }
+    Mod+Shift+Alt+Right { focus-monitor-right; }
+    Mod+Shift+Alt+H     { focus-monitor-left; }
+    Mod+Shift+Alt+J     { focus-monitor-down; }
+    Mod+Shift+Alt+K     { focus-monitor-up; }
+    Mod+Shift+Alt+L     { focus-monitor-right; }
+
+    Mod+Page_Down      { focus-workspace-down; }
+    Mod+Page_Up        { focus-workspace-up; }
+
+    Mod+Ctrl+H { move-workspace-to-monitor-left; }
+    Mod+Ctrl+J { move-workspace-to-monitor-down; }
+    Mod+Ctrl+K { move-workspace-to-monitor-up; }
+    Mod+Ctrl+L { move-workspace-to-monitor-right; }
+
+    Mod+Shift+Page_Down { move-workspace-down; }
+    Mod+Shift+Page_Up   { move-workspace-up; }
+    Mod+Alt+J         { move-workspace-down; }
+    Mod+Alt+K         { move-workspace-up; }
+
+    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    Mod+WheelScrollRight      { focus-column-right; }
+    Mod+WheelScrollLeft       { focus-column-left; }
+    Mod+Ctrl+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+
+    Mod+Shift+WheelScrollDown      { focus-column-right; }
+    Mod+Shift+WheelScrollUp        { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+0 { focus-workspace 10; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+    Mod+Shift+0 { move-column-to-workspace 10; }
+
+    Mod+Right { focus-workspace-down; }
+    Mod+Left { focus-workspace-up; }
+
+    Mod+Escape { focus-workspace-previous; }
+
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+
+    Mod+Comma  { consume-window-into-column; }
+    Mod+Period { expel-window-from-column; }
+
+    Mod+R { switch-preset-column-width; }
+    Mod+F { fullscreen-window; }
+    Mod+M { maximize-window-to-edges; }
+    Mod+E { maximize-column; }
+
+    Mod+Ctrl+F { expand-column-to-available-width; }
+
+    Mod+Ctrl+Shift+C { center-column; }
+
+    Mod+Ctrl+C { center-visible-columns; }
+
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    Mod+Ctrl+Space { toggle-window-floating; }
+    Mod+Tab { switch-focus-between-floating-and-tiling; }
+
+    Mod+T { toggle-column-tabbed-display; }
+
+
+    Print { spawn-sh "slurp | grim -g - -t png - | swappy -f -"; }
+    Mod+Shift+S { spawn-sh "slurp | grim -g - -t png - | swappy -f -"; }
+
+    XF86Display { spawn "wdisplays"; }
+    Mod+S { spawn "wdisplays"; }
+    Mod+D { spawn-sh "dunstctl history-pop"; }
+    Mod+Shift+D { spawn-sh "dunstctl close"; }
+
+    Mod+P { spawn-sh "launcher xdg"; }
+    Mod+X { spawn-sh "launcher cmd"; }
+    Mod+Space { spawn-sh "launcher emoji"; }
+
+    Mod+Alt+B { spawn "firefox"; }
+    Mod+Alt+E { spawn "evolution"; }
+    Mod+Alt+R { spawn "nautilus"; }
+    Mod+Alt+F { spawn "foot" "-e" "lf"; }
+    Mod+Alt+M { spawn "foot" "-e" "mocp"; }
+    Mod+Alt+C { spawn "chromium" "--incognito"; }
+    Mod+Alt+P { spawn "keepassxc" "$HOME/sync/passwords.kdbx"; }
+    Mod+Alt+T { spawn "telegram-desktop"; }
+
+    Mod+Shift+N { spawn-sh "foot --app-id vimnotes -e nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md"; }
+    Mod+Alt+N { spawn-sh "foot --app-id vimnotes -e nvim -c 'cd $HOME/sync/Notes' $HOME/sync/Notes/TODO.md"; }
+
+    XF86MonBrightnessDown { spawn-sh "brightnessctl set 20-"; }
+    XF86MonBrightnessUp { spawn-sh "brightnessctl set 20+"; }
+    Mod+Down { spawn-sh "ddcutil setvcp 10 20 --display 1; ddcutil setvcp 10 20 --display 2"; }
+    Mod+Up { spawn-sh "ddcutil setvcp 10 100 --display 1; ddcutil setvcp 10 100 --display 2"; }
+    XF86AudioRaiseVolume { spawn-sh "amixer sset Master 2%+"; }
+    XF86AudioLowerVolume { spawn-sh "amixer sset Master 2%-"; }
+    XF86AudioMute { spawn-sh "amixer sset Master toggle"; }
+    XF86WebCam { spawn "cheese"; }
+    XF86AudioNext { spawn-sh "mocp --next"; }
+    XF86AudioPrev { spawn-sh "mocp --previous"; }
+    XF86AudioPlay { spawn-sh "$HOME/.moc/mocp_toggle"; }
+
+    Mod+asciicircum allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+    Mod+Shift+E { quit; }
+    Ctrl+Alt+Delete { quit; }
+}

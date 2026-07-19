@@ -1,0 +1,61 @@
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^mpv$"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^org\.pulseaudio\.pavucontrol$"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^pinentry$"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^org\.telegram\.desktop$"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^yad$"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^Signal$"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^com\.nextcloud\.desktopclient\.nextcloud$"#
+    open-floating true
+}
+
+window-rule {
+    match title=r#"(Android |)Emulator(.*)"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^evolution-alarm-notify$"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+
+    block-out-from "screen-capture"
+}

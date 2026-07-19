@@ -1,0 +1,14 @@
+{
+  "niri/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+        "empty": "⨁"
+    },
+    "on-click": "activate",
+    "on-click-right": "close-window",
+    "separate-outputs": true
+  },
+  "niri/window": {
+    "format": "{}"
+  }
+}

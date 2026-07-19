@@ -1,0 +1,11 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "fixed-center": false,
+    "modules-left": ["niri/workspaces"],
+    "modules-center": ["niri/window"]
+}
