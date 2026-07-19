@@ -188,6 +188,9 @@ bindsym $mod+p exec launcher xdg
 bindsym $mod+x exec launcher cmd
 bindsym $mod+space exec launcher emoji
 
+# Color picker
+bindsym $mod+Shift+c exec sh -c "hyprpicker | wl-copy"
+
 # Application Quickstart
 bindsym $mod+$alt+b exec firefox
 bindsym $mod+$alt+e exec evolution

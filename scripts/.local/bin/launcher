@@ -44,4 +44,7 @@ case $1 in
     emoji )
         cat "$XDG_DATA_HOME/emojidata.txt" | launcher --dmenu --prompt="  " | cut -d" " -f1 | tr -d "\n" | wl-copy
         ;;
+    wlrchooser )
+        launcher --dmenu --prompt="  " < /dev/stdin
+        ;;
 esac
