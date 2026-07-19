@@ -35,10 +35,6 @@ case $1 in
         window=$("$XDG_CONFIG_HOME/sway/scripts/windowlist" ・| launcher --dmenu --prompt="  ")
         swaymsg "[con_id=${window%%・*}]" focus
         ;;
-    hyprclients )
-        window=$(hyprctl -j clients | jq -r '.[] | .title + "・" + .address' | launcher --dmenu --prompt="  ")
-        hyprctl dispatch focuswindow address:"${window##*・}"
-        ;;
     cmd )
         history=$(cat "$histfile")
         cmd=$(launcher --dmenu < "$histfile")

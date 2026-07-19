@@ -28,18 +28,14 @@ To update the dotfiles pull this repo including its submodules.
 git pull --recurse-submodules
 ```
 
-## Hyprland dependencies
+## Sway dependencies
 ```
 pacman -S \
   fuzzel \
   gammastep \
   grim \
-  hyperidle \
-  hyprland \
-  hyprlock \
-  hyprpaper \
-  hyprpicker \
-  hyprsunset \
+  sway \
+  swaybg \
   kanshi \
   materia-gtk-theme \
   noto-fonts \
@@ -55,7 +51,4 @@ pacman -S \
   wireless_tools \
   wl-clipboard \
   xorg-xwayland
-
-hyprpm add https://github.com/outfoxxed/hy3
-hyprpm enable hy3
 ```
