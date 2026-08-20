@@ -3,9 +3,6 @@ binds {
 
     Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "foot"; }
     Mod+C repeat=false { close-window; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-
-    Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
     XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
 
@@ -176,4 +173,5 @@ binds {
 
     Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
+    Super+Delete hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 }

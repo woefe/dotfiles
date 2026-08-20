@@ -130,7 +130,7 @@ layout {
         // draw-behind-window true
 
         // Softness controls the shadow blur radius.
-        softness 10
+        softness 20
 
         // Spread expands the shadow.
         spread 5
@@ -178,7 +178,7 @@ screenshot-path null
 // Animation details at https://niri-wm.github.io/niri/Configuration:-Animations
 animations {
     // Slow down all animations by this factor. Values below 1 speed them up instead.
-    slowdown 1.4
+    slowdown 0.9
 }
 
 include "binds.kdl"
