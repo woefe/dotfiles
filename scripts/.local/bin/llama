@@ -1,0 +1,225 @@
+#!/usr/bin/env python3
+
+import argparse
+import subprocess
+import sys
+from dataclasses import dataclass
+
+
+@dataclass
+class Model:
+    repo: str
+    quant: str = "UD-Q4_K_XL"
+    ctx_size: int = 262144
+    temp: float = 1.0
+    top_p: float = 0.95
+    top_k: int = 64
+    min_p: float = 0.01
+    presence_penalty: float | None = None
+    reasoning: str = "on"
+    chat_template_kwargs: str | None = None
+    vision: bool = False
+
+    @property
+    def hf(self) -> str:
+        return f"{self.repo}:{self.quant}"
+
+
+MODELS: dict[str, Model] = {
+    "qwen3-coder-next": Model(
+        repo="unsloth/Qwen3-Coder-Next-GGUF",
+        quant="UD-IQ3_XXS",
+        top_k=40,
+        reasoning="off",
+    ),
+    "qwen3.8-27b-thinking": Model(
+        repo="unsloth/Qwen3.8-27B-GGUF",
+        top_k=20,
+        chat_template_kwargs='{"reasoning_effort":"medium"}',
+    ),
+    "qwen3.8-27b-instruct": Model(
+        repo="unsloth/Qwen3.8-27B-GGUF",
+        temp=0.7,
+        top_p=0.80,
+        top_k=20,
+        presence_penalty=1.5,
+        chat_template_kwargs='{"reasoning_effort":"low"}',
+        reasoning="off",
+    ),
+    "muse-glimmer-30b": Model(
+        repo="unsloth/Muse-Glimmer-30B-GGUF",
+        vision=True,
+    ),
+    "qwen3.6-27b-thinking": Model(
+        repo="unsloth/Qwen3.6-27B-GGUF",
+        top_k=20,
+    ),
+    "qwen3.6-27b-coding": Model(
+        repo="unsloth/Qwen3.6-27B-GGUF",
+        temp=0.6,
+        top_k=20,
+    ),
+    "qwen3.6-27b-instruct": Model(
+        repo="unsloth/Qwen3.6-27B-GGUF",
+        temp=0.7,
+        top_p=0.80,
+        top_k=20,
+        presence_penalty=1.5,
+        reasoning="off",
+    ),
+    "qwen3.6-35b-a3b-thinking": Model(
+        repo="unsloth/Qwen3.6-35B-A3B-GGUF",
+        top_k=20,
+    ),
+    "qwen3.6-35b-a3b-coding": Model(
+        repo="unsloth/Qwen3.6-35B-A3B-GGUF",
+        temp=0.6,
+        top_k=20,
+    ),
+    "qwen3.6-35b-a3b-instruct": Model(
+        repo="unsloth/Qwen3.6-35B-A3B-GGUF",
+        temp=0.7,
+        top_p=0.80,
+        top_k=20,
+        presence_penalty=1.5,
+        reasoning="off",
+    ),
+    "nemotron-3.5": Model(
+        repo="unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF",
+        temp=0.6,
+    ),
+    "gemma-4-26b": Model(
+        repo="unsloth/gemma-4-26B-A4B-it-GGUF",
+        vision=True,
+    ),
+    "gemma-4-26b-thinking": Model(
+        repo="unsloth/gemma-4-26B-A4B-it-GGUF",
+        vision=True,
+    ),
+    "gemma-4-31b": Model(
+        repo="unsloth/gemma-4-31B-it-GGUF",
+        vision=True,
+    ),
+    "gemma-4-31b-thinking": Model(
+        repo="unsloth/gemma-4-31B-it-GGUF",
+        vision=True,
+    ),
+}
+
+
+def list_models(all_: bool) -> None:
+    print("Supported models:")
+    max_hf = max(len(m.hf) for m in MODELS.values())
+    for code in sorted(MODELS.keys()):
+        if all_:
+            model = MODELS[code]
+            print(f"  {code:<24} {model.hf:<{max_hf + 1}} ctx={model.ctx_size}")
+        else:
+            print(f"  {code}")
+
+
+def serve_model(code: str, host: str, port: str) -> None:
+    if code not in MODELS:
+        print(f"Error: unknown model code '{code}'", file=sys.stderr)
+        print(f"Run '{sys.argv[0]} list' to see supported models.", file=sys.stderr)
+        sys.exit(1)
+
+    model = MODELS[code]
+    alias_name = f"unsloth/{code}"
+
+    print(f"Starting llama-server for {code}")
+    print(f"HF ref: {model.hf}")
+    print(f"Port: {port}")
+    print(f"Host: {host}")
+
+    cmd = [
+        "llama-server",
+        "-hf", model.hf,
+        "--alias", alias_name,
+        "--host", host,
+        "--port", port,
+        "--threads", "-1",
+        "--n-gpu-layers", "999",
+        "--ctx-size", str(model.ctx_size),
+        "--jinja",
+        "--temp", str(model.temp),
+        "--top-p", str(model.top_p),
+        "--top-k", str(model.top_k),
+        "--min-p", str(model.min_p),
+        "--kv-unified",
+        "--cache-type-k", "q8_0",
+        "--cache-type-v", "q8_0",
+        "--batch-size", "4096",
+        "--ubatch-size", "1024",
+        "--prio", "3",
+        "--reasoning", model.reasoning,
+    ]
+
+    if model.presence_penalty is not None:
+        cmd.extend(["--presence-penalty", str(model.presence_penalty)])
+    if model.chat_template_kwargs is not None:
+        cmd.extend(["--chat-template-kwargs", model.chat_template_kwargs])
+
+    print("Command:", " ".join(cmd))
+    subprocess.run(cmd, check=True)
+
+
+def update_model(code: str, force: bool = False) -> None:
+    if code not in MODELS:
+        print(f"Error: unknown model code '{code}'", file=sys.stderr)
+        print(f"Run '{sys.argv[0]} list' to see supported models.", file=sys.stderr)
+        sys.exit(1)
+
+    model = MODELS[code]
+
+    print(f"Updating {code} from {model.repo}")
+    print(f"Quant filter: {model.quant}")
+
+    hf_args = ["--force-download"] if force else []
+    subprocess.run(["hf", "download", model.repo] + hf_args + ["--include", f"*{model.quant}*"], check=True)
+
+    if model.vision:
+        print("Downloading mmproj for vision model...")
+        subprocess.run(["hf", "download", model.repo] + hf_args + ["--include", "*mmproj*"], check=True)
+
+    print(f"Update complete for {code}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="""
+            Llama server manager. Starts llama.cpp server with predefined models and parameters as
+            recommended by unsloth.ai. Optimized for 32GB VRAM.
+            """,
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    subparsers = parser.add_subparsers(dest="command", help="Commands")
+
+    list_parser = subparsers.add_parser("list", help="List supported models")
+    list_parser.add_argument("--all", action="store_true", help="Show full details")
+
+    serve_parser = subparsers.add_parser("serve", help="Start llama.cpp server for a model")
+    serve_parser.add_argument("model_code", help="Model code to serve")
+    serve_parser.add_argument("--host", default="127.0.0.1", help="Host to serve on")
+    serve_parser.add_argument("--port", default="9931", help="Port to serve on")
+
+    update_parser = subparsers.add_parser("update", help="Update model from Hugging Face")
+    update_parser.add_argument("model_code", help="Model code to update")
+    update_parser.add_argument("--force", action="store_true", help="Force download")
+
+    args = parser.parse_args()
+
+    if not args.command:
+        parser.print_help()
+        sys.exit(1)
+
+    if args.command == "list":
+        list_models(args.all)
+    elif args.command == "serve":
+        serve_model(args.model_code, args.host, args.port)
+    elif args.command == "update":
+        update_model(args.model_code, force=args.force)
+
+
+if __name__ == "__main__":
+    main()
